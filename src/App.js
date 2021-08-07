@@ -43,22 +43,19 @@ function App() {
 	};
 
 	const onFormSubmit = (message) => {
-
 		let userText = message.replace(/^\s+|\s+$/g, '');
-		// console.log("userText:", userText, userText.length)
-
 		if (userText.length === 0) {
 			console.log("Empty String")
-			setMessage("");
-			return
+		} else {
+			console.log("Message Sent:", message);
 		}
-		console.log("Message Sent:", message);
 		setMessage("");
 	};
 
 	const onKeyDown = (e) => {
 		if (e.code === "Enter" || e.code === "NumpadEnter") {
-			// console.log("Enter Detected");
+			// this cannot read the updated message state since it is in the Event Loop
+			// which has no access to the updated states unless it is passed in
 			onFormSubmit(e.target.value)
 		}
 	};
