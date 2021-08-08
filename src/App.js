@@ -15,8 +15,8 @@ client.onopen = function () {
 	function sendNumber() {
 		if (client.readyState === client.OPEN) {
 			var number = Math.round(Math.random() * 0xffffff);
-			client.send(number.toString());
-			setTimeout(sendNumber, 1000);
+			client.send(new Date() + " " + number.toString());
+			setTimeout(sendNumber, 10000);
 		}
 	}
 	sendNumber();
@@ -38,16 +38,19 @@ function App() {
 	const messageInput = (e) => {
 		// e.target.value gets the entire input bar's values
 		e.preventDefault();
-		console.log("e.target.value:", e.target.value);
 		setMessage(e.target.value);
 	};
 
 	const onFormSubmit = (message) => {
-		let userText = message.replace(/^\s+|\s+$/g, '');
+		let userText = message.replace(/^\s+|\s+$/g, "");
 		if (userText.length === 0) {
-			console.log("Empty String")
-		} else {
+			console.log("Empty String");
+			return
+		}
+
+		if (client.readyState === client.OPEN) {
 			console.log("Message Sent:", message);
+			client.send(new Date() + " " + message);
 		}
 		setMessage("");
 	};
@@ -56,7 +59,7 @@ function App() {
 		if (e.code === "Enter" || e.code === "NumpadEnter") {
 			// this cannot read the updated message state since it is in the Event Loop
 			// which has no access to the updated states unless it is passed in
-			onFormSubmit(e.target.value)
+			onFormSubmit(e.target.value);
 		}
 	};
 
