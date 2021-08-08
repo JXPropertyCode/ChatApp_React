@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./components/messageBox.css";
 
 var W3CWebSocket = require("websocket").w3cwebsocket;
@@ -35,53 +35,40 @@ client.onmessage = function (e) {
 function App() {
 	const [message, setMessage] = useState("");
 
-	const messageInput = (e) => {
-		// e.target.value gets the entire input bar's values
+	const onFormSubmit = (e, message) => {
+		// prevents refresh, if you have form and onSubmit
+		// stops the browsers default behaviour
 		e.preventDefault();
-		setMessage(e.target.value);
-	};
 
-	const onFormSubmit = (message) => {
-		let userText = message.replace(/^\s+|\s+$/g, "");
+		// prevent whitespace messages
+		let userText = message.replace(/^\s+$/g, "");
 		if (userText.length === 0) {
 			console.log("Empty String");
+			setMessage("");
 			return
 		}
 
 		if (client.readyState === client.OPEN) {
 			console.log("Message Sent:", message);
 			client.send(new Date() + " " + message);
+		} else {
+			console.log("client.readyState isn't connected")
+			console.log("Message NOT Sent:", new Date(), message)
 		}
 		setMessage("");
 	};
 
-	const onKeyDown = (e) => {
-		if (e.code === "Enter" || e.code === "NumpadEnter") {
-			// this cannot read the updated message state since it is in the Event Loop
-			// which has no access to the updated states unless it is passed in
-			onFormSubmit(e.target.value);
-		}
-	};
-
-	useEffect(() => {
-		window.addEventListener("keydown", onKeyDown);
-		return () => {
-			window.removeEventListener("keydown", onKeyDown);
-		};
-	}, []);
-
 	return (
 		<div>
-			<div className="messageBox">
+			{/* onFormSubmit() mechanism enables you to click the input box and pressing enter would trigger it only */}
+			<form className="messageBox" onSubmit={(e) => onFormSubmit(e, message)}>
 				<input
 					type="text"
 					value={message}
-					onChange={(e) => messageInput(e)}
+					onChange={(e) => setMessage(e.target.value)}
 				/>
-				<button type="submit" onClick={() => onFormSubmit(message)}>
-					Send
-				</button>
-			</div>
+				<button type="submit">Send</button>
+			</form>
 		</div>
 	);
 }
