@@ -12,14 +12,23 @@ client.onerror = function () {
 // sending random numbers to Express's websocket, then Express would output them
 client.onopen = function () {
 	console.log("WebSocket Client Connected");
-	function sendNumber() {
-		if (client.readyState === client.OPEN) {
-			var number = Math.round(Math.random() * 0xffffff);
-			client.send(new Date() + " " + number.toString());
-			setTimeout(sendNumber, 10000);
-		}
-	}
-	sendNumber();
+	// this is a setTimeout that constantly sends data to remind connection
+	// function sendNumber() {
+	// 	if (client.readyState === client.OPEN) {
+	// 		// var number = Math.round(Math.random() * 0xffffff);
+	// 		let date = new Date()
+	// 		let entireMessage = {
+	// 			"dateSent": date.toString(),
+	// 			"clientMessage": "Still Connected"
+	// 		}
+	// 		console.log("interval entireMessage:", entireMessage)
+	// 		client.send(JSON.stringify(entireMessage));
+	// 		// client.send({clientMessage: entireMessage});
+	// 		// client.send(new Date() + ": Still Connected");
+	// 		setTimeout(sendNumber, 10000);
+	// 	}
+	// }
+	// sendNumber();
 };
 
 client.onclose = function () {
@@ -27,9 +36,11 @@ client.onclose = function () {
 };
 
 client.onmessage = function (e) {
-	if (typeof e.data === "string") {
-		console.log("Received: '" + e.data + "'");
-	}
+	// if (typeof e.data === "string") {
+	// 	console.log("Received: '" + e.data + "'");
+	// }
+	console.log("Received: '" + e.data + "'");
+
 };
 
 function App() {
@@ -50,10 +61,24 @@ function App() {
 
 		if (client.readyState === client.OPEN) {
 			console.log("Message Sent:", message);
-			client.send(new Date() + " " + message);
+			// client.send(new Date() + " " + message);
+
+			let date = new Date()
+			let entireMessage = {
+				"dateSent": date.toString(),
+				"clientMessage": message.toString()
+			}
+
+			console.log("entireMessage Successfully Sent:", entireMessage)
+			client.send(JSON.stringify(entireMessage));
 		} else {
 			console.log("client.readyState isn't connected")
-			console.log("Message NOT Sent:", new Date(), message)
+			let date = new Date()
+			let entireMessage = {
+				"dateSent": date.toString(),
+				"clientMessage": message.toString()
+			}
+			console.log("entireMessage NOT Sent:", entireMessage)
 		}
 		setMessage("");
 	};
