@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./components/messageBox.css";
 
 var W3CWebSocket = require("websocket").w3cwebsocket;
@@ -35,65 +35,81 @@ client.onclose = function () {
 	console.log("echo-protocol Client Closed");
 };
 
+// const [messages, setMessages] = useState([])
+
 client.onmessage = function (e) {
 	// if (typeof e.data === "string") {
 	// 	console.log("Received: '" + e.data + "'");
 	// }
-	console.log("Received: '" + e.data + "'");
 
+	// the e.data comes in a object format but in a string, so need to convert it to JSON
+	let dataReceived = JSON.parse(e.data)
+	console.log("dataReceived from Server:", dataReceived)
+	console.log("Message Received from Server: '" + dataReceived.clientMessage + "'");
+	// setMessages([...messages, dataReceived.clientMessage])
 };
 
-function App() {
-	const [message, setMessage] = useState("");
+// useEffect(() => {
+// 	console.log("messages:", messages)
+// }, [messages])
 
-	const onFormSubmit = (e, message) => {
+function App() {
+
+	const [sendMessage, setSendMessage] = useState("")
+
+	const onFormSubmit = (e, sendMessage) => {
 		// prevents refresh, if you have form and onSubmit
 		// stops the browsers default behaviour
 		e.preventDefault();
 
 		// prevent whitespace messages
-		let userText = message.replace(/^\s+$/g, "");
+		let userText = sendMessage.replace(/^\s+$/g, "");
 		if (userText.length === 0) {
 			console.log("Empty String");
-			setMessage("");
-			return
+			setSendMessage("");
+			return;
 		}
 
 		if (client.readyState === client.OPEN) {
-			console.log("Message Sent:", message);
-			// client.send(new Date() + " " + message);
-
-			let date = new Date()
+			console.log("Message Sent:", sendMessage);
+			let date = new Date();
 			let entireMessage = {
-				"dateSent": date.toString(),
-				"clientMessage": message.toString()
-			}
+				dateSent: date.toString(),
+				clientMessage: sendMessage.toString(),
+			};
 
-			console.log("entireMessage Successfully Sent:", entireMessage)
+			console.log("entireMessage Successfully Sent to Server:", entireMessage);
 			client.send(JSON.stringify(entireMessage));
 		} else {
-			console.log("client.readyState isn't connected")
-			let date = new Date()
+			console.log("client.readyState isn't connected");
+			let date = new Date();
 			let entireMessage = {
-				"dateSent": date.toString(),
-				"clientMessage": message.toString()
-			}
-			console.log("entireMessage NOT Sent:", entireMessage)
+				dateSent: date.toString(),
+				clientMessage: sendMessage.toString(),
+			};
+			console.log("entireMessage NOT Sent to Server:", entireMessage);
 		}
-		setMessage("");
+		setSendMessage("");
 	};
 
 	return (
 		<div>
-			{/* onFormSubmit() mechanism enables you to click the input box and pressing enter would trigger it only */}
-			<form className="messageBox" onSubmit={(e) => onFormSubmit(e, message)}>
-				<input
-					type="text"
-					value={message}
-					onChange={(e) => setMessage(e.target.value)}
-				/>
-				<button type="submit">Send</button>
-			</form>
+			<div className="chatDisplay">
+				{/* onFormSubmit() mechanism enables you to click the input box and pressing enter would trigger it only */}
+				<div className="messageWindow"></div>
+				<form
+					className="messageBox"
+					onSubmit={(e) => onFormSubmit(e, sendMessage)}
+				>
+					<input
+						className="inputBox"
+						type="text"
+						value={sendMessage}
+						onChange={(e) => setSendMessage(e.target.value)}
+					/>
+					<button type="submit">Send</button>
+				</form>
+			</div>
 		</div>
 	);
 }
