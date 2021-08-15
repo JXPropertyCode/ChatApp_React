@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./components/messageBox.css";
 
 var W3CWebSocket = require("websocket").w3cwebsocket;
@@ -35,27 +35,26 @@ client.onclose = function () {
 	console.log("echo-protocol Client Closed");
 };
 
-// const [messages, setMessages] = useState([])
 
 client.onmessage = function (e) {
 	// if (typeof e.data === "string") {
 	// 	console.log("Received: '" + e.data + "'");
 	// }
 
+	// console.log("e.data:", e.data)
+
+
 	// the e.data comes in a object format but in a string, so need to convert it to JSON
 	let dataReceived = JSON.parse(e.data)
 	console.log("dataReceived from Server:", dataReceived)
 	console.log("Message Received from Server: '" + dataReceived.clientMessage + "'");
-	// setMessages([...messages, dataReceived.clientMessage])
 };
-
-// useEffect(() => {
-// 	console.log("messages:", messages)
-// }, [messages])
 
 function App() {
 
 	const [sendMessage, setSendMessage] = useState("")
+
+	const [messages, setMessages] = useState([])
 
 	const onFormSubmit = (e, sendMessage) => {
 		// prevents refresh, if you have form and onSubmit
@@ -96,7 +95,8 @@ function App() {
 		<div>
 			<div className="chatDisplay">
 				{/* onFormSubmit() mechanism enables you to click the input box and pressing enter would trigger it only */}
-				<div className="messageWindow"></div>
+				<div className="messageWindow">
+				</div>
 				<form
 					className="messageBox"
 					onSubmit={(e) => onFormSubmit(e, sendMessage)}
