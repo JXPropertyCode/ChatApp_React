@@ -1,5 +1,5 @@
 // import { useState, useEffect } from "react";
-import { useState, useCallback, useMemo, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import "./components/messageBox.css";
@@ -16,12 +16,15 @@ function App() {
 		// lastMessage,
 		// lastJsonMessage,
 		// readyState,
-		getWebSocket,
+		// getWebSocket,
 	} = useWebSocket(socketUrl, {
 		// if successfully connected to the Express WebSocket
-		onOpen: () =>
-			console.log("Successfully Connected to Express WebSocket..."),
+		onOpen: () => {
+			console.log("Successfully Connected to Express WebSocket...");
+		},
 		onMessage: (e) => {
+			// this prevents error: Unexpected token H in JSON at position 0
+			if (e.data === "Hi there, I am a WebSocket server") return
 			console.log("Received from Server:", JSON.parse(e.data));
 			setMessages((messages) => [...messages, JSON.parse(e.data)]);
 		},
@@ -80,16 +83,6 @@ function App() {
 		}
 		setPrepMessage("");
 	};
-
-	// if (lastMessage) {
-	// 	console.log("lastMessage.data.clientMessage:", JSON.parse(lastMessage.data).clientMessage)
-	// }
-
-	// if (getWebSocket()) {
-	// 	console.log("getWebSocket().onmessage:", getWebSocket);
-	// }
-
-	// console.log("getWebSocket().onmessage:", getWebSocket().onmessage);
 
 	return (
 		<div>
