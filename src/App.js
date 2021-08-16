@@ -24,7 +24,7 @@ function App() {
 		},
 		onMessage: (e) => {
 			// this prevents error: Unexpected token H in JSON at position 0
-			if (e.data === "Hi there, I am a WebSocket server") return
+			// if (e.data === "Hi there, I am a WebSocket server") return
 			console.log("Received from Server:", JSON.parse(e.data));
 			setMessages((messages) => [...messages, JSON.parse(e.data)]);
 		},
