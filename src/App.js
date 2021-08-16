@@ -1,24 +1,30 @@
-import { useState } from "react";
+// import { useState, useEffect } from "react";
+import { useState, useCallback, useMemo, useRef, useEffect } from "react";
+
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import "./components/messageBox.css";
 
 function App() {
 	// This can also be an async getter function. See notes below on Async Urls.
-	const socketUrl = "ws://localhost:8000/";
-
+	const socketUrl = "ws://localhost:8000/echo";
 	const { readyState } = useWebSocket(socketUrl);
-
+	const [prepMessage, setPrepMessage] = useState("");
+	const [messages, setMessages] = useState([]);
 	const {
 		sendMessage,
 		// sendJsonMessage,
 		// lastMessage,
 		// lastJsonMessage,
 		// readyState,
-		// getWebSocket,
+		getWebSocket,
 	} = useWebSocket(socketUrl, {
 		// if successfully connected to the Express WebSocket
 		onOpen: () =>
 			console.log("Successfully Connected to Express WebSocket..."),
+		onMessage: (e) => {
+			console.log("Received from Server:", JSON.parse(e.data));
+			setMessages((messages) => [...messages, JSON.parse(e.data)]);
+		},
 		// Will attempt to reconnect on all close events, such as server shutting down
 		shouldReconnect: (closeEvent) => true,
 	});
@@ -31,10 +37,9 @@ function App() {
 		[ReadyState.UNINSTANTIATED]: "Uninstantiated",
 	}[readyState];
 
-	const [prepMessage, setPrepMessage] = useState("")
-	// const [sendMessage, setSendMessage] = useState("");
-
-	const [messages, setMessages] = useState([]);
+	useEffect(() => {
+		//console.log("Total Messages:", messages);
+	}, []);
 
 	const onFormSubmit = (e, prepMessage) => {
 		// prevents refresh, if you have form and onSubmit
@@ -60,8 +65,10 @@ function App() {
 				"entireMessage Successfully Sent to Server:",
 				entireMessage
 			);
-			// client.send(JSON.stringify(entireMessage));
-			sendMessage(JSON.stringify(entireMessage))
+			sendMessage(JSON.stringify(entireMessage));
+
+			// trying to receive message from server to put into messages
+			// setMessages([...messages, entireMessage])
 		} else {
 			console.log("client.readyState isn't connected");
 			let date = new Date();
@@ -74,11 +81,25 @@ function App() {
 		setPrepMessage("");
 	};
 
+	// if (lastMessage) {
+	// 	console.log("lastMessage.data.clientMessage:", JSON.parse(lastMessage.data).clientMessage)
+	// }
+
+	// if (getWebSocket()) {
+	// 	console.log("getWebSocket().onmessage:", getWebSocket);
+	// }
+
+	// console.log("getWebSocket().onmessage:", getWebSocket().onmessage);
+
 	return (
 		<div>
 			<div className="chatDisplay">
 				{/* onFormSubmit() mechanism enables you to click the input box and pressing enter would trigger it only */}
-				<div className="messageWindow"></div>
+				<div className="messageWindow">
+					{messages.map((msg, i) => {
+						return <p key={i}>{msg.clientMessage}</p>;
+					})}
+				</div>
 				<form
 					className="messageBox"
 					onSubmit={(e) => onFormSubmit(e, prepMessage)}
