@@ -12,6 +12,9 @@ function App() {
 	const [messages, setMessages] = useState([]);
 	const [loginStatus, setLoginStatus] = useState(false);
 
+	const [loginPage, setLoginPage] = useState(true);
+	const [signupPage, setSignupPage] = useState(false);
+
 	const {
 		sendMessage,
 		// sendJsonMessage,
@@ -109,10 +112,14 @@ function App() {
 			});
 			setError(false);
 			setLoginStatus(true);
+			setLoginPage(false);
+			setSignupPage(false);
 		} else {
 			console.log("Login Details Do Not Match");
 			setError(true);
 			setLoginStatus(false);
+			setLoginPage(true);
+			setSignupPage(false);
 		}
 	};
 
@@ -122,7 +129,7 @@ function App() {
 	};
 
 	// create the login UI
-	if (loginStatus === false) {
+	if (signupPage === false && loginStatus === false && loginPage === true) {
 		return (
 			<div className="App">
 				{/* ternary operator */}
@@ -138,14 +145,95 @@ function App() {
 						className="LoginFormAfter"
 						login={login}
 						error={error}
+						setLoginPage={setLoginPage}
+						setSignupPage={setSignupPage}
 					/>
 				)}
 			</div>
 		);
 	}
 
-	// return <div>Logged In</div>
+	// create signup Page
+	if (loginStatus === false && loginPage === false && signupPage === true) {
+		return (
+			<div>
+				<form
+				// onSubmit={createAccount}
+				>
+					<div className="form-inner">
+						<h2>Sign Up</h2>
+						<div className="form-group">
+							<label htmlFor="email">Email:</label>
+							<input
+								type="email"
+								name="email"
+								id="email"
+								// onChange={(e) =>
+								// 	setDetails({
+								// 		...details,
+								// 		email: e.target.value,
+								// 	})
+								// }
+								// value={details.email}
+							/>
+						</div>
+						<div className="form-group">
+							<label htmlFor="password">Password:</label>
+							<input
+								type="password"
+								name="password"
+								id="password"
+								// onChange={(e) =>
+								// 	setDetails({
+								// 		...details,
+								// 		password: e.target.value,
+								// 	})
+								// }
+								// value={details.password}
+							/>
+						</div>
+						<div className="form-group">
+							<label htmlFor="password">Confirm Password:</label>
+							<input
+								type="password"
+								name="password"
+								id="password"
+								// onChange={(e) =>
+								// 	setDetails({
+								// 		...details,
+								// 		password: e.target.value,
+								// 	})
+								// }
+								// value={details.password}
+							/>
+						</div>
+						<input
+							className="signupButton"
+							type="button"
+							value="Back to Login"
+							onClick={() => {
+								setLoginPage(true);
+								setSignupPage(false);
+							}}
+						/>
+						<input
+							type="button"
+							className="signupButton"
+							onClick={() => {
+								console.log("Create Account");
+								setSignupPage(true);
+								setLoginPage(false);
+								setLoginStatus(false);
+							}}
+							value="Create Account"
+						/>
+					</div>
+				</form>
+			</div>
+		);
+	}
 
+	// this is the message center
 	return (
 		<div>
 			<div className="chatDisplay">

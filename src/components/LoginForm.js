@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const LoginForm = ({ login, error }) => {
+const LoginForm = ({ login, error, setLoginPage, setSignupPage }) => {
 	const [details, setDetails] = useState({
 		name: "",
 		email: "",
@@ -18,78 +18,78 @@ const LoginForm = ({ login, error }) => {
 		console.log("Confirm Create Account");
 	};
 
-	const [loginPage, setLoginPage] = useState(true);
-	const [signupPage, setSignupPage] = useState(false);
+	// const [loginPage, setLoginPage] = useState(true);
+	// const [signupPage, setSignupPage] = useState(false);
 
-	if (signupPage === true && loginPage === false) {
-		return (
-			<form onSubmit={createAccount}>
-				<div className="form-inner">
-					<h2>Sign Up</h2>
-					<div className="form-group">
-						<label htmlFor="email">Email:</label>
-						<input
-							type="email"
-							name="email"
-							id="email"
-							onChange={(e) =>
-								setDetails({
-									...details,
-									email: e.target.value,
-								})
-							}
-							value={details.email}
-						/>
-					</div>
-					<div className="form-group">
-						<label htmlFor="password">Password:</label>
-						<input
-							type="password"
-							name="password"
-							id="password"
-							onChange={(e) =>
-							setDetails({
-								...details,
-								password: e.target.value,
-							})
-							}
-							value={details.password}
-						/>
-					</div>
-					<div className="form-group">
-						<label htmlFor="password">Confirm Password:</label>
-						<input
-							type="password"
-							name="password"
-							id="password"
-							// onChange={(e) =>
-							// 	setDetails({
-							// 		...details,
-							// 		password: e.target.value,
-							// 	})
-							// }
-							// value={details.password}
-						/>
-					</div>
-					<input
-						className="signupButton"
-						type="button"
-						value="Back to Login"
-						onClick={() => {
-							setLoginPage(true);
-							setSignupPage(false);
-						}}
-					/>
-					<input
-						type="button"
-						className="signupButton"
-						onClick={() => console.log("Create Account")}
-						value="Create Account"
-					/>
-				</div>
-			</form>
-		);
-	}
+	// if (signupPage === true && loginPage === false) {
+	// 	return (
+	// 		<form onSubmit={createAccount}>
+	// 			<div className="form-inner">
+	// 				<h2>Sign Up</h2>
+	// 				<div className="form-group">
+	// 					<label htmlFor="email">Email:</label>
+	// 					<input
+	// 						type="email"
+	// 						name="email"
+	// 						id="email"
+	// 						onChange={(e) =>
+	// 							setDetails({
+	// 								...details,
+	// 								email: e.target.value,
+	// 							})
+	// 						}
+	// 						value={details.email}
+	// 					/>
+	// 				</div>
+	// 				<div className="form-group">
+	// 					<label htmlFor="password">Password:</label>
+	// 					<input
+	// 						type="password"
+	// 						name="password"
+	// 						id="password"
+	// 						onChange={(e) =>
+	// 						setDetails({
+	// 							...details,
+	// 							password: e.target.value,
+	// 						})
+	// 						}
+	// 						value={details.password}
+	// 					/>
+	// 				</div>
+	// 				<div className="form-group">
+	// 					<label htmlFor="password">Confirm Password:</label>
+	// 					<input
+	// 						type="password"
+	// 						name="password"
+	// 						id="password"
+	// 						// onChange={(e) =>
+	// 						// 	setDetails({
+	// 						// 		...details,
+	// 						// 		password: e.target.value,
+	// 						// 	})
+	// 						// }
+	// 						// value={details.password}
+	// 					/>
+	// 				</div>
+	// 				<input
+	// 					className="signupButton"
+	// 					type="button"
+	// 					value="Back to Login"
+	// 					onClick={() => {
+	// 						setLoginPage(true);
+	// 						setSignupPage(false);
+	// 					}}
+	// 				/>
+	// 				<input
+	// 					type="button"
+	// 					className="signupButton"
+	// 					onClick={() => console.log("Create Account")}
+	// 					value="Create Account"
+	// 				/>
+	// 			</div>
+	// 		</form>
+	// 	);
+	// }
 
 	return (
 		<form onSubmit={submitHandler}>
