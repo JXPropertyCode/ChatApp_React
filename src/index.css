@@ -106,6 +106,7 @@ form .form-inner input[type="submit"],
 	display: inline-block;
 	padding: 10px 15px;
 	border-radius: 8px;
+	margin-right: 5px;
 	background-image: linear-gradient(
 		to right,
 		#ffce00 50%,
@@ -122,6 +123,29 @@ form .form-inner input[type="submit"],
 
 form .form-inner input[type="submit"]:hover,
 .welcome button:hover {
+	background-position: 100% 0%;
+}
+
+.signupButton {
+	display: inline-block;
+	padding: 10px 15px;
+	border-radius: 8px;
+	margin-right: 5px;
+	background-image: linear-gradient(
+		to right,
+		#ffce00 50%,
+		#ffce00 50%,
+		#fe4880
+	);
+	background-size: 200%;
+	background-position: 0%;
+	transition: 0.4s;
+	color: #fff;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.signupButton:hover {
 	background-position: 100% 0%;
 }
 

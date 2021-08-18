@@ -10,6 +10,9 @@ const LoginForm = ({ login, error }) => {
 	const submitHandler = (e) => {
 		// prevent re-renders
 		e.preventDefault();
+
+		console.log("e:", e)
+
 		login(details);
 	};
 
@@ -22,7 +25,7 @@ const LoginForm = ({ login, error }) => {
 					<div className="error">Login Details Do Not Match</div>
 				)}
 
-				<div className="form-group">
+				{/* <div className="form-group">
 					<label htmlFor="name">Name:</label>
 					<input
 						type="text"
@@ -33,7 +36,7 @@ const LoginForm = ({ login, error }) => {
 						}
 						value={details.name}
 					/>
-				</div>
+				</div> */}
 				<div className="form-group">
 					<label htmlFor="email">Email:</label>
 					<input
@@ -59,7 +62,9 @@ const LoginForm = ({ login, error }) => {
 					/>
 				</div>
 				<input type="submit" value="LOGIN" />
+				<input type="button" className="signupButton" onClick={() => console.log("Sign Up")} value="SIGN UP" />
 			</div>
+
 		</form>
 	);
 };
