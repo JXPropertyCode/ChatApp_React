@@ -3,7 +3,6 @@ import useWebSocket, { ReadyState } from "react-use-websocket";
 import "./components/messageBox.css";
 import LoginForm from "./components/LoginForm";
 import "./index.css";
-// import "./components/messageWindow.css";
 
 function App() {
 	// This can also be an async getter function. See notes below on Async Urls.
@@ -54,7 +53,7 @@ function App() {
 		// prevent whitespace messages
 		let userText = prepMessage.replace(/^\s+$/g, "");
 		if (userText.length === 0) {
-			console.log("Empty String");
+			console.log("Empty String Will Not Be Sent");
 			setPrepMessage("");
 			return;
 		}
@@ -161,7 +160,7 @@ function App() {
 					onSubmit={(e) => onFormSubmit(e, prepMessage)}
 				>
 					<input
-						className="inputBox"
+						className="messageInputBox"
 						type="text"
 						value={prepMessage}
 						onChange={(e) => setPrepMessage(e.target.value)}
