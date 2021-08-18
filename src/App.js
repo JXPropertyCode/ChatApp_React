@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import "./components/messageBox.css";
 import LoginForm from "./components/LoginForm";
-import './index.css'
-import "./components/messageWindow.css";
+import "./index.css";
+// import "./components/messageWindow.css";
 
 function App() {
 	// This can also be an async getter function. See notes below on Async Urls.
@@ -136,10 +136,6 @@ function App() {
 					</div>
 				) : (
 					<LoginForm
-						// style={{
-						// 	backgroundImage:
-						// 		"linear-gradient(to bottom right, #ffce00, #fe4880)",
-						// }}
 						className="LoginFormAfter"
 						login={login}
 						error={error}
@@ -170,7 +166,9 @@ function App() {
 						value={prepMessage}
 						onChange={(e) => setPrepMessage(e.target.value)}
 					/>
-					<button type="submit">Send</button>
+					<button className="chatSendButton" type="submit">
+						Send
+					</button>
 				</form>
 			</div>
 		</div>

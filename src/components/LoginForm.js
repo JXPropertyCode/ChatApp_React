@@ -13,14 +13,14 @@ const LoginForm = ({ login, error }) => {
 		login(details);
 	};
 
-
-
 	return (
 		<form onSubmit={submitHandler}>
 			<div className="form-inner">
 				<h2>Login</h2>
 
-                {error && (<div className="error">Login Details Do Not Match</div>)}
+				{error && (
+					<div className="error">Login Details Do Not Match</div>
+				)}
 
 				<div className="form-group">
 					<label htmlFor="name">Name:</label>

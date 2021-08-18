@@ -11,9 +11,12 @@
 }
 
 .inputBox {
-	width: 25%;
-	background-color: rgba(255, 255, 255, 0);
+	width: 50%;
+	border: 1px solid #27213c;
+}
 
+.chatSendButton {
+	border: 1px solid #27213c;
 }
 
 .messageWindow {
@@ -21,11 +24,11 @@
 	border: 1px solid #27213c;
 	display: flex;
 	width: 90%;
-	height: 600px;
+	/* height: 600px; */
+	height: 92vh;
 	flex-direction: column;
 	padding: 5px 10px 5px 5px;
 }
-
 
 .chatDisplay {
 	justify-content: center;
