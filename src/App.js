@@ -1,8 +1,9 @@
-// import { useState, useEffect } from "react";
 import { useState, useEffect } from "react";
-
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import "./components/messageBox.css";
+import LoginForm from "./components/LoginForm";
+import './index.css'
+import "./components/messageWindow.css";
 
 function App() {
 	// This can also be an async getter function. See notes below on Async Urls.
@@ -10,6 +11,8 @@ function App() {
 	const { readyState } = useWebSocket(socketUrl);
 	const [prepMessage, setPrepMessage] = useState("");
 	const [messages, setMessages] = useState([]);
+	const [loginStatus, setLoginStatus] = useState(false);
+
 	const {
 		sendMessage,
 		// sendJsonMessage,
@@ -83,6 +86,70 @@ function App() {
 		}
 		setPrepMessage("");
 	};
+
+	// usually this should be stored in a server/DB
+	const adminUser = {
+		email: "admin@admin.com",
+		password: "123",
+	};
+
+	const [user, setUser] = useState({ name: "", email: "" });
+	// catch if the login is correct
+	const [error, setError] = useState(false);
+
+	const login = (details) => {
+		console.log(details);
+		if (
+			details.email === adminUser.email &&
+			details.password === adminUser.password
+		) {
+			console.log("Logged In");
+			setUser({
+				name: details.name,
+				email: details.email,
+			});
+			setError(false);
+			setLoginStatus(true);
+		} else {
+			console.log("Login Details Do Not Match");
+			setError(true);
+			setLoginStatus(false);
+		}
+	};
+
+	const logout = () => {
+		console.log("Logout");
+		setUser({ name: "", email: "" });
+	};
+
+	// create the login UI
+	if (loginStatus === false) {
+		return (
+			<div className="App">
+				{/* ternary operator */}
+				{user.email !== "" ? (
+					<div className="welcome">
+						<h2>
+							Welcome, <span>{user.name}</span>
+						</h2>
+						<button onClick={logout}>Logout</button>
+					</div>
+				) : (
+					<LoginForm
+						// style={{
+						// 	backgroundImage:
+						// 		"linear-gradient(to bottom right, #ffce00, #fe4880)",
+						// }}
+						className="LoginFormAfter"
+						login={login}
+						error={error}
+					/>
+				)}
+			</div>
+		);
+	}
+
+	// return <div>Logged In</div>
 
 	return (
 		<div>
