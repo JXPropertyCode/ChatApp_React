@@ -129,7 +129,7 @@ function App() {
 		setSignupPage(true);
 		setLoginPage(false);
 		setLoginStatus(false);
-		setError(false)
+		setError(false);
 	};
 
 	const logout = () => {
@@ -154,7 +154,7 @@ function App() {
 						className="LoginFormAfter"
 						login={login}
 						error={error}
-						setError={		setError}
+						setError={setError}
 						setLoginPage={setLoginPage}
 						setSignupPage={setSignupPage}
 					/>
@@ -166,53 +166,59 @@ function App() {
 	// create signup Page
 	if (loginStatus === false && loginPage === false && signupPage === true) {
 		return (
-			<form onSubmit={createAccount}>
-				<div className="form-inner">
-					<h2>Sign Up</h2>
-					<div className="form-group">
-						<label htmlFor="name">Name:</label>
+			<div className="App">
+				<form onSubmit={createAccount}>
+					<div className="form-inner">
+						<h2>Sign Up</h2>
+						<div className="form-group">
+							<label htmlFor="name">Name:</label>
+							<input type="text" name="name" id="name" />
+						</div>
+						<div className="form-group">
+							<label htmlFor="email">Email:</label>
+							<input type="email" name="email" id="email" />
+						</div>
+						<div className="form-group">
+							<label htmlFor="password">Password:</label>
+							<input
+								type="password"
+								name="password"
+								id="password"
+							/>
+						</div>
+						<div className="form-group">
+							<label htmlFor="password">Confirm Password:</label>
+							<input
+								type="password"
+								name="password"
+								id="password"
+							/>
+						</div>
 						<input
-							type="text"
-							name="name"
-							id="name"
+							// type="button"
+							type="submit"
+							className="signupButton"
+							onClick={() => {
+								console.log("Create Account");
+								setSignupPage(true);
+								setLoginPage(false);
+								setLoginStatus(false);
+								// createAccount();
+							}}
+							value="Create Account"
+						/>
+						<input
+							className="signupButton"
+							type="button"
+							value="Back to Login"
+							onClick={() => {
+								setLoginPage(true);
+								setSignupPage(false);
+							}}
 						/>
 					</div>
-					<div className="form-group">
-						<label htmlFor="email">Email:</label>
-						<input type="email" name="email" id="email" />
-					</div>
-					<div className="form-group">
-						<label htmlFor="password">Password:</label>
-						<input type="password" name="password" id="password" />
-					</div>
-					<div className="form-group">
-						<label htmlFor="password">Confirm Password:</label>
-						<input type="password" name="password" id="password" />
-					</div>
-					<input
-						// type="button"
-						type="submit"
-						className="signupButton"
-						onClick={() => {
-							console.log("Create Account");
-							setSignupPage(true);
-							setLoginPage(false);
-							setLoginStatus(false);
-							// createAccount();
-						}}
-						value="Create Account"
-					/>
-					<input
-						className="signupButton"
-						type="button"
-						value="Back to Login"
-						onClick={() => {
-							setLoginPage(true);
-							setSignupPage(false);
-						}}
-					/>
-				</div>
-			</form>
+				</form>
+			</div>
 		);
 	}
 
