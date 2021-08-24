@@ -1,5 +1,13 @@
 import "../index.css";
 import "../components/messageBox.css";
+import {
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	Link,
+	Redirect,
+	useHistory
+} from "react-router-dom";
 // { setSignupPage, setLoginPage, setLoginStatus, setError }
 const SignUpForm = () => {
 	// const createAccount = (e) => {
@@ -10,6 +18,8 @@ const SignUpForm = () => {
 	// 	setLoginStatus(false);
 	// 	setError(false);
 	// };
+
+	const history = useHistory()
 
     return (
 		<div className="App">
@@ -49,10 +59,11 @@ const SignUpForm = () => {
 						className="signupButton"
 						type="button"
 						value="Back to Login"
-						// onClick={() => {
-						// 	setLoginPage(true);
-						// 	setSignupPage(false);
-						// }}
+						onClick={() => {
+							// setLoginPage(true);
+							// setSignupPage(false);
+							history.push('/LoginForm')
+						}}
 					/>
 				</div>
 			</form>

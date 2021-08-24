@@ -7,29 +7,21 @@ import "./index.css";
 import SignUpForm from "./pages/SignUpForm";
 import MessageCenter from "./pages/MessageCenter";
 
-
 export default function App() {
 	return (
 		<Router>
-			<div>
-				{/* A <Switch> looks through its children <Route>s and
+			{/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
-				<Switch>
-					<Route path="/LoginForm">
-						<LoginForm />
-					</Route>
-					<Route path="/SignUpForm">
-						<SignUpForm />
-					</Route>
-					<Route path="/MessageCenter">
-						<MessageCenter />
-					</Route>
-					{/* always put the default '/' path to the end or else it would access it first thing */}
-					<Route path="/">
-						<LoginForm />
-					</Route>
-				</Switch>
-			</div>
+			<Switch>
+				<Route exact path="/LoginForm" component={LoginForm} />
+				<Route exact path="/SignUpForm" component={SignUpForm} />
+				<Route exact path="/MessageCenter" component={MessageCenter} />
+			
+				{/* always put the default '/' path to the end or else it would access it first thing */}
+				<Route exact path="/" component={LoginForm} />
+				{/* If no address matches, it will default to 404 error */}
+				<Route exact path="*" component={<h3>404 - Not found</h3>} />
+			</Switch>
 		</Router>
 	);
 }
