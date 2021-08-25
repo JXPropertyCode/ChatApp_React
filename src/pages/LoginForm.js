@@ -1,16 +1,8 @@
-import { render } from "@testing-library/react";
 import { useState } from "react";
 import {
-	BrowserRouter as Router,
-	Switch,
-	Route,
-	Link,
-	Redirect,
 	useHistory
 } from "react-router-dom";
-import MessageCenter from "./MessageCenter";
 
-//  { login, error, setError, setLoginPage, setSignupPage }
 const LoginForm = () => {
 	// usually this should be stored in a server/DB
 	const adminUser = {
@@ -55,7 +47,7 @@ const LoginForm = () => {
 					<h2>Login</h2>
 
 					{invalidCred && (
-						<div className="error">Login Details Do Not Match</div>
+						<div className="invalidCred">Login Details Do Not Match</div>
 					)}
 
 					<div className="form-group">
