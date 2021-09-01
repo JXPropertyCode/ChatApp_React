@@ -27,7 +27,7 @@ const LoginForm = () => {
 		) {
 			console.log("Logged In");
 			setInvalidCred(false)
-			history.push('/MessageCenter')
+			history.push('/messagecenter')
 		} else {
 			console.log("Login Details Do Not Match");
 			setInvalidCred(true)
@@ -93,7 +93,7 @@ const LoginForm = () => {
 								email: "",
 								password: "",
 							});
-							history.push('/SignUpForm')
+							history.push('/signupform')
 						}}
 						value="SIGN UP"
 					/>

@@ -13,9 +13,9 @@ export default function App() {
 			{/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
 			<Switch>
-				<Route exact path="/LoginForm" component={LoginForm} />
-				<Route exact path="/SignUpForm" component={SignUpForm} />
-				<Route exact path="/MessageCenter" component={MessageCenter} />
+				<Route exact path="/loginform" component={LoginForm} />
+				<Route exact path="/signupform" component={SignUpForm} />
+				<Route exact path="/messagecenter" component={MessageCenter} />
 			
 				{/* always put the default '/' path to the end or else it would access it first thing */}
 				<Route exact path="/" component={LoginForm} />

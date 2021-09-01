@@ -9,22 +9,59 @@ import {
 	Redirect,
 	useHistory,
 } from "react-router-dom";
+import AccountObject from "../model/AccountObject";
+import axios from "axios";
 
 const SignUpForm = () => {
 	// track the user input
 	const [creatingCred, setCreatingCred] = useState({
-		name: "",
+		username: "",
 		email: "",
 		password: "",
 		confirmPassword: "",
 	});
 
-	const createAccount = (e) => {
-		if (creatingCred.password === creatingCred.confirmPassword) {
-			console.log("Creating Account Confirmed");
-		}
+	const [credPassError, setCredPassError] = useState(false);
+	const [credEmailError, setCredEmailError] = useState(false);
 
+	const createAccount = (e) => {
 		e.preventDefault();
+
+		if (creatingCred.password === creatingCred.confirmPassword) {
+			// UNIX timestamp
+			let timestamp = Math.floor(Date.now() / 1000);
+
+			let convertData = new AccountObject(
+				creatingCred.username,
+				creatingCred.email,
+				creatingCred.password,
+				timestamp
+			);
+
+			console.log("Requested Account Cred:", convertData);
+
+			axios
+				.post("http://192.168.4.24:8000/signup", convertData)
+				.then((res) => {
+					if (res.data.validCred === "true") {
+						console.log("Success! Account Created:", convertData);
+						setCredEmailError(false);
+					} else {
+						console.log(
+							"Error! Email Already Exists:",
+							convertData.email
+						);
+						setCredEmailError(true);
+					}
+				})
+				.catch((err) => {
+					console.error(err);
+				});
+			setCredPassError(false);
+		} else {
+			console.log("Create Account NOT Confirmed: Password Error");
+			setCredPassError(true);
+		}
 	};
 
 	const history = useHistory();
@@ -34,6 +71,8 @@ const SignUpForm = () => {
 			<form onSubmit={createAccount}>
 				<div className="form-inner">
 					<h2>Sign Up</h2>
+					{credEmailError && <h4>Email Has Already Been Taken!</h4>}
+					{credPassError && <h4>Your Passwords Do Not Match!</h4>}
 					<div className="form-group">
 						<label htmlFor="name">Name:</label>
 						<input
@@ -43,11 +82,12 @@ const SignUpForm = () => {
 							onChange={(e) => {
 								setCreatingCred({
 									...creatingCred,
-									name: e.target.value,
+									username: e.target.value,
 								});
-								console.log("Typing Name:", e.target.value);
+								console.log("Typing Username:", e.target.value);
 							}}
-							value={creatingCred.name}
+							value={creatingCred.username}
+							required
 						/>
 					</div>
 					<div className="form-group">
@@ -64,6 +104,7 @@ const SignUpForm = () => {
 								console.log("Typing Email:", e.target.value);
 							}}
 							value={creatingCred.email}
+							required
 						/>
 					</div>
 					<div className="form-group">
@@ -80,6 +121,7 @@ const SignUpForm = () => {
 								console.log("Typing Password:", e.target.value);
 							}}
 							value={creatingCred.password}
+							required
 						/>
 					</div>
 					<div className="form-group">
@@ -99,14 +141,13 @@ const SignUpForm = () => {
 								);
 							}}
 							value={creatingCred.confirmPassword}
+							required
 						/>
 					</div>
 					<input
 						type="submit"
 						className="signupButton"
-						onClick={() => {
-							console.log("Create Account using:", creatingCred);
-						}}
+						onClick={() => createAccount}
 						value="Create Account"
 					/>
 					<input
@@ -116,12 +157,12 @@ const SignUpForm = () => {
 						onClick={() => {
 							console.log("Going back to login...");
 							setCreatingCred({
-								name: "",
+								username: "",
 								email: "",
 								password: "",
 								confirmPassword: "",
 							});
-							history.push("/LoginForm");
+							history.push("/loginform");
 						}}
 					/>
 				</div>
