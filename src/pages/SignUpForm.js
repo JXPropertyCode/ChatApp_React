@@ -21,6 +21,9 @@ const SignUpForm = () => {
 		confirmPassword: "",
 	});
 
+	const history = useHistory();
+
+	// const [accountCreated, setAccountCreated] = useState(false);
 	const [credPassError, setCredPassError] = useState(false);
 	const [credEmailError, setCredEmailError] = useState(false);
 
@@ -46,12 +49,15 @@ const SignUpForm = () => {
 					if (res.data.validCred === "true") {
 						console.log("Success! Account Created:", convertData);
 						setCredEmailError(false);
+						history.push("/account-created");
+						// setAccountCreated(true);
 					} else {
 						console.log(
 							"Error! Email Already Exists:",
 							convertData.email
 						);
 						setCredEmailError(true);
+						// setAccountCreated(false);
 					}
 				})
 				.catch((err) => {
@@ -64,8 +70,6 @@ const SignUpForm = () => {
 		}
 	};
 
-	const history = useHistory();
-
 	return (
 		<div className="App">
 			<form onSubmit={createAccount}>
@@ -73,6 +77,9 @@ const SignUpForm = () => {
 					<h2>Sign Up</h2>
 					{credEmailError && <h4>Email Has Already Been Taken!</h4>}
 					{credPassError && <h4>Your Passwords Do Not Match!</h4>}
+
+					{/* {accountCreated && <h4>Account Created!</h4>} */}
+
 					<div className="form-group">
 						<label htmlFor="name">Name:</label>
 						<input
@@ -144,6 +151,7 @@ const SignUpForm = () => {
 							required
 						/>
 					</div>
+
 					<input
 						type="submit"
 						className="signupButton"
@@ -162,7 +170,7 @@ const SignUpForm = () => {
 								password: "",
 								confirmPassword: "",
 							});
-							history.push("/loginform");
+							history.push("/login-form");
 						}}
 					/>
 				</div>

@@ -6,6 +6,9 @@ import LoginForm from "./pages/LoginForm";
 import "./index.css";
 import SignUpForm from "./pages/SignUpForm";
 import MessageCenter from "./pages/MessageCenter";
+import AccountCreated from './pages/AccountCreated'
+import LoginSuccess from './pages/LoginSuccess'
+
 
 export default function App() {
 	return (
@@ -13,9 +16,12 @@ export default function App() {
 			{/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
 			<Switch>
-				<Route exact path="/loginform" component={LoginForm} />
-				<Route exact path="/signupform" component={SignUpForm} />
-				<Route exact path="/messagecenter" component={MessageCenter} />
+				<Route exact path="/login-form" component={LoginForm} />
+				<Route exact path="/signup-form" component={SignUpForm} />
+				<Route exact path="/message-center" component={MessageCenter} />
+				<Route exact path="/account-created" component={AccountCreated} />
+				<Route exact path="/login-success" component={LoginSuccess} />
+
 			
 				{/* always put the default '/' path to the end or else it would access it first thing */}
 				<Route exact path="/" component={LoginForm} />

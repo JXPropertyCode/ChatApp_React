@@ -1,7 +1,6 @@
 import { useState } from "react";
-import {
-	useHistory
-} from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 const LoginForm = () => {
 	// usually this should be stored in a server/DB
@@ -10,9 +9,9 @@ const LoginForm = () => {
 		password: "123",
 	};
 
-	const history = useHistory()
+	const history = useHistory();
 
-	const [invalidCred, setInvalidCred] = useState(false)
+	const [invalidCred, setInvalidCred] = useState(false);
 
 	const [inputCred, setInputCred] = useState({
 		email: "",
@@ -21,17 +20,22 @@ const LoginForm = () => {
 
 	const login = (inputCred) => {
 		console.log("Pressed Log In using Cred:", inputCred);
-		if (
-			inputCred.email === adminUser.email &&
-			inputCred.password === adminUser.password
-		) {
-			console.log("Logged In");
-			setInvalidCred(false)
-			history.push('/messagecenter')
-		} else {
-			console.log("Login Details Do Not Match");
-			setInvalidCred(true)
-		}
+
+		axios
+			.post("http://192.168.4.24:8000/login-validation", inputCred)
+			.then((res) => {
+				if (res.data.validCred === "true") {
+					console.log("Success! Account Found:", inputCred);
+					setInvalidCred(false);
+					history.push("/login-success");
+				} else {
+					console.log("Error! Account Doesn't Exist...");
+					setInvalidCred(true);
+				}
+			})
+			.catch((err) => {
+				console.error(err);
+			});
 	};
 
 	const submitHandler = (e) => {
@@ -47,7 +51,9 @@ const LoginForm = () => {
 					<h2>Login</h2>
 
 					{invalidCred && (
-						<div className="invalidCred">Login Details Do Not Match</div>
+						<div className="invalidCred">
+							Login Details Do Not Match
+						</div>
 					)}
 
 					<div className="form-group">
@@ -93,7 +99,7 @@ const LoginForm = () => {
 								email: "",
 								password: "",
 							});
-							history.push('/signupform')
+							history.push("/signup-form");
 						}}
 						value="SIGN UP"
 					/>
