@@ -1,7 +1,13 @@
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const LoginSuccess = () => {
 	const history = useHistory();
+	const validAccount = useSelector((state) => state.auth.accountVerified);
+
+	if (!validAccount) {
+		history.push("/login-form");
+	}
 
 	setTimeout(() => history.push("/message-center"), 4000);
 	return (

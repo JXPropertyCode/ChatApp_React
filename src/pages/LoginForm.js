@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { useDispatch } from "react-redux";
 
 const LoginForm = () => {
 	// usually this should be stored in a server/DB
-	const adminUser = {
-		email: "admin@admin.com",
-		password: "123",
-	};
+	// const adminUser = {
+	// 	email: "admin@admin.com",
+	// 	password: "123",
+	// };
+
+	const dispatch = useDispatch();
 
 	const history = useHistory();
 
@@ -27,6 +30,10 @@ const LoginForm = () => {
 				if (res.data.validCred === "true") {
 					console.log("Success! Account Found:", inputCred);
 					setInvalidCred(false);
+
+					dispatch({ type: "auth/login", payload: inputCred });
+					dispatch({ type: "auth/outputData" });
+
 					history.push("/login-success");
 				} else {
 					console.log("Error! Account Doesn't Exist...");
