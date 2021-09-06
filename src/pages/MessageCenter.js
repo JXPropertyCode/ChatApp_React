@@ -11,11 +11,11 @@ const MessageCenter = () => {
 	if (!validAccount) {
 		history.push("/login-form");
 	}
-	console.log("Welcome to Message Center");
+	// console.log("Welcome to Message Center");
 
 	const logoutButton = () => {
 		history.push("/logout");
-		console.log("Pressed Logout");
+		// console.log("Pressed Logout");
 	};
 
 	// {/* <div className="chatDisplay">

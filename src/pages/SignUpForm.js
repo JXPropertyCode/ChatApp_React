@@ -1,14 +1,7 @@
 import { useState } from "react";
 import "../index.css";
 import "../components/messageBox.css";
-import {
-	BrowserRouter as Router,
-	Switch,
-	Route,
-	Link,
-	Redirect,
-	useHistory,
-} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import AccountObject from "../model/AccountObject";
 import axios from "axios";
 
@@ -41,21 +34,21 @@ const SignUpForm = () => {
 				timestamp
 			);
 
-			console.log("Requested Account Cred:", convertData);
+			// console.log("Requested Account Cred:", convertData);
 
 			axios
 				.post("http://192.168.4.24:8000/signup", convertData)
 				.then((res) => {
 					if (res.data.validCred === "true") {
-						console.log("Success! Account Created:", convertData);
+						// console.log("Success! Account Created:", convertData);
 						setCredEmailError(false);
 						history.push("/account-created");
 						// setAccountCreated(true);
 					} else {
-						console.log(
-							"Error! Email Already Exists:",
-							convertData.email
-						);
+						// console.log(
+						// 	"Error! Email Already Exists:",
+						// 	convertData.email
+						// );
 						setCredEmailError(true);
 						// setAccountCreated(false);
 					}
@@ -65,7 +58,7 @@ const SignUpForm = () => {
 				});
 			setCredPassError(false);
 		} else {
-			console.log("Create Account NOT Confirmed: Password Error");
+			// console.log("Create Account NOT Confirmed: Password Error");
 			setCredPassError(true);
 		}
 	};
@@ -136,7 +129,7 @@ const SignUpForm = () => {
 						<input
 							type="password"
 							name="password"
-							id="password"
+							id="confirmPassword"
 							onChange={(e) => {
 								setCreatingCred({
 									...creatingCred,
@@ -163,7 +156,7 @@ const SignUpForm = () => {
 						type="button"
 						value="Back to Login"
 						onClick={() => {
-							console.log("Going back to login...");
+							// console.log("Going back to login...");
 							setCreatingCred({
 								username: "",
 								email: "",

@@ -22,21 +22,21 @@ const LoginForm = () => {
 	});
 
 	const login = (inputCred) => {
-		console.log("Pressed Log In using Cred:", inputCred);
+		// console.log("Pressed Log In using Cred:", inputCred);
 
 		axios
 			.post("http://192.168.4.24:8000/login-validation", inputCred)
 			.then((res) => {
 				if (res.data.validCred === "true") {
-					console.log("Success! Account Found:", inputCred);
+					// console.log("Success! Account Found:", inputCred);
 					setInvalidCred(false);
 
 					dispatch({ type: "auth/login", payload: inputCred });
-					dispatch({ type: "auth/outputData" });
+					// dispatch({ type: "auth/outputData" });
 
 					history.push("/login-success");
 				} else {
-					console.log("Error! Account Doesn't Exist...");
+					// console.log("Error! Account Doesn't Exist...");
 					setInvalidCred(true);
 				}
 			})

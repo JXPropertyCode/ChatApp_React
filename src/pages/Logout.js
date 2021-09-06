@@ -1,7 +1,7 @@
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-const Logout = () => {	
+const Logout = () => {
 	const history = useHistory();
 	const validAccount = useSelector((state) => state.auth.accountVerified);
 
@@ -9,10 +9,9 @@ const Logout = () => {
 		history.push("/login-form");
 	}
 
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 
 	dispatch({ type: "auth/logout" });
-	dispatch({ type: "auth/outputData" });
 
 	setTimeout(() => {
 		history.push("/login-form");
