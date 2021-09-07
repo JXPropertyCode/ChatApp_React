@@ -21,7 +21,6 @@ export default function App() {
 				<Route exact path="/signup-form" component={SignUpForm} />
 
 				{/* auth these login before letting access */}
-
 				<Route exact path="/message-center" component={MessageCenter} />
 				<Route exact path="/account-created" component={AccountCreated} />
 				<Route exact path="/login-success" component={LoginSuccess} />
