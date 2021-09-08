@@ -13,11 +13,11 @@ const MessageCenter = () => {
 
 	const [prepMessage, setPrepMessage] = useState("");
 	const [sendUserData, setSendUserData] = useState({
-		email: userEmail,
-		password: userPass,
-		timestamp: "",
+		timestamp: 0,
 		username: username,
 		clientMessage: "",
+		email: userEmail,
+		password: userPass,
 	});
 
 	const { sendMessage, lastMessage, readyState } = useWebSocket(
@@ -53,7 +53,7 @@ const MessageCenter = () => {
 	return (
 		<div>
 			<div>
-				<h1>This is Message Center</h1>
+				<h1>{username}'s Dashboard</h1>
 				<button onClick={logoutButton}>Logout Button</button>
 			</div>
 			<div className="chatDisplay">

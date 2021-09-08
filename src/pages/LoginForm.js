@@ -28,7 +28,12 @@ const LoginForm = () => {
 			.post("http://192.168.4.24:8000/login-validation", inputCred)
 			.then((res) => {
 				if (res.data.validCred === "true") {
-					// console.log("Success! Account Found:", inputCred);
+					console.log("Success! Account Found:", inputCred);
+
+					// I added the username from the database back to the inputCred so the Store has the username
+					inputCred.username = res.data.username;
+					console.log("res.data.username:", res.data.username);
+
 					setInvalidCred(false);
 					dispatch({ type: "auth/login", payload: inputCred });
 					// dispatch({ type: "auth/outputData" });

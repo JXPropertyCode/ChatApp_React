@@ -11,6 +11,7 @@ const authSlice = createSlice({
 	reducers: {
 		login: (state, { type, payload }) => {
 			state.accountVerified = true;
+			state.username = payload.username;
 			state.email = payload.email;
 			state.password = payload.password;
 		},
