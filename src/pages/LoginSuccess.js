@@ -9,7 +9,8 @@ const LoginSuccess = () => {
 		history.push("/login-form");
 	}
 
-	setTimeout(() => history.push("/message-center"), 4000);
+	setTimeout(() => history.push("/message-center"), 3000);
+
 	return (
 		<div>
 			<h1>Login Successful!</h1>

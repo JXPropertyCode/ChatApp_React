@@ -42,7 +42,7 @@ const SignUpForm = () => {
 					if (res.data.validCred === "true") {
 						// console.log("Success! Account Created:", convertData);
 						setCredEmailError(false);
-						history.push("/account-created");
+						history.push({pathname: "/account-created", auth: true});
 						// setAccountCreated(true);
 					} else {
 						// console.log(

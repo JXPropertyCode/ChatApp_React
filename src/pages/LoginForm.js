@@ -30,10 +30,8 @@ const LoginForm = () => {
 				if (res.data.validCred === "true") {
 					// console.log("Success! Account Found:", inputCred);
 					setInvalidCred(false);
-
 					dispatch({ type: "auth/login", payload: inputCred });
 					// dispatch({ type: "auth/outputData" });
-
 					history.push("/login-success");
 				} else {
 					// console.log("Error! Account Doesn't Exist...");
