@@ -4,6 +4,7 @@ import "../components/messageBox.css";
 import { useHistory } from "react-router-dom";
 import AccountObject from "../model/AccountObject";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const SignUpForm = () => {
 	// track the user input
@@ -16,9 +17,15 @@ const SignUpForm = () => {
 
 	const history = useHistory();
 
+	const validAccount = useSelector((state) => state.auth.accountVerified);
+
 	// const [accountCreated, setAccountCreated] = useState(false);
 	const [credPassError, setCredPassError] = useState(false);
 	const [credEmailError, setCredEmailError] = useState(false);
+
+	if (validAccount) {
+		history.push("/message-center");
+	}
 
 	const createAccount = (e) => {
 		e.preventDefault();
@@ -40,15 +47,18 @@ const SignUpForm = () => {
 				.post("http://192.168.4.24:8000/signup", convertData)
 				.then((res) => {
 					if (res.data.validCred === "true") {
-						// console.log("Success! Account Created:", convertData);
+						console.log("Success! Account Created:", convertData);
 						setCredEmailError(false);
-						history.push({pathname: "/account-created", auth: true});
+						history.push({
+							pathname: "/account-created",
+							auth: true,
+						});
 						// setAccountCreated(true);
 					} else {
-						// console.log(
-						// 	"Error! Email Already Exists:",
-						// 	convertData.email
-						// );
+						console.log(
+							"Error! Email Already Exists:",
+							convertData.email
+						);
 						setCredEmailError(true);
 						// setAccountCreated(false);
 					}

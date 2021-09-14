@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const LoginForm = () => {
 	// usually this should be stored in a server/DB
@@ -9,6 +10,7 @@ const LoginForm = () => {
 	// 	email: "admin@admin.com",
 	// 	password: "123",
 	// };
+	const validAccount = useSelector((state) => state.auth.accountVerified);
 
 	const dispatch = useDispatch();
 
@@ -20,6 +22,10 @@ const LoginForm = () => {
 		email: "",
 		password: "",
 	});
+
+	if (validAccount) {
+		history.push('/message-center')
+	}
 
 	const login = (inputCred) => {
 		// console.log("Pressed Log In using Cred:", inputCred);
