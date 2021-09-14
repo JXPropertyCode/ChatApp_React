@@ -45,8 +45,10 @@ client.onclose = function () {
 };
 
 client.onmessage = function (e) {
+	e.preventDefault();
+
 	if (typeof e.data === "string") {
-		console.log("Received: '" + e.data + "'");
+		console.log("Received from Server:",  JSON.parse(e.data));
 	}
 };
 

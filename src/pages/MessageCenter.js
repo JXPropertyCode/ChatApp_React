@@ -41,11 +41,14 @@ const MessageCenter = () => {
 
 		let convertData = new MessageObject(
 			sendUserData.username,
+			sendUserData.email,
+			sendUserData.password,
 			timestamp,
 			prepMessage
 		);
 
-		console.log("Sending Message:", message);
+		console.log("Data Sent to Server:", convertData)
+		// console.log("Sending Message:", message);
 		sendMessage(JSON.stringify(convertData));
 		setPrepMessage("");
 	};

@@ -7,11 +7,15 @@ const convertTime = (givenTimeStamp) => {
 
 class MessageObject {
 	username;
+	email;
+	password;
 	timestamp;
 	clientMessage;
 
-	constructor(username, timestamp, clientMessage) {
+	constructor(username, email, password, timestamp, clientMessage) {
 		this.username = String(username);
+		this.email = String(email);
+		this.password = String(password);
 		this.timestamp = String(convertTime(timestamp));
 		this.clientMessage = String(clientMessage);
 	}
