@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import "./components/messageBox.css";
 import LoginForm from "./pages/LoginForm";
@@ -20,6 +20,7 @@ client.onerror = function () {
 };
 
 // sending random numbers to Express's websocket, then Express would output them
+// this is optional for testing purposes
 client.onopen = function () {
 	console.log("WebSocket Client Connected");
 	// function sendNumber() {
@@ -48,7 +49,7 @@ client.onmessage = function (e) {
 	e.preventDefault();
 
 	if (typeof e.data === "string") {
-		console.log("Received from Server:",  JSON.parse(e.data));
+		console.log("Received from Server:", JSON.parse(e.data));
 	}
 };
 
@@ -58,7 +59,6 @@ export default function App() {
 			{/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
 			<Switch>
-				Î
 				<Route exact path="/login-form" component={LoginForm} />
 				<Route exact path="/signup-form" component={SignUpForm} />
 				{/* auth these login before letting access */}

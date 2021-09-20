@@ -1,6 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 import authSliceReducer from "./authSlice";
+import chatroomSliceReducer from "./chatroomSlice";
+
 import { combineReducers } from "redux";
 
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
@@ -10,6 +12,7 @@ const middlewares = [logger];
 
 const rootReducer = combineReducers({
 	auth: authSliceReducer,
+	chatroom: chatroomSliceReducer,
 });
 
 const persistConfig = {
