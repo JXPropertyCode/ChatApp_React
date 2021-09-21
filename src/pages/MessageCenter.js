@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useState, useCallback, useMemo, useRef } from "react";
+import { useState, useEffect } from "react";
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import MessageObject from "../model/MessageObject";
 import { useDispatch } from "react-redux";
@@ -8,8 +8,6 @@ import { useDispatch } from "react-redux";
 const MessageCenter = () => {
 	const history = useHistory();
 	const dispatch = useDispatch();
-	// const messagelog = useState([]);
-	// const messageHistory = useRef([]);
 
 	const { sendMessage, lastMessage, readyState } = useWebSocket(
 		"ws://localhost:8000/"
@@ -22,50 +20,61 @@ const MessageCenter = () => {
 
 	const [prepMessage, setPrepMessage] = useState("");
 
-	const [messagelog, setMessagelog] = useState([]);
+	// gets chatroom message from persist store
+	const [messagelog, setMessagelog] = useState(
+		useSelector((state) => state.chatroom.messages)
+	);
 
-	var W3CWebSocket = require("websocket").w3cwebsocket;
+	useEffect(() => {
+		var W3CWebSocket = require("websocket").w3cwebsocket;
 
-	var client = new W3CWebSocket("ws://localhost:8000/", "echo-protocol");
+		var client = new W3CWebSocket("ws://localhost:8000/", "echo-protocol");
 
-	client.onerror = function () {
-		console.log("Connection Error");
-	};
+		client.onerror = function () {
+			console.log("Connection Error");
+		};
 
-	// sending random numbers to Express's websocket, then Express would output them
-	// this is optional for testing purposes
-	client.onopen = function () {
-		console.log("WebSocket Client Connected");
-		// function sendNumber() {
-		// 	// this is while the connection is open, it will continually keep sending messages
-		// 	// to visualize the flow
-		// 	if (client.readyState === client.OPEN) {
+		// sending random numbers to Express's websocket, then Express would output them
+		// this is optional for testing purposes
+		client.onopen = function () {
+			console.log("WebSocket Client Connected");
+			// function sendNumber() {
+			// 	// this is while the connection is open, it will continually keep sending messages
+			// 	// to visualize the flow
+			// 	if (client.readyState === client.OPEN) {
 
-		// 		var number = Math.round(Math.random() * 0xffffff);
-		// 		let sendInitialData = {
-		// 			dateSent: new Date(),
-		// 			clientMessage: number.toString()
-		// 		}
-		// 		// client.send(number.toString());
-		// 		client.send(JSON.stringify(sendInitialData))
-		// 		setTimeout(sendNumber, 10000);
-		// 	}
-		// }
-		// sendNumber();
-	};
+			// 		var number = Math.round(Math.random() * 0xffffff);
+			// 		let sendInitialData = {
+			// 			dateSent: new Date(),
+			// 			clientMessage: number.toString()
+			// 		}
+			// 		// client.send(number.toString());
+			// 		client.send(JSON.stringify(sendInitialData))
+			// 		setTimeout(sendNumber, 10000);
+			// 	}
+			// }
+			// sendNumber();
+		};
 
-	client.onclose = function () {
-		console.log("echo-protocol Client Closed");
-	};
+		client.onclose = function () {
+			console.log("echo-protocol Client Closed");
+		};
 
-	client.onmessage = function (e) {
-		e.preventDefault();
+		// basically same as lastmessage?
+		// client.onmessage = function (e) {
+		// 	e.preventDefault();
+		// 	console.log("Received from Server:", JSON.parse(e.data));
+		// };
+		// setMessagelog(previousMessagelog)
+	}, []);
 
-		if (typeof e.data === "string") {
-			console.log("Received from Server:", JSON.parse(e.data));
-			// setMessagelog([...messagelog, JSON.parse(e.data)])
+	useEffect(() => {
+		if (lastMessage !== null) {
+			let convertData = JSON.parse(lastMessage.data);
+			setMessagelog([...messagelog, convertData]);
+			dispatch({ type: "chatroom/sendMessages", payload: convertData });
 		}
-	};
+	}, [lastMessage]);
 
 	if (!validAccount) {
 		history.push("/login-form");
@@ -83,24 +92,25 @@ const MessageCenter = () => {
 		let timestamp = Math.floor(Date.now() / 1000);
 
 		let convertData = new MessageObject(
+			username,
 			userEmail,
 			userPass,
-			username,
 			timestamp,
 			prepMessage
 		);
 
 		console.log("Data Sent to Server:", convertData);
-		// dispatch({ type: "chatroom/sendMessages", payload: convertData });
-
 		sendMessage(JSON.stringify(convertData));
 		setPrepMessage("");
 	};
 
 	const resetMessages = (e) => {
 		e.preventDefault();
+		// this removes directly from the persist store. But alone, this won't remove the HTML
 		dispatch({ type: "chatroom/clearMessages" });
-		// messageHistory.current = [null];
+
+		// this clears the messagelog so the UI would remove its HTML
+		setMessagelog([]);
 	};
 
 	return (
@@ -114,21 +124,26 @@ const MessageCenter = () => {
 				<div className="messageWindow">
 					{messagelog.map((message, idx) => {
 						// console.log("message:", message);
-						if (
-							message != null &&
-							typeof message.data === "string"
-						) {
-							return (
-								<p key={idx}>
-									{JSON.parse(message.data).clientMessage}
-								</p>
-							);
+						if (message !== null) {
+							if (message.email !== userEmail) {
+								console.log("Someone Else Said...");
+								return <p key={idx}>{message.clientMessage}</p>;
+							} else {
+								console.log("You Said...");
+								return (
+									<p key={idx} style={{ textAlign: "right" }}>
+										{message.clientMessage}
+									</p>
+								);
+							}
 						}
+						return null;
 					})}
 				</div>
 				<form
 					className="messageBox"
 					onSubmit={(e) => {
+						e.preventDefault();
 						if (prepMessage !== "") onFormSubmit(e, prepMessage);
 					}}
 				>
@@ -137,6 +152,7 @@ const MessageCenter = () => {
 						type="text"
 						value={prepMessage}
 						onChange={(e) => {
+							e.preventDefault();
 							setPrepMessage(e.target.value);
 						}}
 					/>
