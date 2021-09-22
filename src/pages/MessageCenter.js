@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import MessageObject from "../model/MessageObject";
 import { useDispatch } from "react-redux";
@@ -18,7 +18,8 @@ const MessageCenter = () => {
 	const userPass = useSelector((state) => state.auth.password);
 	const username = useSelector((state) => state.auth.username);
 
-	const [prepMessage, setPrepMessage] = useState("");
+	// const [prepMessage, setPrepMessage] = useState("");
+	const prepMessage = useRef(null);
 
 	// gets chatroom message from persist store
 	const [messagelog, setMessagelog] = useState(
@@ -71,6 +72,8 @@ const MessageCenter = () => {
 	useEffect(() => {
 		if (lastMessage !== null) {
 			let convertData = JSON.parse(lastMessage.data);
+			console.log("lastMessage:", convertData)
+			// setRenderMessages(true)
 			setMessagelog([...messagelog, convertData]);
 			dispatch({ type: "chatroom/sendMessages", payload: convertData });
 		}
@@ -88,6 +91,10 @@ const MessageCenter = () => {
 	const onFormSubmit = (e, message) => {
 		e.preventDefault();
 
+		const prepmessage = prepMessage.current
+		console.log(`${prepmessage['inputMessage'].value}`)
+		const currentPrepMessageValue = prepmessage['inputMessage'].value
+
 		// UNIX timestamp
 		let timestamp = Math.floor(Date.now() / 1000);
 
@@ -96,12 +103,13 @@ const MessageCenter = () => {
 			userEmail,
 			userPass,
 			timestamp,
-			prepMessage
+			currentPrepMessageValue
 		);
 
 		console.log("Data Sent to Server:", convertData);
 		sendMessage(JSON.stringify(convertData));
-		setPrepMessage("");
+		prepmessage['inputMessage'].value = ""
+	
 	};
 
 	const resetMessages = (e) => {
@@ -145,16 +153,16 @@ const MessageCenter = () => {
 					onSubmit={(e) => {
 						e.preventDefault();
 						if (prepMessage !== "") onFormSubmit(e, prepMessage);
+						// if (prepMessage.current !== "") onFormSubmit(e, prepMessage.current);
+
 					}}
+					ref={prepMessage}
+
 				>
 					<input
 						className="messageInputBox"
 						type="text"
-						value={prepMessage}
-						onChange={(e) => {
-							e.preventDefault();
-							setPrepMessage(e.target.value);
-						}}
+						name={"inputMessage"}
 					/>
 					<button className="chatSendButton" type="submit">
 						Send
