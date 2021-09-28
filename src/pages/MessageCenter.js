@@ -72,7 +72,7 @@ const MessageCenter = () => {
 	useEffect(() => {
 		if (lastMessage !== null) {
 			let convertData = JSON.parse(lastMessage.data);
-			console.log("lastMessage:", convertData)
+			console.log("lastMessage:", convertData);
 			// setRenderMessages(true)
 			setMessagelog([...messagelog, convertData]);
 			dispatch({ type: "chatroom/sendMessages", payload: convertData });
@@ -91,9 +91,15 @@ const MessageCenter = () => {
 	const onFormSubmit = (e, message) => {
 		e.preventDefault();
 
-		const prepmessage = prepMessage.current
-		console.log(`${prepmessage['inputMessage'].value}`)
-		const currentPrepMessageValue = prepmessage['inputMessage'].value
+		const prepmessage = prepMessage.current;
+		// the reason why they needed the ex. ['inputMessage'] is because useRef() is used on the form and this name of the input is nested.
+		// therefore like a tree or node or nested object, you need to access it by its name
+		console.log(
+			"prepmessage['inputMessage']:",
+			prepmessage["inputMessage"]
+		);
+		console.log(`${prepmessage["inputMessage"].value}`);
+		const currentPrepMessageValue = prepmessage["inputMessage"].value;
 
 		// UNIX timestamp
 		let timestamp = Math.floor(Date.now() / 1000);
@@ -108,8 +114,7 @@ const MessageCenter = () => {
 
 		console.log("Data Sent to Server:", convertData);
 		sendMessage(JSON.stringify(convertData));
-		prepmessage['inputMessage'].value = ""
-	
+		prepmessage["inputMessage"].value = "";
 	};
 
 	const resetMessages = (e) => {
@@ -134,10 +139,10 @@ const MessageCenter = () => {
 						// console.log("message:", message);
 						if (message !== null) {
 							if (message.email !== userEmail) {
-								console.log("Someone Else Said...");
+								// console.log("Someone Else Said...");
 								return <p key={idx}>{message.clientMessage}</p>;
 							} else {
-								console.log("You Said...");
+								// console.log("You Said...");
 								return (
 									<p key={idx} style={{ textAlign: "right" }}>
 										{message.clientMessage}
@@ -154,10 +159,8 @@ const MessageCenter = () => {
 						e.preventDefault();
 						if (prepMessage !== "") onFormSubmit(e, prepMessage);
 						// if (prepMessage.current !== "") onFormSubmit(e, prepMessage.current);
-
 					}}
 					ref={prepMessage}
-
 				>
 					<input
 						className="messageInputBox"

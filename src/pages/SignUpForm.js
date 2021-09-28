@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import "../index.css";
 import "../components/messageBox.css";
 import { useHistory } from "react-router-dom";
@@ -8,12 +8,31 @@ import { useSelector } from "react-redux";
 
 const SignUpForm = () => {
 	// track the user input
-	const [creatingCred, setCreatingCred] = useState({
-		username: "",
-		email: "",
-		password: "",
-		confirmPassword: "",
-	});
+	// const [creatingCred, setCreatingCred] = useState({
+	// 	username: "",
+	// 	email: "",
+	// 	password: "",
+	// 	confirmPassword: "",
+	// });
+
+	// const creatingCred = {
+	// 	username: "",
+	// 	email: "",
+	// 	password: "",
+	// 	confirmPassword: "",
+	// };
+
+	const userName = useRef(null);
+	const userEmail = useRef(null);
+	const userPass = useRef(null);
+	const userConPass = useRef(null);
+
+	// const creatingCred = {
+	// 	username: userName.current.value,
+	// 	email: userEmail.current.value,
+	// 	password: userPass.current.value,
+	// 	confirmPassword: userConPass.current.value,
+	// };
 
 	const history = useHistory();
 
@@ -30,6 +49,17 @@ const SignUpForm = () => {
 	const createAccount = (e) => {
 		e.preventDefault();
 
+		// console.log(userName.current.value, userEmail.current.value, userPass.current.value, userConPass.current.value);
+		const creatingCred = {
+			username: userName.current.value,
+			email: userEmail.current.value,
+			password: userPass.current.value,
+			confirmPassword: userConPass.current.value,
+		};
+
+		console.log("Creating Account using:", creatingCred);
+
+		// return;
 		if (creatingCred.password === creatingCred.confirmPassword) {
 			// UNIX timestamp
 			let timestamp = Math.floor(Date.now() / 1000);
@@ -73,6 +103,8 @@ const SignUpForm = () => {
 		}
 	};
 
+	// console.log("Re-rendering...");
+
 	return (
 		<div className="App">
 			<form onSubmit={createAccount}>
@@ -89,14 +121,7 @@ const SignUpForm = () => {
 							type="text"
 							name="name"
 							id="name"
-							onChange={(e) => {
-								setCreatingCred({
-									...creatingCred,
-									username: e.target.value,
-								});
-								console.log("Typing Username:", e.target.value);
-							}}
-							value={creatingCred.username}
+							ref={userName}
 							required
 						/>
 					</div>
@@ -106,14 +131,7 @@ const SignUpForm = () => {
 							type="email"
 							name="email"
 							id="email"
-							onChange={(e) => {
-								setCreatingCred({
-									...creatingCred,
-									email: e.target.value,
-								});
-								console.log("Typing Email:", e.target.value);
-							}}
-							value={creatingCred.email}
+							ref={userEmail}
 							required
 						/>
 					</div>
@@ -123,14 +141,7 @@ const SignUpForm = () => {
 							type="password"
 							name="password"
 							id="password"
-							onChange={(e) => {
-								setCreatingCred({
-									...creatingCred,
-									password: e.target.value,
-								});
-								console.log("Typing Password:", e.target.value);
-							}}
-							value={creatingCred.password}
+							ref={userPass}
 							required
 						/>
 					</div>
@@ -140,17 +151,7 @@ const SignUpForm = () => {
 							type="password"
 							name="password"
 							id="confirmPassword"
-							onChange={(e) => {
-								setCreatingCred({
-									...creatingCred,
-									confirmPassword: e.target.value,
-								});
-								console.log(
-									"Typing confirmPassword:",
-									e.target.value
-								);
-							}}
-							value={creatingCred.confirmPassword}
+							ref={userConPass}
 							required
 						/>
 					</div>
@@ -158,7 +159,15 @@ const SignUpForm = () => {
 					<input
 						type="submit"
 						className="signupButton"
-						onClick={() => createAccount}
+						// onClick={(e) => {
+						// 	const creatingCred = {
+						// 		username: userName.current.value,
+						// 		email: userEmail.current.value,
+						// 		password: userPass.current.value,
+						// 		confirmPassword: userConPass.current.value,
+						// 	};
+						// 	createAccount(e, creatingCred);
+						// }}
 						value="Create Account"
 					/>
 					<input
@@ -166,13 +175,7 @@ const SignUpForm = () => {
 						type="button"
 						value="Back to Login"
 						onClick={() => {
-							// console.log("Going back to login...");
-							setCreatingCred({
-								username: "",
-								email: "",
-								password: "",
-								confirmPassword: "",
-							});
+							console.log("Going back to login...");
 							history.push("/login-form");
 						}}
 					/>

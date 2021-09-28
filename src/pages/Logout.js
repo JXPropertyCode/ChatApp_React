@@ -5,7 +5,7 @@ const Logout = () => {
 	const history = useHistory();
 	const validAccount = useSelector((state) => state.auth.accountVerified);
 
-	console.log("validAccount:", validAccount)
+	console.log("validAccount:", validAccount);
 
 	if (!validAccount) {
 		history.push("/login-form");
@@ -14,11 +14,12 @@ const Logout = () => {
 	const dispatch = useDispatch();
 
 	// dispatch({ type: "auth/logout" });
-
-	setTimeout(() => {
-		dispatch({ type: "auth/logout" });
-		history.push("/login-form");
-	}, 3000);
+	if (validAccount === true) {
+		setTimeout(() => {
+			dispatch({ type: "auth/logout" });
+			history.push("/login-form");
+		}, 3000);
+	}
 
 	return (
 		<div>

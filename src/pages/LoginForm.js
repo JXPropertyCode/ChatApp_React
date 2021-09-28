@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
@@ -18,14 +18,8 @@ const LoginForm = () => {
 
 	const [invalidCred, setInvalidCred] = useState(false);
 
-	const [inputCred, setInputCred] = useState({
-		email: "",
-		password: "",
-	});
-
-	if (validAccount) {
-		history.push('/message-center')
-	}
+	const emailCred = useRef(null);
+	const passCred = useRef(null);
 
 	const login = (inputCred) => {
 		// console.log("Pressed Log In using Cred:", inputCred);
@@ -36,9 +30,12 @@ const LoginForm = () => {
 				if (res.data.validCred === "true") {
 					console.log("Success! Account Found:", inputCred);
 
-					// I added the username from the database back to the inputCred so the Store has the username
+					// I added a new key and value to teh inputcred, the username is from the database and inserted to the inputCred so the Store has the username of the user
 					inputCred.username = res.data.username;
-					console.log("res.data.username:", res.data.username);
+					console.log(
+						"res.data.username found in database:",
+						res.data.username
+					);
 
 					setInvalidCred(false);
 					dispatch({ type: "auth/login", payload: inputCred });
@@ -57,8 +54,22 @@ const LoginForm = () => {
 	const submitHandler = (e) => {
 		// prevent re-renders
 		e.preventDefault();
+		const inputCred = {
+			email: emailCred.current.value,
+			password: passCred.current.value,
+		};
+
+		// doesn't need ex. emailCred.current['email'].value to access the value since its useRef() is not nested on a Form like MessageCenter's prepmessage
+		console.log("inputCred to Login:", inputCred);
+
 		login(inputCred);
 	};
+
+	// console.log("Re-rendering...");
+
+	if (validAccount) {
+		history.push("/message-center");
+	}
 
 	return (
 		<div className="App">
@@ -78,14 +89,8 @@ const LoginForm = () => {
 							type="email"
 							name="email"
 							id="email"
-							onChange={(e) => {
-								setInputCred({
-									...inputCred,
-									email: e.target.value,
-								});
-								console.log("Typing Email:", e.target.value);
-							}}
-							value={inputCred.email}
+							ref={emailCred}
+							required
 						/>
 					</div>
 					<div className="form-group">
@@ -94,14 +99,8 @@ const LoginForm = () => {
 							type="password"
 							name="password"
 							id="password"
-							onChange={(e) => {
-								setInputCred({
-									...inputCred,
-									password: e.target.value,
-								});
-								console.log("Typing Password:", e.target.value);
-							}}
-							value={inputCred.password}
+							ref={passCred}
+							required
 						/>
 					</div>
 
@@ -111,10 +110,6 @@ const LoginForm = () => {
 						type="button"
 						className="signupButton"
 						onClick={() => {
-							setInputCred({
-								email: "",
-								password: "",
-							});
 							history.push("/signup-form");
 						}}
 						value="SIGN UP"
