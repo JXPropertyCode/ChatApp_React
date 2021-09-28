@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -68,7 +68,8 @@ const LoginForm = () => {
 	// console.log("Re-rendering...");
 
 	if (validAccount) {
-		history.push("/message-center");
+		// history.push("/message-center");
+		return <Redirect to="/message-center" />;
 	}
 
 	return (

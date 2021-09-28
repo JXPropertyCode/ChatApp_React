@@ -1,4 +1,4 @@
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const LoginSuccess = () => {
@@ -7,7 +7,8 @@ const LoginSuccess = () => {
 	const username = useSelector((state) => state.auth.username);
 
 	if (!validAccount) {
-		history.push("/login-form");
+		// history.push("/login-form");
+		return <Redirect to="/login-form" />;
 	}
 
 	setTimeout(() => history.push("/message-center"), 3000);

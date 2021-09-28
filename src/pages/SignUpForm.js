@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import "../index.css";
 import "../components/messageBox.css";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import AccountObject from "../model/AccountObject";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -43,7 +43,8 @@ const SignUpForm = () => {
 	const [credEmailError, setCredEmailError] = useState(false);
 
 	if (validAccount) {
-		history.push("/message-center");
+		// history.push("/message-center");
+		return <Redirect to="/message-center" />
 	}
 
 	const createAccount = (e) => {

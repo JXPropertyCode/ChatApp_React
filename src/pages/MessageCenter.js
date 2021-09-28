@@ -1,4 +1,4 @@
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState, useEffect, useRef } from "react";
 import useWebSocket, { ReadyState } from "react-use-websocket";
@@ -80,7 +80,8 @@ const MessageCenter = () => {
 	}, [lastMessage]);
 
 	if (!validAccount) {
-		history.push("/login-form");
+		// history.push("/login-form");
+		return <Redirect to="/login-form" />;
 	}
 
 	const logoutButton = () => {
