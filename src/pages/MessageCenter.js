@@ -26,6 +26,34 @@ const MessageCenter = () => {
 		useSelector((state) => state.chatroom.messages)
 	);
 
+	// to detect when to scroll
+	const messagesEndRef = useRef(null);
+
+	const scrollToBottom = () => {
+		// if the behavior is "smooth", it cannot catch up to fast messages
+		messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
+	};
+
+	// const [scrollPos, setScrollPos] = useState(0);
+	const scrollRef = useRef(null);
+	const [bottomOfPage, setBottomOfPage] = useState(false);
+
+	const onScroll = (e) => {
+		// detects if youre at the bottom of the page
+		if (
+			e.target.scrollHeight - e.target.scrollTop ===
+			e.target.clientHeight
+		) {
+			console.log(
+				"you're at the bottom of the page:",
+				e.target.clientHeight
+			);
+			setBottomOfPage(true);
+		} else {
+			setBottomOfPage(false);
+		}
+	};
+
 	useEffect(() => {
 		var W3CWebSocket = require("websocket").w3cwebsocket;
 
@@ -61,12 +89,8 @@ const MessageCenter = () => {
 			console.log("echo-protocol Client Closed");
 		};
 
-		// basically same as lastmessage?
-		// client.onmessage = function (e) {
-		// 	e.preventDefault();
-		// 	console.log("Received from Server:", JSON.parse(e.data));
-		// };
-		// setMessagelog(previousMessagelog)
+		// scrolls to the bottom of the messages when logging in
+		scrollToBottom();
 	}, []);
 
 	useEffect(() => {
@@ -77,7 +101,14 @@ const MessageCenter = () => {
 			setMessagelog([...messagelog, convertData]);
 			dispatch({ type: "chatroom/sendMessages", payload: convertData });
 		}
+		// scrollToBottom();
 	}, [lastMessage]);
+
+	useEffect(() => {
+		if (bottomOfPage) {
+			scrollToBottom();
+		}
+	}, [messagelog]);
 
 	if (!validAccount) {
 		// history.push("/login-form");
@@ -95,12 +126,18 @@ const MessageCenter = () => {
 		const prepmessage = prepMessage.current;
 		// the reason why they needed the ex. ['inputMessage'] is because useRef() is used on the form and this name of the input is nested.
 		// therefore like a tree or node or nested object, you need to access it by its name
-		console.log(
-			"prepmessage['inputMessage']:",
-			prepmessage["inputMessage"]
-		);
-		console.log(`${prepmessage["inputMessage"].value}`);
 		const currentPrepMessageValue = prepmessage["inputMessage"].value;
+
+		// prevent empty strings from being sent
+		if (currentPrepMessageValue === "") {
+			return;
+		}
+
+		// console.log(
+		// 	"prepmessage['inputMessage']:",
+		// 	prepmessage["inputMessage"]
+		// );
+		// console.log(`${prepmessage["inputMessage"].value}`);
 
 		// UNIX timestamp
 		let timestamp = Math.floor(Date.now() / 1000);
@@ -135,13 +172,21 @@ const MessageCenter = () => {
 			</div>
 			<div className="chatDisplay">
 				{/* onFormSubmit() mechanism enables you to click the input box and pressing enter would trigger it only */}
-				<div className="messageWindow">
+				<div
+					className="messageWindow"
+					ref={scrollRef}
+					onScroll={onScroll}
+				>
 					{messagelog.map((message, idx) => {
 						// console.log("message:", message);
 						if (message !== null) {
 							if (message.email !== userEmail) {
 								// console.log("Someone Else Said...");
-								return <p key={idx}>{message.clientMessage}</p>;
+								return (
+									<p key={idx} style={{ textAlign: "left" }}>
+										{message.clientMessage}
+									</p>
+								);
 							} else {
 								// console.log("You Said...");
 								return (
@@ -151,8 +196,8 @@ const MessageCenter = () => {
 								);
 							}
 						}
-						return null;
 					})}
+					<div ref={messagesEndRef} />
 				</div>
 				<form
 					className="messageBox"
