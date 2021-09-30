@@ -26,6 +26,9 @@ const MessageCenter = () => {
 		useSelector((state) => state.chatroom.messages)
 	);
 
+	// gets the draft message
+	let draftMessage = useSelector((state) => state.chatroom.draftMessage);
+
 	// to detect when to scroll
 	const messagesEndRef = useRef(null);
 
@@ -97,11 +100,9 @@ const MessageCenter = () => {
 		if (lastMessage !== null) {
 			let convertData = JSON.parse(lastMessage.data);
 			console.log("lastMessage:", convertData);
-			// setRenderMessages(true)
 			setMessagelog([...messagelog, convertData]);
 			dispatch({ type: "chatroom/sendMessages", payload: convertData });
 		}
-		// scrollToBottom();
 	}, [lastMessage]);
 
 	useEffect(() => {
@@ -133,6 +134,13 @@ const MessageCenter = () => {
 			return;
 		}
 
+		draftMessage = "";
+		dispatch({
+			type: "chatroom/draftMessage",
+			payload:
+				"",
+		});
+		console.log("DraftMessage is now empty")
 		// console.log(
 		// 	"prepmessage['inputMessage']:",
 		// 	prepmessage["inputMessage"]
@@ -196,6 +204,7 @@ const MessageCenter = () => {
 								);
 							}
 						}
+						return null;
 					})}
 					<div ref={messagesEndRef} />
 				</div>
@@ -204,7 +213,6 @@ const MessageCenter = () => {
 					onSubmit={(e) => {
 						e.preventDefault();
 						if (prepMessage !== "") onFormSubmit(e, prepMessage);
-						// if (prepMessage.current !== "") onFormSubmit(e, prepMessage.current);
 					}}
 					ref={prepMessage}
 				>
@@ -212,6 +220,15 @@ const MessageCenter = () => {
 						className="messageInputBox"
 						type="text"
 						name={"inputMessage"}
+						value={draftMessage}
+						onChange={() => {
+							dispatch({
+								type: "chatroom/draftMessage",
+								payload:
+									prepMessage.current["inputMessage"].value,
+							});
+							// draftMessage = prepMessage.current["inputMessage"].value
+						}}
 					/>
 					<button className="chatSendButton" type="submit">
 						Send

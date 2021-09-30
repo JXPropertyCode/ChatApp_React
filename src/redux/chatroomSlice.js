@@ -4,9 +4,14 @@ const chatroomSlice = createSlice({
 	name: "chatroom",
 	initialState: {
 		room_id: "1999",
+		draftMessage: "",
 		messages: [],
 	},
 	reducers: {
+		draftMessage: (state, {type, payload}) => {
+			console.log("Saving Draft Message:", payload)
+			state.draftMessage = payload
+		},
 		sendMessages: (state, { type, payload }) => {
 			// state.messages = state.chatInfo.push({
 			// 	timestamp: payload.timestamp,
@@ -27,6 +32,7 @@ const chatroomSlice = createSlice({
 	},
 });
 
+export const draftMessage = chatroomSlice.actions.draftMessage;
 export const sendMessages = chatroomSlice.actions.sendMessages;
 export const clearMessages = chatroomSlice.actions.clearMessages;
 
