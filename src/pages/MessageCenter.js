@@ -140,7 +140,8 @@ const MessageCenter = () => {
 			payload:
 				"",
 		});
-		console.log("DraftMessage is now empty")
+		// console.log("DraftMessage is now empty")
+		
 		// console.log(
 		// 	"prepmessage['inputMessage']:",
 		// 	prepmessage["inputMessage"]
@@ -227,7 +228,6 @@ const MessageCenter = () => {
 								payload:
 									prepMessage.current["inputMessage"].value,
 							});
-							// draftMessage = prepMessage.current["inputMessage"].value
 						}}
 					/>
 					<button className="chatSendButton" type="submit">
