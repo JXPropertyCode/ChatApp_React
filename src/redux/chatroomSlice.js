@@ -24,7 +24,16 @@ const chatroomSlice = createSlice({
 			// 	message: payload.message,
 			// }];
             console.log("incoming payload:", payload)
-            state.messages = [...state.messages, payload];
+
+			
+			if (Array.isArray(payload)) {
+				// initalization getting message data from database and inserting it into the message array to be read
+				state.messages = [...payload];
+			} else {
+				// messages that are being sent after messages are retrieved from server
+				state.messages = [...state.messages, payload];
+			}
+
 		},
         clearMessages: (state) => {
             state.messages = []

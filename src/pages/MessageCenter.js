@@ -92,8 +92,19 @@ const MessageCenter = () => {
 			console.log("echo-protocol Client Closed");
 		};
 
+		// // this removes directly from the persist store. But alone, this won't remove the HTML
+		// dispatch({ type: "chatroom/clearMessages" });
+
+		// // this clears the messagelog so the UI would remove its HTML
+		// setMessagelog([]);
+
+		// dispatch to middleware
+		dispatch({ type: "FETCH_MESSAGES" });
+
 		// scrolls to the bottom of the messages when logging in
 		scrollToBottom();
+
+		// optional return function can be here to process a cleanup
 	}, []);
 
 	useEffect(() => {
@@ -137,11 +148,10 @@ const MessageCenter = () => {
 		draftMessage = "";
 		dispatch({
 			type: "chatroom/draftMessage",
-			payload:
-				"",
+			payload: "",
 		});
 		// console.log("DraftMessage is now empty")
-		
+
 		// console.log(
 		// 	"prepmessage['inputMessage']:",
 		// 	prepmessage["inputMessage"]
