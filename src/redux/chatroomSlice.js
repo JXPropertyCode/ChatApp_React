@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const chatroomSlice = createSlice({
 	name: "chatroom",
 	initialState: {
-		room_id: "1999",
+		room_id: "5000",
 		draftMessage: "",
 		messages: [],
 	},

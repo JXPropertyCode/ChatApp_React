@@ -6,13 +6,15 @@ import moment from "moment";
 // };
 
 class MessageObject {
+	room_id;
 	username;
 	email;
 	password;
 	timestamp;
 	clientMessage;
 
-	constructor(username, email, password, timestamp, clientMessage) {
+	constructor(room_id, username, email, password, timestamp, clientMessage) {
+		this.room_id = String(room_id);
 		this.username = String(username);
 		this.email = String(email);
 		this.password = String(password);
