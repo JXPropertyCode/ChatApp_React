@@ -7,7 +7,6 @@ const LoginSuccess = () => {
 	const username = useSelector((state) => state.auth.username);
 
 	if (!validAccount) {
-		// history.push("/login-form");
 		return <Redirect to="/login-form" />;
 	}
 

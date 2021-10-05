@@ -5,11 +5,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
 const LoginForm = () => {
-	// usually this should be stored in a server/DB
-	// const adminUser = {
-	// 	email: "admin@admin.com",
-	// 	password: "123",
-	// };
+	
 	const validAccount = useSelector((state) => state.auth.accountVerified);
 
 	const dispatch = useDispatch();
@@ -22,7 +18,6 @@ const LoginForm = () => {
 	const passCred = useRef(null);
 
 	const login = (inputCred) => {
-		// console.log("Pressed Log In using Cred:", inputCred);
 
 		axios
 			.post("http://192.168.4.24:8000/login-validation", inputCred)
@@ -39,10 +34,8 @@ const LoginForm = () => {
 
 					setInvalidCred(false);
 					dispatch({ type: "auth/login", payload: inputCred });
-					// dispatch({ type: "auth/outputData" });
 					history.push("/login-success");
 				} else {
-					// console.log("Error! Account Doesn't Exist...");
 					setInvalidCred(true);
 				}
 			})
@@ -65,10 +58,7 @@ const LoginForm = () => {
 		login(inputCred);
 	};
 
-	// console.log("Re-rendering...");
-
 	if (validAccount) {
-		// history.push("/message-center");
 		return <Redirect to="/message-center" />;
 	}
 

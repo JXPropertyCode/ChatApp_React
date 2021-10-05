@@ -7,50 +7,25 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 const SignUpForm = () => {
-	// track the user input
-	// const [creatingCred, setCreatingCred] = useState({
-	// 	username: "",
-	// 	email: "",
-	// 	password: "",
-	// 	confirmPassword: "",
-	// });
-
-	// const creatingCred = {
-	// 	username: "",
-	// 	email: "",
-	// 	password: "",
-	// 	confirmPassword: "",
-	// };
-
 	const userName = useRef(null);
 	const userEmail = useRef(null);
 	const userPass = useRef(null);
 	const userConPass = useRef(null);
 
-	// const creatingCred = {
-	// 	username: userName.current.value,
-	// 	email: userEmail.current.value,
-	// 	password: userPass.current.value,
-	// 	confirmPassword: userConPass.current.value,
-	// };
-
 	const history = useHistory();
 
 	const validAccount = useSelector((state) => state.auth.accountVerified);
 
-	// const [accountCreated, setAccountCreated] = useState(false);
 	const [credPassError, setCredPassError] = useState(false);
 	const [credEmailError, setCredEmailError] = useState(false);
 
 	if (validAccount) {
-		// history.push("/message-center");
 		return <Redirect to="/message-center" />
 	}
 
 	const createAccount = (e) => {
 		e.preventDefault();
 
-		// console.log(userName.current.value, userEmail.current.value, userPass.current.value, userConPass.current.value);
 		const creatingCred = {
 			username: userName.current.value,
 			email: userEmail.current.value,
@@ -60,7 +35,6 @@ const SignUpForm = () => {
 
 		console.log("Creating Account using:", creatingCred);
 
-		// return;
 		if (creatingCred.password === creatingCred.confirmPassword) {
 			// UNIX timestamp
 			let timestamp = Math.floor(Date.now() / 1000);
@@ -72,8 +46,6 @@ const SignUpForm = () => {
 				timestamp
 			);
 
-			// console.log("Requested Account Cred:", convertData);
-
 			axios
 				.post("http://192.168.4.24:8000/signup", convertData)
 				.then((res) => {
@@ -84,14 +56,12 @@ const SignUpForm = () => {
 							pathname: "/account-created",
 							auth: true,
 						});
-						// setAccountCreated(true);
 					} else {
 						console.log(
 							"Error! Email Already Exists:",
 							convertData.email
 						);
 						setCredEmailError(true);
-						// setAccountCreated(false);
 					}
 				})
 				.catch((err) => {
@@ -99,12 +69,9 @@ const SignUpForm = () => {
 				});
 			setCredPassError(false);
 		} else {
-			// console.log("Create Account NOT Confirmed: Password Error");
 			setCredPassError(true);
 		}
 	};
-
-	// console.log("Re-rendering...");
 
 	return (
 		<div className="App">
@@ -113,8 +80,6 @@ const SignUpForm = () => {
 					<h2>Sign Up</h2>
 					{credEmailError && <h4>Email Has Already Been Taken!</h4>}
 					{credPassError && <h4>Your Passwords Do Not Match!</h4>}
-
-					{/* {accountCreated && <h4>Account Created!</h4>} */}
 
 					<div className="form-group">
 						<label htmlFor="name">Name:</label>
@@ -160,15 +125,6 @@ const SignUpForm = () => {
 					<input
 						type="submit"
 						className="signupButton"
-						// onClick={(e) => {
-						// 	const creatingCred = {
-						// 		username: userName.current.value,
-						// 		email: userEmail.current.value,
-						// 		password: userPass.current.value,
-						// 		confirmPassword: userConPass.current.value,
-						// 	};
-						// 	createAccount(e, creatingCred);
-						// }}
 						value="Create Account"
 					/>
 					<input

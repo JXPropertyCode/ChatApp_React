@@ -1,7 +1,7 @@
 import { useHistory, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState, useEffect, useRef } from "react";
-import useWebSocket, { ReadyState } from "react-use-websocket";
+import useWebSocket from "react-use-websocket";
 import MessageObject from "../model/MessageObject";
 import { useDispatch } from "react-redux";
 
@@ -9,7 +9,7 @@ const MessageCenter = () => {
 	const history = useHistory();
 	const dispatch = useDispatch();
 
-	const { sendMessage, lastMessage, readyState } = useWebSocket(
+	const { sendMessage, lastMessage } = useWebSocket(
 		"ws://localhost:8000/"
 	);
 
@@ -18,7 +18,6 @@ const MessageCenter = () => {
 	const userPass = useSelector((state) => state.auth.password);
 	const username = useSelector((state) => state.auth.username);
 
-	// const [prepMessage, setPrepMessage] = useState("");
 	const prepMessage = useRef(null);
 
 	// gets chatroom message from persist store
@@ -28,9 +27,9 @@ const MessageCenter = () => {
 
 	// gets the draft message
 	let draftMessage = useSelector((state) => state.chatroom.draftMessage);
-	const room_id = useSelector((state) => state.chatroom.room_id)
 
-	// console.log("room_id:", room_id, typeof(room_id))
+	// gets current chatroom id
+	const room_id = useSelector((state) => state.chatroom.room_id);
 
 	// to detect when to scroll
 	const messagesEndRef = useRef(null);
@@ -40,7 +39,6 @@ const MessageCenter = () => {
 		messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
 	};
 
-	// const [scrollPos, setScrollPos] = useState(0);
 	const scrollRef = useRef(null);
 	const [bottomOfPage, setBottomOfPage] = useState(false);
 
@@ -50,10 +48,6 @@ const MessageCenter = () => {
 			e.target.scrollHeight - e.target.scrollTop ===
 			e.target.clientHeight
 		) {
-			console.log(
-				"you're at the bottom of the page:",
-				e.target.clientHeight
-			);
 			setBottomOfPage(true);
 		} else {
 			setBottomOfPage(false);
@@ -95,11 +89,7 @@ const MessageCenter = () => {
 			console.log("echo-protocol Client Closed");
 		};
 
-		// // this removes directly from the persist store. But alone, this won't remove the HTML
-		// dispatch({ type: "chatroom/clearMessages" });
-
-		// // this clears the messagelog so the UI would remove its HTML
-		// setMessagelog([]);
+		console.log("UseEffect...");
 
 		// dispatch to middleware
 		dispatch({ type: "FETCH_MESSAGES" });
@@ -126,16 +116,14 @@ const MessageCenter = () => {
 	}, [messagelog]);
 
 	if (!validAccount) {
-		// history.push("/login-form");
 		return <Redirect to="/login-form" />;
 	}
 
 	const logoutButton = () => {
 		history.push("/logout");
-		// console.log("Pressed Logout");
 	};
 
-	const onFormSubmit = (e, message) => {
+	const onFormSubmit = (e) => {
 		e.preventDefault();
 
 		const prepmessage = prepMessage.current;
@@ -153,14 +141,7 @@ const MessageCenter = () => {
 			type: "chatroom/draftMessage",
 			payload: "",
 		});
-		// console.log("DraftMessage is now empty")
-
-		// console.log(
-		// 	"prepmessage['inputMessage']:",
-		// 	prepmessage["inputMessage"]
-		// );
-		// console.log(`${prepmessage["inputMessage"].value}`);
-
+		
 		// UNIX timestamp
 		let timestamp = Math.floor(Date.now() / 1000);
 
@@ -201,17 +182,14 @@ const MessageCenter = () => {
 					onScroll={onScroll}
 				>
 					{messagelog.map((message, idx) => {
-						// console.log("message:", message);
 						if (message !== null) {
 							if (message.email !== userEmail) {
-								// console.log("Someone Else Said...");
 								return (
 									<p key={idx} style={{ textAlign: "left" }}>
 										{message.clientMessage}
 									</p>
 								);
 							} else {
-								// console.log("You Said...");
 								return (
 									<p key={idx} style={{ textAlign: "right" }}>
 										{message.clientMessage}
@@ -227,7 +205,7 @@ const MessageCenter = () => {
 					className="messageBox"
 					onSubmit={(e) => {
 						e.preventDefault();
-						if (prepMessage !== "") onFormSubmit(e, prepMessage);
+						if (prepMessage !== "") onFormSubmit(e);
 					}}
 					ref={prepMessage}
 				>
