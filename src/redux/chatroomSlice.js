@@ -24,9 +24,9 @@ const chatroomSlice = createSlice({
 			}
 
 		},
-        clearMessages: (state) => {
-            state.messages = []
-        }
+        // clearMessages: (state) => {
+        //     state.messages = []
+        // }
 	},
 });
 

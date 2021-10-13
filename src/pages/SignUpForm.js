@@ -5,6 +5,7 @@ import { useHistory, Redirect } from "react-router-dom";
 import AccountObject from "../model/AccountObject";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import uuid from "react-native-uuid";
 
 const SignUpForm = () => {
 	const userName = useRef(null);
@@ -20,13 +21,14 @@ const SignUpForm = () => {
 	const [credEmailError, setCredEmailError] = useState(false);
 
 	if (validAccount) {
-		return <Redirect to="/message-center" />
+		return <Redirect to="/message-center" />;
 	}
 
 	const createAccount = (e) => {
 		e.preventDefault();
 
 		const creatingCred = {
+			userID: uuid.v4(),
 			username: userName.current.value,
 			email: userEmail.current.value,
 			password: userPass.current.value,
@@ -40,6 +42,7 @@ const SignUpForm = () => {
 			let timestamp = Math.floor(Date.now() / 1000);
 
 			let convertData = new AccountObject(
+				creatingCred.userID,
 				creatingCred.username,
 				creatingCred.email,
 				creatingCred.password,

@@ -6,15 +6,17 @@ import moment from "moment";
 // };
 
 class AccountObject {
+	userID;
 	username;
-    email;
-    password;
+	email;
+	password;
 	timestamp;
 
-	constructor(username, email, password, timestamp) {
+	constructor(userID, username, email, password, timestamp) {
+		this.userID = String(userID);
 		this.username = String(username);
-        this.email = String(email);
-        this.password = String(password)
+		this.email = String(email);
+		this.password = String(password);
 		this.timestamp = Number(timestamp);
 	}
 }

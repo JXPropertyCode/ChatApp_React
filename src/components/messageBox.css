@@ -22,11 +22,22 @@
 
 }
 
+.roomWindow {
+	overflow-y: scroll;
+	border: 1px solid #27213c;
+	display: flex;
+	width: 15%;
+	/* height: 600px; */
+	height: 82vh;
+	flex-direction: column;
+	padding: 5px 10px 5px 5px;
+}
+
 .messageWindow {
 	overflow-y: scroll;
 	border: 1px solid #27213c;
 	display: flex;
-	width: 90%;
+	width: 80%;
 	/* height: 600px; */
 	height: 82vh;
 	flex-direction: column;

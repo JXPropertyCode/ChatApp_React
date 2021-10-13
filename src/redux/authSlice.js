@@ -4,6 +4,7 @@ const authSlice = createSlice({
 	name: "auth",
 	initialState: {
 		accountVerified: false,
+		userID: "",
 		username: "",
 		email: "",
 		password: "",
@@ -11,6 +12,7 @@ const authSlice = createSlice({
 	reducers: {
 		login: (state, { type, payload }) => {
 			state.accountVerified = true;
+			state.userID = payload.userID;
 			state.username = payload.username;
 			state.email = payload.email;
 			state.password = payload.password;
@@ -25,6 +27,7 @@ const authSlice = createSlice({
 		},
 		outputData: (state) => {
 			console.log("state.accountVerified:", state.accountVerified);
+			console.log("state.userID:", state.userID);
 			console.log("state.email:", state.email);
 			console.log("state.password:", state.password);
 		},

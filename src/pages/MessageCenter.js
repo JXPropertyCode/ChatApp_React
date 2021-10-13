@@ -5,18 +5,18 @@ import useWebSocket from "react-use-websocket";
 import MessageObject from "../model/MessageObject";
 import { useDispatch } from "react-redux";
 
+
 const MessageCenter = () => {
 	const history = useHistory();
 	const dispatch = useDispatch();
 
-	const { sendMessage, lastMessage } = useWebSocket(
-		"ws://localhost:8000/"
-	);
+	const { sendMessage, lastMessage } = useWebSocket("ws://localhost:8000/");
 
 	const validAccount = useSelector((state) => state.auth.accountVerified);
 	const userEmail = useSelector((state) => state.auth.email);
 	const userPass = useSelector((state) => state.auth.password);
 	const username = useSelector((state) => state.auth.username);
+	const userID = useSelector((state) => state.auth.userID)
 
 	const prepMessage = useRef(null);
 
@@ -123,6 +123,10 @@ const MessageCenter = () => {
 		history.push("/logout");
 	};
 
+	const createRoom = () => {
+		console.log("Pressed Create Room Button");
+	};
+
 	const onFormSubmit = (e) => {
 		e.preventDefault();
 
@@ -141,12 +145,13 @@ const MessageCenter = () => {
 			type: "chatroom/draftMessage",
 			payload: "",
 		});
-		
+
 		// UNIX timestamp
 		let timestamp = Math.floor(Date.now() / 1000);
 
 		let convertData = new MessageObject(
 			room_id,
+			userID,
 			username,
 			userEmail,
 			userPass,
@@ -159,14 +164,15 @@ const MessageCenter = () => {
 		prepmessage["inputMessage"].value = "";
 	};
 
-	const resetMessages = (e) => {
-		e.preventDefault();
-		// this removes directly from the persist store. But alone, this won't remove the HTML
-		dispatch({ type: "chatroom/clearMessages" });
+	// const resetMessages = (e) => {
+	// 	e.preventDefault();
+	// 	// this removes directly from the persist store. But alone, this won't remove the HTML
+	// 	dispatch({ type: "chatroom/clearMessages" });
 
-		// this clears the messagelog so the UI would remove its HTML
-		setMessagelog([]);
-	};
+	// 	// this clears the messagelog so the UI would remove its HTML
+	// 	setMessagelog([]);
+	// };
+
 
 	return (
 		<div>
@@ -174,7 +180,14 @@ const MessageCenter = () => {
 				<h1>{username}'s Dashboard</h1>
 				<button onClick={logoutButton}>Logout Button</button>
 			</div>
+
 			<div className="chatDisplay">
+				{/* For displaying rooms */}
+				<div className="roomWindow">
+					<button onClick={createRoom}>Create Room Button</button>
+				</div>
+
+				{/* <div className="chatDisplay"> */}
 				{/* onFormSubmit() mechanism enables you to click the input box and pressing enter would trigger it only */}
 				<div
 					className="messageWindow"
@@ -225,9 +238,9 @@ const MessageCenter = () => {
 					<button className="chatSendButton" type="submit">
 						Send
 					</button>
-					<button className="chatSendButton" onClick={resetMessages}>
+					{/* <button className="chatSendButton" onClick={resetMessages}>
 						Clear
-					</button>
+					</button> */}
 				</form>
 			</div>
 		</div>

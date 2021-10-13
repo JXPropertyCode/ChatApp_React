@@ -23,10 +23,15 @@ const LoginForm = () => {
 			.post("http://192.168.4.24:8000/login-validation", inputCred)
 			.then((res) => {
 				if (res.data.validCred === "true") {
-					console.log("Success! Account Found:", inputCred);
+					// console.log("Success! Account Found:", inputCred);
 
+					console.log("res.data:", res.data)
 					// I added a new key and value to teh inputcred, the username is from the database and inserted to the inputCred so the Store has the username of the user
 					inputCred.username = res.data.username;
+					inputCred.userID = res.data.userID
+
+					console.log("Success! Account Found:", inputCred);
+
 					console.log(
 						"res.data.username found in database:",
 						res.data.username

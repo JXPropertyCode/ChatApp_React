@@ -11,6 +11,7 @@ const messagesMiddleware = (store) => (next) => (action) => {
 					let data = res.data[i];
 					let convertData = new MessageObject(
                         data.room_id,
+						data.userID,
 						data.username,
 						data.email,
 						data.password,
