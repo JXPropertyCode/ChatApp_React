@@ -29,6 +29,7 @@ const LoginForm = () => {
 					// I added a new key and value to teh inputcred, the username is from the database and inserted to the inputCred so the Store has the username of the user
 					inputCred.username = res.data.username;
 					inputCred.userID = res.data.userID
+					inputCred.chatrooms = [...res.data.chatrooms]
 
 					console.log("Success! Account Found:", inputCred);
 

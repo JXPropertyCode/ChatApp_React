@@ -7,13 +7,15 @@ import moment from "moment";
 
 class AccountObject {
 	userID;
+	chatrooms;
 	username;
 	email;
 	password;
 	timestamp;
 
-	constructor(userID, username, email, password, timestamp) {
+	constructor(userID, chatrooms, username, email, password, timestamp) {
 		this.userID = String(userID);
+		this.chatrooms = new Array(...chatrooms);
 		this.username = String(username);
 		this.email = String(email);
 		this.password = String(password);

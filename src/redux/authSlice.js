@@ -5,6 +5,7 @@ const authSlice = createSlice({
 	initialState: {
 		accountVerified: false,
 		userID: "",
+		chatrooms: [],
 		username: "",
 		email: "",
 		password: "",
@@ -13,6 +14,7 @@ const authSlice = createSlice({
 		login: (state, { type, payload }) => {
 			state.accountVerified = true;
 			state.userID = payload.userID;
+			state.chatrooms = [...payload.chatrooms];
 			state.username = payload.username;
 			state.email = payload.email;
 			state.password = payload.password;

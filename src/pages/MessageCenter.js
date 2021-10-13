@@ -5,7 +5,6 @@ import useWebSocket from "react-use-websocket";
 import MessageObject from "../model/MessageObject";
 import { useDispatch } from "react-redux";
 
-
 const MessageCenter = () => {
 	const history = useHistory();
 	const dispatch = useDispatch();
@@ -16,7 +15,7 @@ const MessageCenter = () => {
 	const userEmail = useSelector((state) => state.auth.email);
 	const userPass = useSelector((state) => state.auth.password);
 	const username = useSelector((state) => state.auth.username);
-	const userID = useSelector((state) => state.auth.userID)
+	const userID = useSelector((state) => state.auth.userID);
 
 	const prepMessage = useRef(null);
 
@@ -173,11 +172,11 @@ const MessageCenter = () => {
 	// 	setMessagelog([]);
 	// };
 
-
 	return (
 		<div>
 			<div>
 				<h1>{username}'s Dashboard</h1>
+				<p>userID: {userID}</p>
 				<button onClick={logoutButton}>Logout Button</button>
 			</div>
 
@@ -187,7 +186,6 @@ const MessageCenter = () => {
 					<button onClick={createRoom}>Create Room Button</button>
 				</div>
 
-				{/* <div className="chatDisplay"> */}
 				{/* onFormSubmit() mechanism enables you to click the input box and pressing enter would trigger it only */}
 				<div
 					className="messageWindow"

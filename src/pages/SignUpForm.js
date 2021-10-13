@@ -30,6 +30,7 @@ const SignUpForm = () => {
 		const creatingCred = {
 			userID: uuid.v4(),
 			username: userName.current.value,
+			chatrooms: new Array(),
 			email: userEmail.current.value,
 			password: userPass.current.value,
 			confirmPassword: userConPass.current.value,
@@ -43,6 +44,7 @@ const SignUpForm = () => {
 
 			let convertData = new AccountObject(
 				creatingCred.userID,
+				creatingCred.chatrooms,
 				creatingCred.username,
 				creatingCred.email,
 				creatingCred.password,
