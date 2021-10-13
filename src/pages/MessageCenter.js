@@ -29,7 +29,7 @@ const MessageCenter = () => {
 	let draftMessage = useSelector((state) => state.chatroom.draftMessage);
 
 	// gets current chatroom id
-	const room_id = useSelector((state) => state.chatroom.room_id);
+	const roomID = useSelector((state) => state.chatroom.roomID);
 
 	// to detect when to scroll
 	const messagesEndRef = useRef(null);
@@ -150,7 +150,7 @@ const MessageCenter = () => {
 		let timestamp = Math.floor(Date.now() / 1000);
 
 		let convertData = new MessageObject(
-			room_id,
+			roomID,
 			userID,
 			username,
 			userEmail,

@@ -6,7 +6,7 @@ import moment from "moment";
 // };
 
 class MessageObject {
-	room_id;
+	roomID;
 	userID;
 	username;
 	email;
@@ -15,7 +15,7 @@ class MessageObject {
 	clientMessage;
 
 	constructor(
-		room_id,
+		roomID,
 		userID,
 		username,
 		email,
@@ -23,7 +23,7 @@ class MessageObject {
 		timestamp,
 		clientMessage
 	) {
-		this.room_id = String(room_id);
+		this.roomID = String(roomID);
 		this.userID = String(userID);
 		this.username = String(username);
 		this.email = String(email);

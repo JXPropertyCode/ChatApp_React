@@ -10,7 +10,7 @@ const messagesMiddleware = (store) => (next) => (action) => {
 				for (let i = 0; i < res.data.length; i++) {
 					let data = res.data[i];
 					let convertData = new MessageObject(
-                        data.room_id,
+                        data.roomID,
 						data.userID,
 						data.username,
 						data.email,

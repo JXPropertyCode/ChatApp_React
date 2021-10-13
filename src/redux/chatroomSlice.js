@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import uuid from "react-native-uuid";
+
 
 const chatroomSlice = createSlice({
 	name: "chatroom",
 	initialState: {
-		room_id: "5000",
+		roomID: uuid.v4(),
 		draftMessage: "",
 		messages: [],
 	},
