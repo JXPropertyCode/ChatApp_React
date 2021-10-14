@@ -22,7 +22,7 @@
 
 }
 
-.roomWindow {
+.chatroomWindow {
 	overflow-y: scroll;
 	border: 1px solid #27213c;
 	display: flex;

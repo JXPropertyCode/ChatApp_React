@@ -41,6 +41,8 @@ const MessageCenter = () => {
 	const scrollRef = useRef(null);
 	const [bottomOfPage, setBottomOfPage] = useState(false);
 
+	const createChatRoomName = useRef(null);
+
 	const onScroll = (e) => {
 		// detects if youre at the bottom of the page
 		if (
@@ -122,8 +124,25 @@ const MessageCenter = () => {
 		history.push("/logout");
 	};
 
-	const createRoom = () => {
-		console.log("Pressed Create Room Button");
+	const removeExtraSpace = (s) => s.trim().split(/ +/).join(" ");
+
+	const createRoom = (e) => {
+		e.preventDefault();
+
+		// prevent white spaces from being used
+		let strFilter = removeExtraSpace(createChatRoomName.current.value);
+
+		if (strFilter.length === 0) {
+			console.log("Cannot Have Empty Spaces in Chat Room Name");
+		}
+
+		console.log(
+			"Creating Chat Room Name:",
+			createChatRoomName.current.value
+		);
+
+		// reset the input box value after submitting
+		createChatRoomName.current.value = "";
 	};
 
 	const onFormSubmit = (e) => {
@@ -172,6 +191,8 @@ const MessageCenter = () => {
 	// 	setMessagelog([]);
 	// };
 
+	console.log("Re-rendering...");
+
 	return (
 		<div>
 			<div>
@@ -182,8 +203,15 @@ const MessageCenter = () => {
 
 			<div className="chatDisplay">
 				{/* For displaying rooms */}
-				<div className="roomWindow">
-					<button onClick={createRoom}>Create Room Button</button>
+				<div className="chatroomWindow">
+					<form onSubmit={createRoom}>
+						<input
+							type="text"
+							name="name"
+							placeholder="Create Chat Room"
+							ref={createChatRoomName}
+						/>
+					</form>
 				</div>
 
 				{/* onFormSubmit() mechanism enables you to click the input box and pressing enter would trigger it only */}
