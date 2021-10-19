@@ -4,6 +4,8 @@ import { useState, useEffect, useRef } from "react";
 import useWebSocket from "react-use-websocket";
 import MessageObject from "../model/MessageObject";
 import { useDispatch } from "react-redux";
+import axios from "axios";
+
 
 const MessageCenter = () => {
 	const history = useHistory();
@@ -141,8 +143,47 @@ const MessageCenter = () => {
 			createChatRoomName.current.value
 		);
 
+
+		const inputCred = {
+			email: userEmail,
+			password: userPass,
+			chatroomName: createChatRoomName.current.value,
+		};
+
+		
+		axios
+		.post("http://192.168.4.24:8000/create-chatroom", inputCred)
+		.then((res) => {
+			if (res.data.validCred === "true") {
+				// console.log("Success! Account Found:", inputCred);
+
+				console.log("res.data:", res.data)
+
+				console.log("Success! Account Found:", inputCred);
+				// setInvalidCred(false);
+				// dispatch({ type: "auth/login", payload: inputCred });
+			} else {
+				// setInvalidCred(true);
+				console.log("Error in Creating a Chatroom")
+			}
+		})
+		.catch((err) => {
+			console.log("Error in Creating a Chatroom...")
+			console.error(err);
+		});
+
+
+
+
+
+
+
 		// reset the input box value after submitting
 		createChatRoomName.current.value = "";
+
+
+
+
 	};
 
 	const onFormSubmit = (e) => {
