@@ -28,7 +28,7 @@ const SignUpForm = () => {
 		e.preventDefault();
 
 		const creatingCred = {
-			userID: uuid.v4(),
+			// userID: uuid.v4(),
 			username: userName.current.value,
 			chatrooms: new Array(),
 			email: userEmail.current.value,
@@ -43,7 +43,7 @@ const SignUpForm = () => {
 			let timestamp = Math.floor(Date.now() / 1000);
 
 			let convertData = new AccountObject(
-				creatingCred.userID,
+				// creatingCred.userID,
 				creatingCred.chatrooms,
 				creatingCred.username,
 				creatingCred.email,
