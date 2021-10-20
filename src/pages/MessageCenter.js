@@ -156,7 +156,7 @@ const MessageCenter = () => {
 
 					console.log("res.data:", res.data);
 
-					console.log("Success! Account Found:", inputCred);
+					console.log("Success! Auth to Create a Chatroom...");
 					// setInvalidCred(false);
 					// dispatch({ type: "auth/login", payload: inputCred });
 				} else {
