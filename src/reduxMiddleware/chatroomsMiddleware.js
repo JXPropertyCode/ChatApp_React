@@ -12,10 +12,10 @@ const chatroomsMiddleware = (store) => (next) => (action) => {
 				let tempArr = [];
 				for (let i = 0; i < res.data.length; i++) {
 					let data = res.data[i];
-
 					// if (res.data[i].userID === userID) {
 					let convertData = new ChatroomObject(
                         data._id,
+						data.chatroomName,
 						data.creatorUserID,
 						data.members,
 						data.timestamp
@@ -23,9 +23,7 @@ const chatroomsMiddleware = (store) => (next) => (action) => {
 					tempArr.push(convertData);
 					// }
 				}
-
                 console.log("Chatrooms From Server:", tempArr)
-
 
 				// instead of using dispatch, which I can't use here, I can use next()
 				next({ type: "auth/setChatrooms", payload: tempArr });

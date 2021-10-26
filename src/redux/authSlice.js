@@ -29,10 +29,10 @@ const authSlice = createSlice({
 		},
 		// this is for replacing chatrooms from database when refreshing and if other people created it
 		// this is for resetting
-		// setChatrooms: (state, { type, payload }) => {
-		// 	// console.log("addChatrooms payload:", payload)
-		// 	state.chatrooms = [...payload]
-		// },
+		setChatrooms: (state, { type, payload }) => {
+			// console.log("addChatrooms payload:", payload)
+			state.chatrooms = [...payload]
+		},
 		createChatroom: (state, { type, payload }) => {
 			console.log("addChatrooms payload.chatroomCreated:", payload.chatroomCreated)
 			state.chatrooms = [...state.chatrooms, payload]
