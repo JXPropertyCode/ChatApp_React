@@ -5,6 +5,7 @@ import useWebSocket from "react-use-websocket";
 import MessageObject from "../model/MessageObject";
 import { useDispatch } from "react-redux";
 import axios from "axios";
+import ChatroomObject from "../model/ChatroomObject";
 
 const MessageCenter = () => {
 	const history = useHistory();
@@ -24,6 +25,10 @@ const MessageCenter = () => {
 	const [messagelog, setMessagelog] = useState(
 		useSelector((state) => state.chatroom.messages)
 	);
+
+	const chatrooms = useSelector((state) => state.auth.chatrooms);
+	// // const [chatrooms, setChatrooms] = useState(useSelector((state) => state.auth.chatrooms));
+	console.log("Chatrooms in Store:", chatrooms)
 
 	// gets the draft message
 	let draftMessage = useSelector((state) => state.chatroom.draftMessage);
@@ -94,7 +99,9 @@ const MessageCenter = () => {
 		console.log("UseEffect...");
 
 		// dispatch to middleware
+		dispatch({ type: "FETCH_CHATROOMS" });
 		dispatch({ type: "FETCH_MESSAGES" });
+
 
 		// scrolls to the bottom of the messages when logging in
 		scrollToBottom();
@@ -110,6 +117,15 @@ const MessageCenter = () => {
 			dispatch({ type: "chatroom/sendMessages", payload: convertData });
 		}
 	}, [lastMessage]);
+
+	// useEffect(() => {
+	// 	if (lastMessage !== null) {
+	// 		let convertData = JSON.parse(lastMessage.data);
+	// 		console.log("lastMessage:", convertData);
+	// 		setMessagelog([...messagelog, convertData]);
+	// 		dispatch({ type: "chatroom/sendMessages", payload: convertData });
+	// 	}
+	// }, [chatrooms]);
 
 	useEffect(() => {
 		if (bottomOfPage) {
@@ -135,6 +151,7 @@ const MessageCenter = () => {
 
 		if (strFilter.length === 0) {
 			console.log("Cannot Have Empty Spaces in Chat Room Name");
+			return
 		}
 
 		console.log(
@@ -144,7 +161,7 @@ const MessageCenter = () => {
 
 		const inputCred = {
 			userID: userID,
-			// chatroomName: createChatRoomName.current.value,
+			chatroomName: createChatRoomName.current.value,
 			timestamp: Math.floor(Date.now() / 1000),
 		};
 
@@ -157,10 +174,10 @@ const MessageCenter = () => {
 					console.log("res.data:", res.data);
 
 					console.log("Success! Auth to Create a Chatroom...");
-					// setInvalidCred(false);
-					// dispatch({ type: "auth/login", payload: inputCred });
+
+					// setChatrooms([...chatrooms, res.data.chatroomCreated])
+					dispatch({type: "auth/createChatroom", payload: new ChatroomObject(res.data.chatroomCreated, inputCred.chatroomName, userID, [userID], Date.now())})
 				} else {
-					// setInvalidCred(true);
 					console.log("Error in Creating a Chatroom");
 				}
 			})
@@ -240,6 +257,15 @@ const MessageCenter = () => {
 							ref={createChatRoomName}
 						/>
 					</form>
+
+					{chatrooms.map((chatroom, idx) => {
+						// console.log("Outputting Chatroom:", chatroom.chatroomID)
+						return (
+							<p key={idx}>
+								{chatroom.chatroomName}
+							</p>
+						);
+					})}
 				</div>
 
 				{/* onFormSubmit() mechanism enables you to click the input box and pressing enter would trigger it only */}

@@ -38,6 +38,8 @@ const LoginForm = () => {
 						res.data.username
 					);
 
+					console.log("Transferring Data onto Auth Store:", res.data)
+
 					setInvalidCred(false);
 					dispatch({ type: "auth/login", payload: inputCred });
 					history.push("/login-success");

@@ -1,5 +1,8 @@
 import axios from "axios";
 import MessageObject from "../model/MessageObject";
+import { useSelector } from "react-redux";
+
+// const userID = useSelector((state) => state.auth.userID);
 
 const messagesMiddleware = (store) => (next) => (action) => {
 	if (action.type === "FETCH_MESSAGES") {
@@ -9,16 +12,20 @@ const messagesMiddleware = (store) => (next) => (action) => {
 				let tempArr = [];
 				for (let i = 0; i < res.data.length; i++) {
 					let data = res.data[i];
+
+					// filter to messages to see which ones belong to the user
+					// if (res.data[i].userID === userID) {
 					let convertData = new MessageObject(
-                        data.roomID,
+						data.roomID,
 						data.userID,
 						data.username,
 						data.email,
 						data.password,
-                        data.timestamp,
-                        data.clientMessage
+						data.timestamp,
+						data.clientMessage
 					);
 					tempArr.push(convertData);
+					// }
 				}
 
 				// instead of using dispatch, which I can't use here, I can use next()

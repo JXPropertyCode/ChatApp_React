@@ -2,14 +2,15 @@ import { configureStore } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 import authSliceReducer from "./authSlice";
 import chatroomSliceReducer from "./chatroomSlice";
-import messagesMiddleware from "../reduxMiddleware/messagesMiddleware"
+import messagesMiddleware from "../reduxMiddleware/messagesMiddleware";
+import chatroomsMiddleware from "../reduxMiddleware/chatroomsMiddleware";
 
 import { combineReducers } from "redux";
 
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 import { persistReducer } from "redux-persist";
 
-const middlewares = [messagesMiddleware, logger];
+const middlewares = [chatroomsMiddleware, messagesMiddleware, logger];
 
 const rootReducer = combineReducers({
 	auth: authSliceReducer,
