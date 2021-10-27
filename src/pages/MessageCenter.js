@@ -17,15 +17,14 @@ const MessageCenter = () => {
 
 	return (
 		<div>
-			<div>
+			<header>
 				<h1>{username}'s Dashboard</h1>
 				<p>userID: {userID}</p>
 				<button onClick={logoutButton}>Logout Button</button>
-			</div>
+			</header>
 
 			<div className="chatDisplay">
 				<ChatroomLists></ChatroomLists>
-
 				<ChatroomMessages></ChatroomMessages>
 			</div>
 		</div>

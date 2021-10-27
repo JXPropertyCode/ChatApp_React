@@ -68,6 +68,11 @@ const ChatroomLists = () => {
 		// reset the input box value after submitting
 		createChatRoomName.current.value = "";
 	};
+
+	const clickedChatroom = (e, chatroom) => {
+		console.log("chatroom.chatroomID:", chatroom.chatroomID);
+	};
+
 	return (
 		<div className="chatroomWindow">
 			<form onSubmit={createRoom}>
@@ -78,11 +83,28 @@ const ChatroomLists = () => {
 					ref={createChatRoomName}
 				/>
 			</form>
+			<a href="https://images.wallpapersden.com/image/download/cybertruck_a2xsam2UmZqaraWkpJRobWllrWdma2U.jpg">
+				TestRoom
+			</a>
 
 			{chatrooms.map((chatroom, idx) => {
 				// console.log("Outputting Chatroom:", chatroom.chatroomID)
-				return <p key={idx}>{chatroom.chatroomName}</p>;
+				return (
+					<form>
+						<input
+							type="button"
+							key={idx}
+							value={chatroom.chatroomName}
+							onClick={(e) => clickedChatroom(e, chatroom)}
+						/>
+					</form>
+				);
 			})}
+
+			{/* {chatrooms.map((chatroom, idx) => {
+				// console.log("Outputting Chatroom:", chatroom.chatroomID)
+				return <p key={idx}>{chatroom.chatroomName}</p>;
+			})} */}
 		</div>
 	);
 };
