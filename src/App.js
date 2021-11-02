@@ -66,7 +66,11 @@ export default function App() {
 				<Route exact path="/login-form" component={LoginForm} />
 				<Route exact path="/signup-form" component={SignUpForm} />
 				{/* auth these login before letting access */}
-				<Route exact path="/message-center" component={MessageCenter} />
+
+				{/* if using exact path, the chatroom routes would result in Error 404 */}
+				<Route path="/message-center" component={MessageCenter} />
+				{/* <Route exact path="/message-center" component={MessageCenter} /> */}
+
 				<Route
 					exact
 					path="/account-created"
@@ -76,6 +80,7 @@ export default function App() {
 				<Route exact path="/logout" component={Logout} />
 				{/* always put the default '/' path to the end or else it would access it first thing */}
 				<Route exact path="/" component={LoginForm} />
+
 				{/* If no address matches, it will default to 404 error */}
 				<Route exact path="*" component={Error} />
 			</Switch>

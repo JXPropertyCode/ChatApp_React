@@ -1,10 +1,18 @@
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+// import { Link, Route, useRouteMatch, useLocation } from "react-router-dom";
+
 import { useRef } from "react";
 import axios from "axios";
 import ChatroomObject from "../model/ChatroomObject";
 
 const ChatroomLists = () => {
+	// const location = useLocation();
+	// console.log("location.pathname:", location.pathname);
+
+	// let { path, url } = useRouteMatch()
+	// console.log("Path:", path)
+	// console.log("url:", url)
+
 	const dispatch = useDispatch();
 	const createChatRoomName = useRef(null);
 
@@ -69,9 +77,9 @@ const ChatroomLists = () => {
 		createChatRoomName.current.value = "";
 	};
 
-	const clickedChatroom = (e, chatroom) => {
-		console.log("chatroom.chatroomID:", chatroom.chatroomID);
-	};
+	// const clickedChatroom = (e, chatroom) => {
+	// 	console.log("chatroom.chatroomID:", chatroom.chatroomID);
+	// };
 
 	return (
 		<div className="chatroomWindow">
@@ -83,28 +91,26 @@ const ChatroomLists = () => {
 					ref={createChatRoomName}
 				/>
 			</form>
-			<a href="https://images.wallpapersden.com/image/download/cybertruck_a2xsam2UmZqaraWkpJRobWllrWdma2U.jpg">
-				TestRoom
-			</a>
 
 			{chatrooms.map((chatroom, idx) => {
 				// console.log("Outputting Chatroom:", chatroom.chatroomID)
 				return (
-					<form>
-						<input
-							type="button"
-							key={idx}
-							value={chatroom.chatroomName}
-							onClick={(e) => clickedChatroom(e, chatroom)}
-						/>
-					</form>
+					<a
+						key={idx}
+						href={`/message-center/${chatroom.chatroomID}`}
+					>
+						{chatroom.chatroomName}
+					</a>
+					// <form>
+					// 	<input
+					// 		type="button"
+					// 		key={idx}
+					// 		value={chatroom.chatroomName}
+					// 		onClick={(e) => clickedChatroom(e, chatroom)}
+					// 	/>
+					// </form>
 				);
 			})}
-
-			{/* {chatrooms.map((chatroom, idx) => {
-				// console.log("Outputting Chatroom:", chatroom.chatroomID)
-				return <p key={idx}>{chatroom.chatroomName}</p>;
-			})} */}
 		</div>
 	);
 };
