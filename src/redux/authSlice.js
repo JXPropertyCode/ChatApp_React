@@ -5,7 +5,7 @@ const authSlice = createSlice({
 	initialState: {
 		accountVerified: false,
 		userID: "",
-		chatrooms: [],
+		// chatrooms: [],
 		username: "",
 		email: "",
 		password: "",
@@ -14,7 +14,7 @@ const authSlice = createSlice({
 		login: (state, { type, payload }) => {
 			state.accountVerified = true;
 			state.userID = payload.userID;
-			state.chatrooms = payload.chatrooms;
+			// state.chatrooms = payload.chatrooms;
 			state.username = payload.username;
 			state.email = payload.email;
 			state.password = payload.password;
@@ -29,14 +29,14 @@ const authSlice = createSlice({
 		},
 		// this is for replacing chatrooms from database when refreshing and if other people created it
 		// this is for resetting
-		setChatrooms: (state, { type, payload }) => {
-			// console.log("addChatrooms payload:", payload)
-			state.chatrooms = [...payload]
-		},
-		createChatroom: (state, { type, payload }) => {
-			console.log("addChatrooms payload.chatroomCreated:", payload.chatroomCreated)
-			state.chatrooms = [...state.chatrooms, payload]
-		},
+		// setChatrooms: (state, { type, payload }) => {
+		// 	// console.log("addChatrooms payload:", payload)
+		// 	state.chatrooms = [...payload]
+		// },
+		// createChatroom: (state, { type, payload }) => {
+		// 	console.log("addChatrooms payload.chatroomCreated:", payload.chatroomCreated)
+		// 	state.chatrooms = [...state.chatrooms, payload]
+		// },
 		outputData: (state) => {
 			console.log("state.accountVerified:", state.accountVerified);
 			console.log("state.userID:", state.userID);

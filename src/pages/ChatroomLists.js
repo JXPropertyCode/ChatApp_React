@@ -1,7 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 // import { Link, Route, useRouteMatch, useLocation } from "react-router-dom";
-
-import { useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import ChatroomObject from "../model/ChatroomObject";
 
@@ -17,7 +16,44 @@ const ChatroomLists = () => {
 	const createChatRoomName = useRef(null);
 
 	const userID = useSelector((state) => state.auth.userID);
-	const chatrooms = useSelector((state) => state.auth.chatrooms);
+	// const chatrooms = useSelector((state) => state.auth.chatrooms);
+
+	const [chatrooms, setChatrooms] = useState([]);
+
+	const getChatrooms = () => {
+		axios
+			.get("http://192.168.4.24:8000/chatrooms")
+			.then((res) => {
+				let tempArr = [];
+				for (let i = 0; i < res.data.length; i++) {
+					let data = res.data[i];
+					// if (res.data[i].userID === userID) {
+					let convertData = new ChatroomObject(
+						data._id,
+						data.chatroomName,
+						data.creatorUserID,
+						data.members,
+						data.timestamp
+					);
+					tempArr.push(convertData);
+					// }
+				}
+				console.log("Chatrooms From Server:", tempArr);
+				setChatrooms([...tempArr]);
+				return tempArr;
+				// instead of using dispatch, which I can't use here, I can use next()
+				// next({ type: "auth/setChatrooms", payload: tempArr });
+			})
+			.catch((e) => {
+				console.log("Error:", e);
+				return e;
+			});
+	};
+
+	useEffect(() => {
+		console.log("useEffect...");
+		getChatrooms();
+	}, []);
 
 	const removeExtraSpace = (s) => s.trim().split(/ +/).join(" ");
 
@@ -53,17 +89,26 @@ const ChatroomLists = () => {
 
 					console.log("Success! Auth to Create a Chatroom...");
 
-					// setChatrooms([...chatrooms, res.data.chatroomCreated])
-					dispatch({
-						type: "auth/createChatroom",
-						payload: new ChatroomObject(
+					setChatrooms([
+						...chatrooms,
+						new ChatroomObject(
 							res.data.chatroomCreated,
 							inputCred.chatroomName,
 							userID,
 							[userID],
 							Date.now()
 						),
-					});
+					]);
+					// dispatch({
+					// type: "auth/createChatroom",
+					// payload: new ChatroomObject(
+					// 	res.data.chatroomCreated,
+					// 	inputCred.chatroomName,
+					// 	userID,
+					// 	[userID],
+					// 	Date.now()
+					// ),
+					// });
 				} else {
 					console.log("Error in Creating a Chatroom");
 				}
@@ -83,7 +128,7 @@ const ChatroomLists = () => {
 
 	return (
 		<div className="chatroomWindow">
-			<form onSubmit={createRoom}>
+			<form onSubmit={(e) => createRoom(e)}>
 				<input
 					type="text"
 					name="name"

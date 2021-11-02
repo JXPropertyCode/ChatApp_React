@@ -101,7 +101,7 @@ const ChatroomMessages = () => {
 		console.log("UseEffect...");
 
 		// dispatch to middleware
-		dispatch({ type: "FETCH_CHATROOMS" });
+		// dispatch({ type: "FETCH_CHATROOMS" });
 
 
 		// dispatch({ type: "FETCH_MESSAGES" });
@@ -116,9 +116,9 @@ const ChatroomMessages = () => {
 
 	console.log("Current Message Log:", messagelog);
 
-	const chatrooms = useSelector((state) => state.auth.chatrooms);
+	// const chatrooms = useSelector((state) => state.auth.chatrooms);
 	// // const [chatrooms, setChatrooms] = useState(useSelector((state) => state.auth.chatrooms));
-	console.log("Chatrooms in Store:", chatrooms);
+	// console.log("Chatrooms in Store:", chatrooms);
 
 	// gets the draft message
 	let draftMessage = useSelector((state) => state.chatroom.draftMessage);
