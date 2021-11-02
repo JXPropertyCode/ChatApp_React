@@ -80,7 +80,7 @@ export default function App() {
 				<Route exact path="/logout" component={Logout} />
 				{/* always put the default '/' path to the end or else it would access it first thing */}
 				<Route exact path="/" component={LoginForm} />
-
+				
 				{/* If no address matches, it will default to 404 error */}
 				<Route exact path="*" component={Error} />
 			</Switch>

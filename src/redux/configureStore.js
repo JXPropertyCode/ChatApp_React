@@ -3,7 +3,7 @@ import logger from "redux-logger";
 import authSliceReducer from "./authSlice";
 import chatroomSliceReducer from "./chatroomSlice";
 // import messagesMiddleware from "../reduxMiddleware/messagesMiddleware";
-import chatroomsMiddleware from "../reduxMiddleware/chatroomsMiddleware";
+// import chatroomsMiddleware from "../reduxMiddleware/chatroomsMiddleware";
 
 import { combineReducers } from "redux";
 
@@ -12,7 +12,7 @@ import { persistReducer } from "redux-persist";
 
 // const middlewares = [chatroomsMiddleware, messagesMiddleware, logger];
 
-const middlewares = [chatroomsMiddleware, logger];
+const middlewares = [logger];
 
 
 const rootReducer = combineReducers({

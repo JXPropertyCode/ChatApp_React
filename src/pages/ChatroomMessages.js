@@ -26,14 +26,13 @@ const ChatroomMessages = () => {
 	const userPass = useSelector((state) => state.auth.password);
 	const username = useSelector((state) => state.auth.username);
 	const userID = useSelector((state) => state.auth.userID);
-
 	const prepMessage = useRef(null);
+
 
 	// gets chatroom messages from persist store
 	// const [messagelog, setMessagelog] = useState(
 	// 	useSelector((state) => state.chatroom.messages)
 	// );
-
 
 	const [messagelog, setMessagelog] = useState([]);
 
@@ -43,21 +42,23 @@ const ChatroomMessages = () => {
 			.then((res) => {
 				// console.log(res);
 
-				let currentChatroomMessages = []
-				for (let i=0; i<res.data.length; i++) {
+				let currentChatroomMessages = [];
+				for (let i = 0; i < res.data.length; i++) {
 					if (res.data[i].roomID === pathname) {
-						currentChatroomMessages.push(res.data[i])
+						currentChatroomMessages.push(res.data[i]);
 					}
 				}
-				console.log("currentChatroomMessages:", currentChatroomMessages)
-				setMessagelog([...currentChatroomMessages])
-				return currentChatroomMessages
+				console.log(
+					"currentChatroomMessages:",
+					currentChatroomMessages
+				);
+				setMessagelog([...currentChatroomMessages]);
+				return currentChatroomMessages;
 			})
 			.catch((err) => {
 				console.error(err);
 			});
 	};
-
 
 	useEffect(() => {
 		var W3CWebSocket = require("websocket").w3cwebsocket;
@@ -103,10 +104,9 @@ const ChatroomMessages = () => {
 		// dispatch to middleware
 		// dispatch({ type: "FETCH_CHATROOMS" });
 
-
 		// dispatch({ type: "FETCH_MESSAGES" });
 		// dispatch({ type: "FETCH_MESSAGES", payload: { pathname: pathname } });
-		getMessagelog()
+		getMessagelog();
 
 		// scrolls to the bottom of the messages when logging in
 		scrollToBottom();
@@ -177,8 +177,7 @@ const ChatroomMessages = () => {
 			// dispatch({ type: "chatroom/sendMessages", payload: convertData });
 
 			// when getting new messages just update the state
-			setMessagelog([...messagelog, convertData])
-
+			setMessagelog([...messagelog, convertData]);
 		}
 	}, [lastMessage]);
 
