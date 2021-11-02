@@ -28,7 +28,8 @@ const MessageCenter = () => {
 	console.log("Re-rendering...");
 
 	useEffect(() => {
-		console.log("useEffect...")
+		// this is just to make sure taht if the user inputs a unauthorized chatroom, it wouldn't let them access it
+		console.log("useEffect...");
 		const inputData = {
 			email: userEmail,
 			password: userPass,
@@ -46,40 +47,13 @@ const MessageCenter = () => {
 					setIsValidRoom(true);
 				} else {
 					setIsValidRoom(false);
+					history.push("/message-center");
 				}
-
-				// return res.data.auth;
 			})
 			.catch((e) => {
 				console.log("Error:", e);
-				// return false;
 			});
 	}, []);
-
-	// const validChatrooms = async () => {
-	// 	const inputData = {
-	// 		email: userEmail,
-	// 		password: userPass,
-	// 		reqChatroom: pathname,
-	// 	};
-
-	// 	const result = axios
-	// 		.post(
-	// 			"http://192.168.4.24:8000/user-chatroom-validation",
-	// 			inputData
-	// 		)
-	// 		.then((res) => {
-	// 			console.log("res.data:", res.data);
-	// 			return res.data.auth;
-	// 		})
-	// 		.catch((e) => {
-	// 			console.log("Error:", e);
-	// 			return false;
-	// 		});
-
-	// 	console.log("Result:", await result);
-	// 	return await result;
-	// };
 
 	return (
 		<div>

@@ -5,7 +5,6 @@ import { useHistory, Redirect } from "react-router-dom";
 import AccountObject from "../model/AccountObject";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import uuid from "react-native-uuid";
 
 const SignUpForm = () => {
 	const userName = useRef(null);
@@ -28,9 +27,8 @@ const SignUpForm = () => {
 		e.preventDefault();
 
 		const creatingCred = {
-			// userID: uuid.v4(),
 			username: userName.current.value,
-			chatrooms: new Array(),
+			chatrooms: [],
 			email: userEmail.current.value,
 			password: userPass.current.value,
 			confirmPassword: userConPass.current.value,
@@ -43,7 +41,6 @@ const SignUpForm = () => {
 			let timestamp = Math.floor(Date.now() / 1000);
 
 			let convertData = new AccountObject(
-				// creatingCred.userID,
 				creatingCred.chatrooms,
 				creatingCred.username,
 				creatingCred.email,

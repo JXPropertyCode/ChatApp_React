@@ -16,7 +16,6 @@ const ChatroomMessages = () => {
 
 	const dispatch = useDispatch();
 
-	// const { sendMessage, lastMessage } = useWebSocket("ws://localhost:8000/");
 	const { sendMessage, lastMessage } = useWebSocket(
 		`ws://localhost:8000/${pathname}`
 	);
@@ -27,21 +26,12 @@ const ChatroomMessages = () => {
 	const username = useSelector((state) => state.auth.username);
 	const userID = useSelector((state) => state.auth.userID);
 	const prepMessage = useRef(null);
-
-
-	// gets chatroom messages from persist store
-	// const [messagelog, setMessagelog] = useState(
-	// 	useSelector((state) => state.chatroom.messages)
-	// );
-
 	const [messagelog, setMessagelog] = useState([]);
 
 	const getMessagelog = () => {
 		axios
 			.get("http://192.168.4.24:8000/messages")
 			.then((res) => {
-				// console.log(res);
-
 				let currentChatroomMessages = [];
 				for (let i = 0; i < res.data.length; i++) {
 					if (res.data[i].roomID === pathname) {
@@ -67,7 +57,6 @@ const ChatroomMessages = () => {
 			`ws://localhost:8000/${pathname}`,
 			"echo-protocol"
 		);
-		// var client = new W3CWebSocket("ws://localhost:8000/", "echo-protocol");
 
 		client.onerror = function () {
 			console.log("Connection Error");
@@ -101,11 +90,6 @@ const ChatroomMessages = () => {
 
 		console.log("UseEffect...");
 
-		// dispatch to middleware
-		// dispatch({ type: "FETCH_CHATROOMS" });
-
-		// dispatch({ type: "FETCH_MESSAGES" });
-		// dispatch({ type: "FETCH_MESSAGES", payload: { pathname: pathname } });
 		getMessagelog();
 
 		// scrolls to the bottom of the messages when logging in
@@ -116,15 +100,8 @@ const ChatroomMessages = () => {
 
 	console.log("Current Message Log:", messagelog);
 
-	// const chatrooms = useSelector((state) => state.auth.chatrooms);
-	// // const [chatrooms, setChatrooms] = useState(useSelector((state) => state.auth.chatrooms));
-	// console.log("Chatrooms in Store:", chatrooms);
-
 	// gets the draft message
 	let draftMessage = useSelector((state) => state.chatroom.draftMessage);
-
-	// gets current chatroom id
-	// const roomID = useSelector((state) => state.chatroom.roomID);
 
 	// to detect when to scroll
 	const messagesEndRef = useRef(null);
@@ -146,12 +123,7 @@ const ChatroomMessages = () => {
 		}
 
 		return;
-		// return (
-		// 	e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight
-		// );
 	};
-
-	// const createChatRoomName = useRef(null);
 
 	// const onScroll = (e) => {
 	// 	// detects if youre at the bottom of the page
@@ -180,28 +152,6 @@ const ChatroomMessages = () => {
 			setMessagelog([...messagelog, convertData]);
 		}
 	}, [lastMessage]);
-
-	// useEffect(() => {
-	// 	// 2152, 1611, 541
-	// 	// if (isBottomOfMessages()) {
-	// 	console.log("scrollRef:", scrollRef);
-	// 	console.log("scrollRef.scrollHeight:", scrollRef.current.scrollHeight);
-	// 	console.log("scrollRef.scrollTop:", scrollRef.current.scrollTop);
-	// 	console.log("scrollRef.clientHeight:", scrollRef.current.clientHeight);
-	// 	console.log(
-	// 		"Total:",
-	// 		scrollRef.current.scrollHeight - scrollRef.current.scrollTop ===
-	// 			scrollRef.current.clientHeight
-	// 	);
-
-	// 	const isBottom =
-	// 		scrollRef.current.scrollHeight - scrollRef.current.scrollTop ===
-	// 		scrollRef.current.clientHeight;
-	// 	if (isBottom) {
-	// 		scrollToBottom();
-	// 	}
-	// 	// }
-	// }, [messagelog]);
 
 	if (!validAccount) {
 		return <Redirect to="/login-form" />;
@@ -254,10 +204,7 @@ const ChatroomMessages = () => {
 			<div>
 				{messagelog.map((message, idx) => {
 					if (message !== null) {
-						// console.log("message:", message)
-
 						// this is needed due to the bug in which messages show for other rooms
-						// if (message.roomID === pathname) {
 						if (message.email !== userEmail) {
 							return (
 								<p key={idx} style={{ textAlign: "left" }}>
@@ -272,7 +219,6 @@ const ChatroomMessages = () => {
 							);
 						}
 					}
-					// }
 					return null;
 				})}
 				<div ref={messagesEndRef} />

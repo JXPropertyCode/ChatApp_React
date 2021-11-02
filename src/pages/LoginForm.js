@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
 const LoginForm = () => {
-	
 	const validAccount = useSelector((state) => state.auth.accountVerified);
 
 	const dispatch = useDispatch();
@@ -18,18 +17,15 @@ const LoginForm = () => {
 	const passCred = useRef(null);
 
 	const login = (inputCred) => {
-
 		axios
 			.post("http://192.168.4.24:8000/login-validation", inputCred)
 			.then((res) => {
 				if (res.data.validCred === "true") {
-					// console.log("Success! Account Found:", inputCred);
-
-					console.log("res.data:", res.data)
+					console.log("res.data:", res.data);
 					// I added a new key and value to teh inputcred, the username is from the database and inserted to the inputCred so the Store has the username of the user
 					inputCred.username = res.data.username;
-					inputCred.userID = res.data.userID
-					inputCred.chatrooms = [...res.data.chatrooms]
+					inputCred.userID = res.data.userID;
+					inputCred.chatrooms = [...res.data.chatrooms];
 
 					console.log("Success! Account Found:", inputCred);
 
@@ -38,7 +34,7 @@ const LoginForm = () => {
 						res.data.username
 					);
 
-					console.log("Transferring Data onto Auth Store:", res.data)
+					console.log("Transferring Data onto Auth Store:", res.data);
 
 					setInvalidCred(false);
 					dispatch({ type: "auth/login", payload: inputCred });

@@ -1,10 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-// import uuid from "react-native-uuid";
 
 const chatroomSlice = createSlice({
 	name: "chatroom",
 	initialState: {
-		// roomID: uuid.v4(),
 		draftMessage: "",
 		messages: [],
 	},
@@ -19,7 +17,7 @@ const chatroomSlice = createSlice({
 			if (Array.isArray(payload)) {
 				console.log("Setting state.messages...");
 				// initalization getting message data from database and inserting it into the message array to be read
-				console.log("Payload.length:", payload.length)
+				console.log("Payload.length:", payload.length);
 				if (payload.length === 0) {
 					state.messages = [];
 				} else {
@@ -31,9 +29,6 @@ const chatroomSlice = createSlice({
 				state.messages = [...state.messages, payload];
 			}
 		},
-		// clearMessages: (state) => {
-		//     state.messages = []
-		// }
 	},
 });
 
