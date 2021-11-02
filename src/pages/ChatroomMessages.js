@@ -102,6 +102,8 @@ const ChatroomMessages = () => {
 
 		// dispatch to middleware
 		dispatch({ type: "FETCH_CHATROOMS" });
+
+
 		// dispatch({ type: "FETCH_MESSAGES" });
 		// dispatch({ type: "FETCH_MESSAGES", payload: { pathname: pathname } });
 		getMessagelog()
