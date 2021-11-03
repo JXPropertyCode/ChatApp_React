@@ -2,33 +2,28 @@ import { useSelector } from "react-redux";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import ChatroomObject from "../model/ChatroomObject";
+import { isCompositeComponent } from "react-dom/test-utils";
 
 const ChatroomLists = () => {
 	const createChatRoomName = useRef(null);
 
 	const userID = useSelector((state) => state.auth.userID);
+	const userEmail = useSelector((state) => state.auth.email);
+	const userPass = useSelector((state) => state.auth.password);
 
 	const [chatrooms, setChatrooms] = useState([]);
 
 	const getChatrooms = () => {
+		const inputCred = {
+			email: userEmail,
+			password: userPass,
+		};
 		axios
-			.get("http://192.168.4.24:8000/chatrooms")
+			.post("http://192.168.4.24:8000/get-user-chatroom", inputCred)
 			.then((res) => {
-				let tempArr = [];
-				for (let i = 0; i < res.data.length; i++) {
-					let data = res.data[i];
-					let convertData = new ChatroomObject(
-						data._id,
-						data.chatroomName,
-						data.creatorUserID,
-						data.members,
-						data.timestamp
-					);
-					tempArr.push(convertData);
-				}
-				console.log("Chatrooms From Server:", tempArr);
-				setChatrooms([...tempArr]);
-				return tempArr;
+				console.log("User Chatrooms From Server:", res.data.chatrooms);
+				setChatrooms([...res.data.chatrooms]);
+				return;
 			})
 			.catch((e) => {
 				console.log("Error:", e);
@@ -108,12 +103,16 @@ const ChatroomLists = () => {
 			</form>
 
 			{chatrooms.map((chatroom, idx) => {
+				console.log("chatroom:", chatroom)
 				return (
 					<a
 						key={idx}
-						href={`/message-center/${chatroom.chatroomID}`}
+						// href={`/message-center/${chatroom.chatroomID}`}
+						href={`/message-center/${chatroom}`}
 					>
-						{chatroom.chatroomName}
+						{/* {chatroom.chatroomName} */}
+						{chatroom}
+
 					</a>
 				);
 			})}
