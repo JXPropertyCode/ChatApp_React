@@ -2,6 +2,7 @@ import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ChatroomMessages from "./ChatroomMessages";
 import ChatroomLists from "./ChatroomLists";
+import AddMembers from "./AddMembers";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
@@ -64,6 +65,7 @@ const MessageCenter = () => {
 				<button onClick={logoutButton}>Logout Button</button>
 			</header>
 
+			<AddMembers></AddMembers>
 			<div className="chatDisplay">
 				<ChatroomLists></ChatroomLists>
 				{isValidRoom && <ChatroomMessages></ChatroomMessages>}

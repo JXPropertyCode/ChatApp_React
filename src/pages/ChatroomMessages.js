@@ -208,7 +208,7 @@ const ChatroomMessages = () => {
 						if (message.email !== userEmail) {
 							return (
 								<p key={idx} style={{ textAlign: "left" }}>
-									{message.clientMessage}
+									{message.username}: {message.clientMessage}
 								</p>
 							);
 						} else {

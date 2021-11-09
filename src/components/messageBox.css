@@ -16,6 +16,18 @@
 	border: 1px solid #27213c;
 }
 
+.chatMemberInputBox {
+	width: 25%;
+	/* height: 50%; */
+	border: 1px solid #27213c;
+}
+
+.addChatMemberInputBox {
+	width: 5%;
+	/* height: 50%; */
+	border: 1px solid #27213c;
+}
+
 .chatSendButton {
 	border: 1px solid #27213c;
 	/* height: 50%; */
