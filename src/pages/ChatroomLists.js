@@ -69,13 +69,14 @@ const ChatroomLists = () => {
 
 					setChatrooms([
 						...chatrooms,
-						new ChatroomObject(
-							res.data.chatroomCreated,
-							inputCred.chatroomName,
-							userID,
-							[userID],
-							Date.now()
-						),
+						// new ChatroomObject(
+						// 	res.data.chatroomCreated,
+						// 	inputCred.chatroomName,
+						// 	userID,
+						// 	[userID],
+						// 	Date.now()
+						// ),
+						res.data.chatroomCreated
 					]);
 				} else {
 					console.log("Error in Creating a Chatroom");
@@ -102,7 +103,7 @@ const ChatroomLists = () => {
 			</form>
 
 			{chatrooms.map((chatroom, idx) => {
-				console.log("chatroom:", chatroom)
+				console.log("chatroom:", chatroom);
 				return (
 					<a
 						key={idx}
@@ -111,7 +112,6 @@ const ChatroomLists = () => {
 					>
 						{/* {chatroom.chatroomName} */}
 						{chatroom}
-
 					</a>
 				);
 			})}

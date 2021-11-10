@@ -65,7 +65,8 @@ const MessageCenter = () => {
 				<button onClick={logoutButton}>Logout Button</button>
 			</header>
 
-			<AddMembers></AddMembers>
+			<AddMembers chatroomID={pathname}></AddMembers>
+
 			<div className="chatDisplay">
 				<ChatroomLists></ChatroomLists>
 				{isValidRoom && <ChatroomMessages></ChatroomMessages>}
