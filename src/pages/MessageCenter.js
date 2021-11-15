@@ -6,6 +6,7 @@ import AddMembers from "./AddMembers";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import LeaveChatroom from "./LeaveChatroom";
 
 const MessageCenter = () => {
 	const history = useHistory();
@@ -21,6 +22,10 @@ const MessageCenter = () => {
 
 	const pathname = location.pathname.replace("/message-center/", "");
 	console.log("pathname:", pathname);
+
+
+	// const [currentRoom, setCurrentRoom] = useState("");
+
 
 	const logoutButton = () => {
 		history.push("/logout");
@@ -54,7 +59,33 @@ const MessageCenter = () => {
 			.catch((e) => {
 				console.log("Error:", e);
 			});
+
+		// setCurrentRoom(pathname)
 	}, []);
+
+	// useEffect(() => {
+	// 	console.log("Room Changed:", currentRoom);
+	// 	if (
+	// 		currentRoom === "" ||
+	// 		currentRoom === "/message-center"
+	// 	) {
+	// 		setIsValidRoom(false);
+	// 		history.push("/message-center");
+	// 	}
+	// }, [currentRoom]);
+
+
+	// pathname is from useLocation() which is a hook therefore useEffect can be used
+	useEffect(() => {
+		console.log("Room Changed:", pathname);
+		if (
+			pathname === "" ||
+			pathname === "/message-center"
+		) {
+			setIsValidRoom(false);
+			history.push("/message-center");
+		}
+	}, [pathname]);
 
 	return (
 		<div>
@@ -66,7 +97,7 @@ const MessageCenter = () => {
 			</header>
 
 			<AddMembers chatroomID={pathname}></AddMembers>
-
+			<LeaveChatroom chatroomID={pathname} userID={userID} />
 			<div className="chatDisplay">
 				<ChatroomLists></ChatroomLists>
 				{isValidRoom && <ChatroomMessages></ChatroomMessages>}
