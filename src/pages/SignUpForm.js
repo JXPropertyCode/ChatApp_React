@@ -49,7 +49,7 @@ const SignUpForm = () => {
 			);
 
 			axios
-				.post("http://192.168.4.24:8000/signup", convertData)
+				.post(`${process.env.REACT_APP_GET_API_KEY}signup`, convertData)
 				.then((res) => {
 					if (res.data.validCred === "true") {
 						console.log("Success! Account Created:", convertData);

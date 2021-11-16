@@ -18,7 +18,7 @@ const ChatroomLists = () => {
 			password: userPass,
 		};
 		axios
-			.post("http://192.168.4.24:8000/get-user-chatroom", inputCred)
+			.post(`${process.env.REACT_APP_GET_API_KEY}get-user-chatroom`, inputCred)
 			.then((res) => {
 				console.log("User Chatrooms From Server:", res.data.chatrooms);
 				setChatrooms([...res.data.chatrooms]);
@@ -60,7 +60,7 @@ const ChatroomLists = () => {
 		};
 
 		axios
-			.post("http://192.168.4.24:8000/create-chatroom", inputCred)
+			.post(`${process.env.REACT_APP_GET_API_KEY}create-chatroom`, inputCred)
 			.then((res) => {
 				if (res.data.validCred === "true") {
 					console.log("res.data:", res.data);

@@ -30,7 +30,7 @@ const ChatroomMessages = () => {
 
 	const getMessagelog = () => {
 		axios
-			.get("http://192.168.4.24:8000/messages")
+			.get(`${process.env.REACT_APP_GET_API_KEY}messages`)
 			.then((res) => {
 				let currentChatroomMessages = [];
 				for (let i = 0; i < res.data.length; i++) {

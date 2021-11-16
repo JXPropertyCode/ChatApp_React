@@ -16,9 +16,13 @@ const LoginForm = () => {
 	const emailCred = useRef(null);
 	const passCred = useRef(null);
 
+	// console.log(`${process.env.REACT_APP_GET_API_KEY}login-validation`)
+
 	const login = (inputCred) => {
 		axios
-			.post("http://192.168.4.24:8000/login-validation", inputCred)
+			// .post("http://192.168.4.24:8000/login-validation", inputCred)
+			
+			.post(`${process.env.REACT_APP_GET_API_KEY}login-validation`, inputCred)
 			.then((res) => {
 				if (res.data.validCred === "true") {
 					console.log("res.data:", res.data);

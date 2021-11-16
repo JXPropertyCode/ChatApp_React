@@ -20,7 +20,7 @@ const AddMembers = ({ chatroomID }) => {
 
 		await axios
 			.post(
-				"http://192.168.4.24:8000/verify-auth-to-add-users-to-chatroom",
+				`${process.env.REACT_APP_GET_API_KEY}verify-auth-to-add-users-to-chatroom`,
 				inputCred
 			)
 			.then((res) => {
@@ -58,7 +58,7 @@ const AddMembers = ({ chatroomID }) => {
 		};
 
 		axios
-			.post("http://192.168.4.24:8000/add-users-to-chatroom", inputData)
+			.post(`${process.env.REACT_APP_GET_API_KEY}add-users-to-chatroom`, inputData)
 			.then((res) => {
 				console.log("res.data:", res.data);
 			})

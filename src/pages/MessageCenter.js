@@ -43,7 +43,7 @@ const MessageCenter = () => {
 		};
 		axios
 			.post(
-				"http://192.168.4.24:8000/user-chatroom-validation",
+				`${process.env.REACT_APP_GET_API_KEY}user-chatroom-validation`,
 				inputData
 			)
 			.then((res) => {
