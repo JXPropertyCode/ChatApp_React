@@ -1,4 +1,4 @@
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ChatroomMessages from "./ChatroomMessages";
 import ChatroomLists from "./ChatroomLists";
@@ -17,17 +17,16 @@ const MessageCenter = () => {
 	const userEmail = useSelector((state) => state.auth.email);
 	const [isValidRoom, setIsValidRoom] = useState(false);
 
+	const validAccount = useSelector((state) => state.auth.accountVerified);
+
 	const location = useLocation();
 	console.log("location.pathname:", location.pathname);
 
 	const pathname = location.pathname.replace("/message-center/", "");
 	console.log("pathname:", pathname);
 
-
-	// const [currentRoom, setCurrentRoom] = useState("");
-
-
 	const logoutButton = () => {
+		// history.push("/logout");
 		history.push("/logout");
 	};
 
@@ -41,27 +40,37 @@ const MessageCenter = () => {
 			password: userPass,
 			reqChatroom: pathname,
 		};
-		axios
-			.post(
-				`${process.env.REACT_APP_GET_API_KEY}user-chatroom-validation`,
-				inputData
-			)
-			.then((res) => {
-				console.log("res.data:", res.data);
 
-				if (res.data.auth === true) {
-					setIsValidRoom(true);
-				} else {
-					setIsValidRoom(false);
-					history.push("/message-center");
-				}
-			})
-			.catch((e) => {
-				console.log("Error:", e);
-			});
+		console.log("inputData:", inputData)
+
+		// if accessing the chatroom is not valid or doesn't belong to you, you will be sent back to your /message-center
+		if (validAccount) {
+			console.log("Account Valid...")
+			axios
+				.post(
+					`${process.env.REACT_APP_GET_API_KEY}user-chatroom-validation`,
+					inputData
+				)
+				.then((res) => {
+					console.log("res.data:", res.data);
+
+					if (res.data.auth === true) {
+						setIsValidRoom(true);
+					} else {
+						setIsValidRoom(false);
+						history.push("/message-center");
+					}
+				})
+				.catch((e) => {
+					console.log("Error:", e);
+				});
+
+		}
 
 		// setCurrentRoom(pathname)
 	}, []);
+
+	
 
 	// useEffect(() => {
 	// 	console.log("Room Changed:", currentRoom);
@@ -87,6 +96,13 @@ const MessageCenter = () => {
 		}
 	}, [pathname]);
 
+
+	if (!validAccount) {
+		console.log("Invalid Access Detected...")
+		console.log("invalidAccount:", !validAccount)
+		history.push("/login-form");
+	}
+
 	return (
 		<div>
 			<header>
@@ -99,7 +115,7 @@ const MessageCenter = () => {
 			<AddMembers chatroomID={pathname}></AddMembers>
 			<LeaveChatroom chatroomID={pathname} userID={userID} />
 			<div className="chatDisplay">
-				<ChatroomLists></ChatroomLists>
+				{validAccount && <ChatroomLists></ChatroomLists>}
 				{isValidRoom && <ChatroomMessages></ChatroomMessages>}
 			</div>
 		</div>

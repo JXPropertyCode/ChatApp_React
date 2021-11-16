@@ -27,7 +27,9 @@ export default function App() {
 					path="/account-created"
 					component={AccountCreated}
 				/>
+				
 				<Route exact path="/login-success" component={LoginSuccess} />
+
 				<Route exact path="/logout" component={Logout} />
 				{/* always put the default '/' path to the end or else it would access it first thing */}
 				<Route exact path="/" component={LoginForm} />

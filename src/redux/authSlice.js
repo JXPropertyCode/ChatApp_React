@@ -21,6 +21,8 @@ const authSlice = createSlice({
 			state.accountVerified = false;
 			state.email = "";
 			state.password = "";
+			state.userID = "";
+			state.username = ""
 		},
 		isVerified: (state) => {
 			console.log("isVerified:", state.accountVerified);

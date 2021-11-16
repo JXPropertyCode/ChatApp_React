@@ -1,17 +1,25 @@
 import { useHistory, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const LoginSuccess = () => {
 	const history = useHistory();
 	const validAccount = useSelector((state) => state.auth.accountVerified);
 	const username = useSelector((state) => state.auth.username);
 
+	useEffect(() => {
+		setTimeout(() => history.push("/message-center"), 3000);
+	}, [])
+
+
 	if (!validAccount) {
 		return <Redirect to="/login-form" />;
 	}
+	console.log("Login Succesful...")
 
-	setTimeout(() => history.push("/message-center"), 3000);
+	// setTimeout(() => history.push("/message-center"), 3000);
 
+	
 	return (
 		<div>
 			<h1>Login Successful!</h1>

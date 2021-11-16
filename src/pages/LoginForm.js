@@ -3,6 +3,7 @@ import { useHistory, Redirect } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const LoginForm = () => {
 	const validAccount = useSelector((state) => state.auth.accountVerified);
@@ -18,10 +19,10 @@ const LoginForm = () => {
 
 	// console.log(`${process.env.REACT_APP_GET_API_KEY}login-validation`)
 
-	const login = (inputCred) => {
-		axios
+	const login = async (inputCred) => {
+		return await axios
 			// .post("http://192.168.4.24:8000/login-validation", inputCred)
-			
+
 			.post(`${process.env.REACT_APP_GET_API_KEY}login-validation`, inputCred)
 			.then((res) => {
 				if (res.data.validCred === "true") {
@@ -41,17 +42,22 @@ const LoginForm = () => {
 
 					setInvalidCred(false);
 					dispatch({ type: "auth/login", payload: inputCred });
-					history.push("/login-success");
+					// history.push("/login-success");
+
+					return true
+
 				} else {
 					setInvalidCred(true);
+					return false
 				}
 			})
 			.catch((err) => {
 				console.error(err);
+				return false
 			});
 	};
 
-	const submitHandler = (e) => {
+	const submitHandler = async (e) => {
 		// prevent re-renders
 		e.preventDefault();
 		const inputCred = {
@@ -62,12 +68,17 @@ const LoginForm = () => {
 		// doesn't need ex. emailCred.current['email'].value to access the value since its useRef() is not nested on a Form like MessageCenter's prepmessage
 		console.log("inputCred to Login:", inputCred);
 
-		login(inputCred);
+		const loginValid = await login(inputCred);
+
+		if (loginValid === true) {
+			console.log("loginValid:", loginValid)
+			history.push("/login-success");
+		}
 	};
 
-	if (validAccount) {
-		return <Redirect to="/message-center" />;
-	}
+	// if (validAccount) {
+	// 	return <Redirect to="/message-center" />;
+	// }
 
 	return (
 		<div className="App">
