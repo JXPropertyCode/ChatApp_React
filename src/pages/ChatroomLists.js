@@ -20,8 +20,12 @@ const ChatroomLists = () => {
     axios
       .post(`${process.env.REACT_APP_GET_API_KEY}get-user-chatroom`, inputCred)
       .then((res) => {
-        console.log("User Chatrooms From Server:", res.data.chatrooms);
-        setChatrooms([...res.data.chatrooms]);
+        // console.log("User Chatrooms From Server:", res.data.chatrooms);
+        // setChatrooms([...res.data.chatrooms]);
+
+        console.log("User Chatrooms From Server:", res.data);
+        setChatrooms([...res.data]);
+
         return;
       })
       .catch((e) => {
@@ -88,13 +92,12 @@ const ChatroomLists = () => {
           ref={createChatRoomName}
         />
       </form>
-      <h3>Your Chatrooms</h3>
-
+      <h3> Your Chatrooms </h3>
       {chatrooms.map((chatroom, idx) => {
-        console.log("chatroom:", chatroom);
+        console.log("chatroom.chatroomName:", chatroom.chatroomName);
         return (
-          <a key={idx} href={`/message-center/${chatroom}`}>
-            {chatroom}
+          <a key={idx} href={`/message-center/${chatroom.chatroomID}`}>
+            {chatroom.chatroomName}
           </a>
         );
       })}
