@@ -107,7 +107,7 @@ const MessageCenter = () => {
 
       {/* if not a valid room, such as /message-center, do not let it add anyone */}
       {isValidRoom && <AddMembers chatroomID={pathname}></AddMembers>}
-      <LeaveChatroom chatroomID={pathname} userID={userID} />
+      {isValidRoom && <LeaveChatroom chatroomID={pathname} userID={userID} />}
       <div className="chatDisplay">
         {validAccount && <ChatroomLists></ChatroomLists>}
         {isValidRoom && <ChatroomMessages></ChatroomMessages>}
