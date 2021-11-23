@@ -3,14 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 const chatroomSlice = createSlice({
 	name: "chatroom",
 	initialState: {
-		draftMessage: "",
+		// draftMessage: "",
 		messages: [],
 	},
 	reducers: {
-		draftMessage: (state, { type, payload }) => {
-			console.log("Saving Draft Message:", payload);
-			state.draftMessage = payload;
-		},
+		// draftMessage: (state, { type, payload }) => {
+		// 	console.log("Saving Draft Message:", payload);
+		// 	state.draftMessage = payload;
+		// },
 		sendMessages: (state, { type, payload }) => {
 			console.log("incoming payload:", payload);
 
@@ -32,7 +32,7 @@ const chatroomSlice = createSlice({
 	},
 });
 
-export const draftMessage = chatroomSlice.actions.draftMessage;
+// export const draftMessage = chatroomSlice.actions.draftMessage;
 export const sendMessages = chatroomSlice.actions.sendMessages;
 export const clearMessages = chatroomSlice.actions.clearMessages;
 

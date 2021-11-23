@@ -14,7 +14,7 @@ const ChatroomMessages = () => {
 	const pathname = location.pathname.replace("/message-center/", "");
 	console.log("pathname:", pathname);
 
-	const dispatch = useDispatch();
+	// const dispatch = useDispatch();
 
 	const { sendMessage, lastMessage } = useWebSocket(
 		`ws://localhost:8000/${pathname}`
@@ -27,6 +27,10 @@ const ChatroomMessages = () => {
 	const userID = useSelector((state) => state.auth.userID);
 	const prepMessage = useRef(null);
 	const [messagelog, setMessagelog] = useState([]);
+	
+	const [isScrollActive, setIsScrollActive] = useState(true);
+
+	// const [isBottom, setIsBottom] = useState(true)
 
 	const getMessagelog = () => {
 		axios
@@ -48,6 +52,9 @@ const ChatroomMessages = () => {
 			.catch((err) => {
 				console.error(err);
 			});
+
+		// scrollToBottom()
+
 	};
 
 	useEffect(() => {
@@ -92,16 +99,15 @@ const ChatroomMessages = () => {
 
 		getMessagelog();
 
-		// scrolls to the bottom of the messages when logging in
-		scrollToBottom();
 
 		// optional return function can be here to process a cleanup
 	}, []);
 
 	console.log("Current Message Log:", messagelog);
 
+
 	// gets the draft message
-	let draftMessage = useSelector((state) => state.chatroom.draftMessage);
+	// let draftMessage = useSelector((state) => state.chatroom.draftMessage);
 
 	// to detect when to scroll
 	const messagesEndRef = useRef(null);
@@ -115,6 +121,8 @@ const ChatroomMessages = () => {
 	// const [bottomOfPage, setBottomOfPage] = useState(false);
 
 	const isBottomOfMessages = (e) => {
+		console.log(e.target.scrollHeight - e.target.scrollTop ===
+			e.target.clientHeight)
 		if (
 			e.target.scrollHeight - e.target.scrollTop ===
 			e.target.clientHeight
@@ -125,32 +133,66 @@ const ChatroomMessages = () => {
 		return;
 	};
 
-	// const onScroll = (e) => {
-	// 	// detects if youre at the bottom of the page
-	// 	e.preventDefault()
-	// 	// console.log("window.pageYOffset:", window.pageYOffset);
-	// 	if (
-	// 		e.target.scrollHeight - e.target.scrollTop ===
-	// 		e.target.clientHeight
-	// 	) {
-	// 		// console.log("Bottom of the page");
-	// 		setBottomOfPage(true);
-	// 	} else {
-	// 		// console.log("NOT bottom of the page");
-	// 		setBottomOfPage(false);
+	const onScroll = (e) => {
+		// detects if youre at the bottom of the page
+		e.preventDefault()
+		// console.log("window.pageYOffset:", window.pageYOffset);
+		if (
+			e.target.scrollHeight - e.target.scrollTop ===
+			e.target.clientHeight
+		) {
+			console.log("Bottom of the page");
+			setIsScrollActive(true)
+			// setBottomOfPage(true);
+		} else {
+			console.log("NOT bottom of the page");
+			setIsScrollActive(false)
+			// setBottomOfPage(false);
+		}
+	};
+
+	// useEffect(() => {
+	// 	const isBottomOfPage = scrollRef.current.scrollHeight - scrollRef.current.scrollTop === scrollRef.current.clientHeight
+	// 	if (isBottomOfPage) {
+	// 		setIsBottom(true)
+	// 		scrollToBottom()
 	// 	}
-	// };
+
+	// 	if (isBottom && isBottomOfPage) {
+	// 		scrollToBottom()
+	// 	} else {
+	// 		setIsBottom(false)
+	// 	}
+	// }, [isBottom, messagelog, lastMessage])
+
+	useEffect(() => {
+		console.log("scrollRef.current.scrollHeight:", scrollRef.current.scrollHeight)
+		console.log("scrollRef.current.scrollTop:", scrollRef.current.scrollTop)
+		console.log("scrollRef.current.clientHeight:", scrollRef.current.clientHeight)
+		console.log("BottomOfPage:", scrollRef.current.scrollHeight - scrollRef.current.scrollTop === scrollRef.current.clientHeight)
+		// const isBottomOfPage = scrollRef.current.scrollHeight - scrollRef.current.scrollTop === scrollRef.current.clientHeight
+		// if (isBottomOfPage) {
+		// 	scrollToBottom()
+		// }
+		if (isScrollActive) {
+			scrollToBottom()
+		}
+		
+
+	}, [messagelog, lastMessage])
+
 
 	useEffect(() => {
 		if (lastMessage !== null) {
 			let convertData = JSON.parse(lastMessage.data);
 			console.log("lastMessage:", convertData);
-			// setMessagelog([...messagelog, convertData]);
 			// dispatch({ type: "chatroom/sendMessages", payload: convertData });
 
 			// when getting new messages just update the state
 			setMessagelog([...messagelog, convertData]);
 		}
+
+
 	}, [lastMessage]);
 
 	if (!validAccount) {
@@ -159,7 +201,6 @@ const ChatroomMessages = () => {
 
 	const onFormSubmit = (e) => {
 		e.preventDefault();
-
 		const prepmessage = prepMessage.current;
 		// the reason why they needed the ex. ['inputMessage'] is because useRef() is used on the form and this name of the input is nested.
 		// therefore like a tree or node or nested object, you need to access it by its name
@@ -170,11 +211,11 @@ const ChatroomMessages = () => {
 			return;
 		}
 
-		draftMessage = "";
-		dispatch({
-			type: "chatroom/draftMessage",
-			payload: "",
-		});
+		// draftMessage = "";
+		// dispatch({
+		// 	type: "chatroom/draftMessage",
+		// 	payload: "",
+		// });
 
 		// UNIX timestamp
 		let timestamp = Math.floor(Date.now() / 1000);
@@ -198,9 +239,11 @@ const ChatroomMessages = () => {
 		<div
 			className="messageWindow"
 			ref={scrollRef}
-			// onScroll={(e) => onScroll(e)}
-			onScroll={(e) => isBottomOfMessages(e)}
+			// onScroll={(e) => isBottomOfMessages(e)}
+			onScroll={(e) => onScroll(e)}
+
 		>
+
 			<div>
 				{messagelog.map((message, idx) => {
 					if (message !== null) {
@@ -215,6 +258,7 @@ const ChatroomMessages = () => {
 							return (
 								<p key={idx} style={{ textAlign: "right" }}>
 									{message.clientMessage}
+
 								</p>
 							);
 						}
@@ -228,7 +272,10 @@ const ChatroomMessages = () => {
 					className="messageBox"
 					onSubmit={(e) => {
 						e.preventDefault();
-						if (prepMessage !== "") onFormSubmit(e);
+						if (prepMessage !== "") {
+							onFormSubmit(e)
+
+						}
 					}}
 					ref={prepMessage}
 				>
@@ -236,14 +283,15 @@ const ChatroomMessages = () => {
 						className="messageInputBox"
 						type="text"
 						name={"inputMessage"}
-						value={draftMessage}
-						onChange={() => {
-							dispatch({
-								type: "chatroom/draftMessage",
-								payload:
-									prepMessage.current["inputMessage"].value,
-							});
-						}}
+
+					// value={draftMessage}
+					// onChange={() => {
+					// 	dispatch({
+					// 		type: "chatroom/draftMessage",
+					// 		payload:
+					// 			prepMessage.current["inputMessage"].value,
+					// 	});
+					// }}
 					/>
 					<button className="chatSendButton" type="submit">
 						Send
