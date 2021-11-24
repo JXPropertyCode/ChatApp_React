@@ -1,4 +1,4 @@
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ChatroomMessages from "./ChatroomMessages";
 import ChatroomLists from "./ChatroomLists";
@@ -68,7 +68,6 @@ const MessageCenter = () => {
     }
   }, []);
 
-
   // pathname is from useLocation() which is a hook therefore useEffect can be used
   useEffect(() => {
     console.log("Room Changed:", pathname);
@@ -88,6 +87,17 @@ const MessageCenter = () => {
     <div>
       <header>
         <h1>{username}'s Dashboard</h1>
+        {validAccount && (
+          //   <input
+          //     type="button"
+          //     value="My Profile"
+          //     onClick={() => {
+          //       console.log("Clicked My Profile");
+          //       history.push("/user-profile");
+          //     }}
+          //   />
+          <a href={`/user-profile/${userID}`}>My Profile</a>
+        )}
         <p>userID: {userID}</p>
         <p>Current Chatroom: {pathname} </p>
         <button onClick={logoutButton}>Logout Button</button>
@@ -98,6 +108,7 @@ const MessageCenter = () => {
       {isValidRoom && <LeaveChatroom chatroomID={pathname} userID={userID} />}
       <div className="chatDisplay">
         {validAccount && <ChatroomLists></ChatroomLists>}
+
         {isValidRoom && <ChatroomMessages></ChatroomMessages>}
         {isValidRoom && <ChatroomMembers chatroomID={pathname} />}
       </div>
