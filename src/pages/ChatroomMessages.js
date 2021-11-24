@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { useState, useEffect, useRef } from "react";
 import useWebSocket from "react-use-websocket";
 import MessageObject from "../model/MessageObject";
-import { useDispatch } from "react-redux";
 import axios from "axios";
 import "../components/messageBox.css";
 
@@ -14,7 +13,6 @@ const ChatroomMessages = () => {
 	const pathname = location.pathname.replace("/message-center/", "");
 	console.log("pathname:", pathname);
 
-	// const dispatch = useDispatch();
 
 	const { sendMessage, lastMessage } = useWebSocket(
 		`ws://localhost:8000/${pathname}`
@@ -27,10 +25,9 @@ const ChatroomMessages = () => {
 	const userID = useSelector((state) => state.auth.userID);
 	const prepMessage = useRef(null);
 	const [messagelog, setMessagelog] = useState([]);
-	
+
 	const [isScrollActive, setIsScrollActive] = useState(true);
 
-	// const [isBottom, setIsBottom] = useState(true)
 
 	const getMessagelog = () => {
 		axios
@@ -52,8 +49,6 @@ const ChatroomMessages = () => {
 			.catch((err) => {
 				console.error(err);
 			});
-
-		// scrollToBottom()
 
 	};
 
@@ -96,18 +91,11 @@ const ChatroomMessages = () => {
 		};
 
 		console.log("UseEffect...");
-
 		getMessagelog();
-
-
 		// optional return function can be here to process a cleanup
 	}, []);
 
 	console.log("Current Message Log:", messagelog);
-
-
-	// gets the draft message
-	// let draftMessage = useSelector((state) => state.chatroom.draftMessage);
 
 	// to detect when to scroll
 	const messagesEndRef = useRef(null);
@@ -118,67 +106,29 @@ const ChatroomMessages = () => {
 	};
 
 	const scrollRef = useRef(null);
-	// const [bottomOfPage, setBottomOfPage] = useState(false);
-
-	const isBottomOfMessages = (e) => {
-		console.log(e.target.scrollHeight - e.target.scrollTop ===
-			e.target.clientHeight)
-		if (
-			e.target.scrollHeight - e.target.scrollTop ===
-			e.target.clientHeight
-		) {
-			scrollToBottom();
-		}
-
-		return;
-	};
 
 	const onScroll = (e) => {
 		// detects if youre at the bottom of the page
 		e.preventDefault()
-		// console.log("window.pageYOffset:", window.pageYOffset);
 		if (
 			e.target.scrollHeight - e.target.scrollTop ===
 			e.target.clientHeight
 		) {
 			console.log("Bottom of the page");
 			setIsScrollActive(true)
-			// setBottomOfPage(true);
 		} else {
 			console.log("NOT bottom of the page");
 			setIsScrollActive(false)
-			// setBottomOfPage(false);
 		}
 	};
-
-	// useEffect(() => {
-	// 	const isBottomOfPage = scrollRef.current.scrollHeight - scrollRef.current.scrollTop === scrollRef.current.clientHeight
-	// 	if (isBottomOfPage) {
-	// 		setIsBottom(true)
-	// 		scrollToBottom()
-	// 	}
-
-	// 	if (isBottom && isBottomOfPage) {
-	// 		scrollToBottom()
-	// 	} else {
-	// 		setIsBottom(false)
-	// 	}
-	// }, [isBottom, messagelog, lastMessage])
 
 	useEffect(() => {
 		console.log("scrollRef.current.scrollHeight:", scrollRef.current.scrollHeight)
 		console.log("scrollRef.current.scrollTop:", scrollRef.current.scrollTop)
 		console.log("scrollRef.current.clientHeight:", scrollRef.current.clientHeight)
-		console.log("BottomOfPage:", scrollRef.current.scrollHeight - scrollRef.current.scrollTop === scrollRef.current.clientHeight)
-		// const isBottomOfPage = scrollRef.current.scrollHeight - scrollRef.current.scrollTop === scrollRef.current.clientHeight
-		// if (isBottomOfPage) {
-		// 	scrollToBottom()
-		// }
 		if (isScrollActive) {
 			scrollToBottom()
 		}
-		
-
 	}, [messagelog, lastMessage])
 
 
@@ -186,13 +136,9 @@ const ChatroomMessages = () => {
 		if (lastMessage !== null) {
 			let convertData = JSON.parse(lastMessage.data);
 			console.log("lastMessage:", convertData);
-			// dispatch({ type: "chatroom/sendMessages", payload: convertData });
-
 			// when getting new messages just update the state
 			setMessagelog([...messagelog, convertData]);
 		}
-
-
 	}, [lastMessage]);
 
 	if (!validAccount) {
@@ -210,12 +156,6 @@ const ChatroomMessages = () => {
 		if (currentPrepMessageValue === "") {
 			return;
 		}
-
-		// draftMessage = "";
-		// dispatch({
-		// 	type: "chatroom/draftMessage",
-		// 	payload: "",
-		// });
 
 		// UNIX timestamp
 		let timestamp = Math.floor(Date.now() / 1000);
@@ -239,9 +179,7 @@ const ChatroomMessages = () => {
 		<div
 			className="messageWindow"
 			ref={scrollRef}
-			// onScroll={(e) => isBottomOfMessages(e)}
 			onScroll={(e) => onScroll(e)}
-
 		>
 
 			<div>
@@ -283,15 +221,6 @@ const ChatroomMessages = () => {
 						className="messageInputBox"
 						type="text"
 						name={"inputMessage"}
-
-					// value={draftMessage}
-					// onChange={() => {
-					// 	dispatch({
-					// 		type: "chatroom/draftMessage",
-					// 		payload:
-					// 			prepMessage.current["inputMessage"].value,
-					// 	});
-					// }}
 					/>
 					<button className="chatSendButton" type="submit">
 						Send

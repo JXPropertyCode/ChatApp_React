@@ -36,7 +36,7 @@ const ChatroomMembers = ({ chatroomID }) => {
 
 	return (
 		<div className="chatroomWindow">
-			<button onClick={() => updateMemberList()}>refersh</button>
+			<input type="button" onClick={() => updateMemberList()} value="Refresh" />
 			<h3>Chatroom Members</h3>
 			{members.map((member, idx) => {
 				return <p key={idx}>{member}</p>;

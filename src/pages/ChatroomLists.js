@@ -1,7 +1,6 @@
 import { useSelector } from "react-redux";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import ChatroomObject from "../model/ChatroomObject";
 
 const ChatroomLists = () => {
   const createChatRoomName = useRef(null);
@@ -21,7 +20,6 @@ const ChatroomLists = () => {
       .post(`${process.env.REACT_APP_GET_API_KEY}get-user-chatroom`, inputCred)
       .then((res) => {
         // console.log("User Chatrooms From Server:", res.data.chatrooms);
-        // setChatrooms([...res.data.chatrooms]);
 
         console.log("User Chatrooms From Server:", res.data);
         setChatrooms([...res.data]);
@@ -84,6 +82,7 @@ const ChatroomLists = () => {
 
   return (
     <div className="chatroomWindow">
+      <input type="button" value="Refresh" onClick={() => getChatrooms()} />
       <form onSubmit={(e) => createRoom(e)}>
         <input
           type="text"

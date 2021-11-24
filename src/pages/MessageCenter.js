@@ -66,20 +66,8 @@ const MessageCenter = () => {
           console.log("Error:", e);
         });
     }
-
-    // setCurrentRoom(pathname)
   }, []);
 
-  // useEffect(() => {
-  // 	console.log("Room Changed:", currentRoom);
-  // 	if (
-  // 		currentRoom === "" ||
-  // 		currentRoom === "/message-center"
-  // 	) {
-  // 		setIsValidRoom(false);
-  // 		history.push("/message-center");
-  // 	}
-  // }, [currentRoom]);
 
   // pathname is from useLocation() which is a hook therefore useEffect can be used
   useEffect(() => {
