@@ -27,6 +27,9 @@ const authSlice = createSlice({
 		isVerified: (state) => {
 			console.log("isVerified:", state.accountVerified);
 		},
+		changeUsername: (state, { type, payload }) => {
+			state.username = payload.newUsername
+		},
 		outputData: (state) => {
 			console.log("state.accountVerified:", state.accountVerified);
 			console.log("state.userID:", state.userID);
@@ -39,6 +42,7 @@ const authSlice = createSlice({
 export const login = authSlice.actions.login;
 export const logout = authSlice.actions.logout;
 export const isVerified = authSlice.actions.isVerified;
+export const changeUsername = authSlice.actions.changeUsername;
 export const outputData = authSlice.actions.outputData;
 
 export default authSlice.reducer;

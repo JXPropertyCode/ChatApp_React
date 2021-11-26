@@ -135,6 +135,8 @@ const ChatroomMessages = () => {
     return <Redirect to="/login-form" />;
   }
 
+  const removeExtraSpace = (s) => s.trim().split(/ +/).join(" ");
+
   const onFormSubmit = (e) => {
     e.preventDefault();
     const prepmessage = prepMessage.current;
@@ -143,7 +145,11 @@ const ChatroomMessages = () => {
     const currentPrepMessageValue = prepmessage["inputMessage"].value;
 
     // prevent empty strings from being sent
-    if (currentPrepMessageValue === "") {
+    let strFilter = removeExtraSpace(currentPrepMessageValue);
+
+    if (strFilter.length === 0) {
+      console.log("Cannot Have Empty Spaces in Chat Room Name");
+      prepmessage["inputMessage"].value = ""
       return;
     }
 
