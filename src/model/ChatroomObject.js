@@ -1,10 +1,3 @@
-// import moment from "moment";
-
-// const convertTime = (givenTimeStamp) => {
-// 	// console.log("givenTimeStamp:", givenTimeStamp);
-// 	return moment.unix(givenTimeStamp).format("MM/DD/YY hh:mm:ss a");
-// };
-
 class ChatroomObject {
     chatroomID;
 	chatroomName;

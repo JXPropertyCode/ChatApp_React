@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useState, useEffect, useRef } from "react";
+import { useRef } from "react";
 import axios from "axios";
 
 const AddMembers = ({ chatroomID }) => {
@@ -45,12 +45,6 @@ const AddMembers = ({ chatroomID }) => {
 
 		// the split creates an array of the input by removing the commas and spaces
 		const addMembersList = userInput.split(/[ ,]+/);
-
-		// for (let i=0; i<addMembersLists.length; i++) {
-		// 	if (addMembersLists) {
-
-		// 	}
-		// }
 
 		const inputData = {
 			currentChatroom: chatroomID,

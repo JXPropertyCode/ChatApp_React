@@ -24,7 +24,6 @@ const UserProfile = () => {
   const removeExtraSpace = (s) => s.trim().split(/ +/).join(" ");
 
   const reqChangeUsername = () => {
-    // e.preventDefault()
     console.log("reqNewUserName.current.value:", reqNewUserName.current.value);
 
     let strFilter = removeExtraSpace(reqNewUserName.current.value);
@@ -51,20 +50,17 @@ const UserProfile = () => {
         console.error(err);
       });
 
-      // change the states for the user auth
+    // change the states for the user auth
     dispatch({ type: "auth/changeUsername", payload: inputData });
-    setChangeUsername(false)
+    setChangeUsername(false);
   };
 
   // this dictates when to show teh text box to submit or cancel a new name change
   const handleUsername = () => {
-    // e.preventDefault(e)
-
     setChangeUsername(!changeUsername);
   };
 
   const logoutButton = () => {
-    // history.push("/logout");
     history.push("/logout");
   };
 
@@ -85,8 +81,12 @@ const UserProfile = () => {
       <div className="userInfo">
         <h3>Username: {username}</h3>
         {changeUsername && (
-          // prevents enter from submitting
-          <form onSubmit={e => { e.preventDefault(); }}>
+          // prevents enter from submitting which prevents re-renders too
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+            }}
+          >
             <label>
               <input type="text" ref={reqNewUserName} />
             </label>

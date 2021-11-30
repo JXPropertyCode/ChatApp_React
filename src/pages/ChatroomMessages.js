@@ -37,39 +37,6 @@ const ChatroomMessages = () => {
           if (res.data[i].roomID === pathname) {
             // console.log("res.data[i]:", res.data[i])
             let retrieveRoomData = res.data[i];
-
-            // const inputData = {
-            //   userID: res.data[i].userID._id,
-            // };
-
-            // this is to get the user ID then find the username from the server/database to get the most recent name
-            // note: this causes the program to be slow.
-            // I added this if statement since if you are speaking, it doesn't output your own name
-            // therefore saving a little time so you don't need to call the server
-            // if (res.data[i].userID._id !== userID) {
-            //   // await axios
-            //   //   .post(
-            //   //     `${process.env.REACT_APP_GET_API_KEY}get-username-by-user-id`,
-            //   //     inputData
-            //   //   )
-            //   //   .then((res) => {
-            //   //     console.log("res:", res.data.username);
-
-            //   //     retrieveRoomData.username = res.data.username;
-
-            //   //     // return;
-            //   //   })
-            //   //   .catch((err) => {
-            //   //     console.error(err);
-            //   //   });
-            //   retrieveRoomData.username = res.data[i].userID.username;
-            //   console.log("retrieveRoomData:", retrieveRoomData);
-            //   currentChatroomMessages.push(retrieveRoomData);
-            //   // currentChatroomMessages.push(res.data[i]);
-            // } else {
-            //   currentChatroomMessages.push(userID);
-
-            // }
             currentChatroomMessages.push(retrieveRoomData);
           }
         }
@@ -150,9 +117,6 @@ const ChatroomMessages = () => {
   };
 
   useEffect(() => {
-    // console.log("scrollRef.current.scrollHeight:", scrollRef.current.scrollHeight)
-    // console.log("scrollRef.current.scrollTop:", scrollRef.current.scrollTop)
-    // console.log("scrollRef.current.clientHeight:", scrollRef.current.clientHeight)
     if (isScrollActive) {
       scrollToBottom();
     }
@@ -206,8 +170,6 @@ const ChatroomMessages = () => {
     sendMessage(JSON.stringify(convertData));
     prepmessage["inputMessage"].value = "";
   };
-
-  // console.log("Final Messagelog:", messagelog);
 
   return (
     <div

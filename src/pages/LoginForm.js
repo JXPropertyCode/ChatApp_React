@@ -1,12 +1,9 @@
 import { useState, useRef } from "react";
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
 
 const LoginForm = () => {
-	const validAccount = useSelector((state) => state.auth.accountVerified);
 
 	const dispatch = useDispatch();
 
@@ -17,12 +14,8 @@ const LoginForm = () => {
 	const emailCred = useRef(null);
 	const passCred = useRef(null);
 
-	// console.log(`${process.env.REACT_APP_GET_API_KEY}login-validation`)
-
 	const login = async (inputCred) => {
 		return await axios
-			// .post("http://192.168.4.24:8000/login-validation", inputCred)
-
 			.post(`${process.env.REACT_APP_GET_API_KEY}login-validation`, inputCred)
 			.then((res) => {
 				if (res.data.validCred === "true") {
@@ -42,10 +35,7 @@ const LoginForm = () => {
 
 					setInvalidCred(false);
 					dispatch({ type: "auth/login", payload: inputCred });
-					// history.push("/login-success");
-
 					return true
-
 				} else {
 					setInvalidCred(true);
 					return false
@@ -75,10 +65,6 @@ const LoginForm = () => {
 			history.push("/login-success");
 		}
 	};
-
-	// if (validAccount) {
-	// 	return <Redirect to="/message-center" />;
-	// }
 
 	return (
 		<div className="App">

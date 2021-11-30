@@ -16,9 +16,6 @@ const LoginSuccess = () => {
 		return <Redirect to="/login-form" />;
 	}
 	console.log("Login Succesful...")
-
-	// setTimeout(() => history.push("/message-center"), 3000);
-
 	
 	return (
 		<div>

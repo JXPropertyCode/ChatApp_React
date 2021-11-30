@@ -26,10 +26,7 @@ const MessageCenter = () => {
   const pathname = location.pathname.replace("/message-center/", "");
   console.log("pathname:", pathname);
 
-  // const [currentChatroomName, setCurrentChatroomName] = useState("")
-
   const logoutButton = () => {
-    // history.push("/logout");
     history.push("/logout");
   };
 
@@ -85,26 +82,11 @@ const MessageCenter = () => {
     history.push("/login-form");
   }
 
-  // useEffect(() => {
-  //   axios
-  //   setCurrentChatroomName()
-  // }, [])
-
   return (
     <div>
       <header>
         <h1>{username}'s Dashboard</h1>
-        {validAccount && (
-          //   <input
-          //     type="button"
-          //     value="My Profile"
-          //     onClick={() => {
-          //       console.log("Clicked My Profile");
-          //       history.push("/user-profile");
-          //     }}
-          //   />
-          <a href={`/user-profile/${userID}`}>My Profile</a>
-        )}
+        {validAccount && <a href={`/user-profile/${userID}`}>My Profile</a>}
         <p>userID: {userID}</p>
         <p>Current Chatroom: {pathname} </p>
         <button onClick={logoutButton}>Logout Button</button>

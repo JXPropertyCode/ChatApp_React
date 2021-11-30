@@ -7,31 +7,25 @@
 	width: 80%;
 	height: 10%;
 	background-color: rgba(255, 255, 255, 0);
-	/* margin: -5px; */
 }
 
 .messageInputBox {
 	width: 85.25%;
-	/* height: 50%; */
 	border: 1px solid #27213c;
 }
 
 .chatMemberInputBox {
 	width: 25%;
-	/* height: 50%; */
 	border: 1px solid #27213c;
 }
 
 .addChatMemberInputBox {
 	width: 5%;
-	/* height: 50%; */
 	border: 1px solid #27213c;
 }
 
 .chatSendButton {
 	border: 1px solid #27213c;
-	/* height: 50%; */
-
 }
 
 .chatroomWindow {
@@ -39,7 +33,6 @@
 	border: 1px solid #27213c;
 	display: flex;
 	width: 15%;
-	/* height: 600px; */
 	height: 82vh;
 	flex-direction: column;
 	padding: 5px 10px 5px 5px;
@@ -51,7 +44,6 @@
 	border: 1px solid #27213c;
 	display: flex;
 	width: 80%;
-	/* height: 600px; */
 	height: 82vh;
 	flex-direction: column;
 	padding: 5px 10px 5px 5px;
