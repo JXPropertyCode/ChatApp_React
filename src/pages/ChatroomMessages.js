@@ -29,7 +29,7 @@ const ChatroomMessages = () => {
 
   const getMessagelog = () => {
     axios
-    // this axios gets data from the message pathway while giving the path query to the 8000 server to identify the roomID in which to retreive information/data
+      // this axios gets data from the message pathway while giving the path query to the 8000 server to identify the roomID in which to retreive information/data
       .get(`${process.env.REACT_APP_GET_API_KEY}messages?roomid=${pathname}`)
       .then(async (res) => {
         let currentChatroomMessages = [];
@@ -38,38 +38,39 @@ const ChatroomMessages = () => {
             // console.log("res.data[i]:", res.data[i])
             let retrieveRoomData = res.data[i];
 
-            const inputData = {
-              userID: res.data[i].userID,
-            };
+            // const inputData = {
+            //   userID: res.data[i].userID._id,
+            // };
 
             // this is to get the user ID then find the username from the server/database to get the most recent name
             // note: this causes the program to be slow.
             // I added this if statement since if you are speaking, it doesn't output your own name
             // therefore saving a little time so you don't need to call the server
-            if (res.data[i].userID !== userID) {
-              await axios
-                .post(
-                  `${process.env.REACT_APP_GET_API_KEY}get-username-by-user-id`,
-                  inputData
-                )
-                .then((res) => {
-                  console.log("res:", res.data.username);
+            // if (res.data[i].userID._id !== userID) {
+            //   // await axios
+            //   //   .post(
+            //   //     `${process.env.REACT_APP_GET_API_KEY}get-username-by-user-id`,
+            //   //     inputData
+            //   //   )
+            //   //   .then((res) => {
+            //   //     console.log("res:", res.data.username);
 
-                  retrieveRoomData.username = res.data.username;
+            //   //     retrieveRoomData.username = res.data.username;
 
-                  // return;
-                })
-                .catch((err) => {
-                  console.error(err);
-                });
+            //   //     // return;
+            //   //   })
+            //   //   .catch((err) => {
+            //   //     console.error(err);
+            //   //   });
+            //   retrieveRoomData.username = res.data[i].userID.username;
+            //   console.log("retrieveRoomData:", retrieveRoomData);
+            //   currentChatroomMessages.push(retrieveRoomData);
+            //   // currentChatroomMessages.push(res.data[i]);
+            // } else {
+            //   currentChatroomMessages.push(userID);
 
-              console.log("retrieveRoomData:", retrieveRoomData);
-              currentChatroomMessages.push(retrieveRoomData);
-              // currentChatroomMessages.push(res.data[i]);
-            } else {
-              currentChatroomMessages.push(res.data[i]);
-
-            }
+            // }
+            currentChatroomMessages.push(retrieveRoomData);
           }
         }
         console.log("currentChatroomMessages:", currentChatroomMessages);
@@ -124,7 +125,7 @@ const ChatroomMessages = () => {
     // optional return function can be here to process a cleanup
   }, []);
 
-  console.log("Current Message Log:", messagelog);
+  // console.log("Current Message Log:", messagelog);
 
   // to detect when to scroll
   const messagesEndRef = useRef(null);
@@ -206,7 +207,7 @@ const ChatroomMessages = () => {
     prepmessage["inputMessage"].value = "";
   };
 
-  console.log("Final Messagelog:", messagelog);
+  // console.log("Final Messagelog:", messagelog);
 
   return (
     <div
@@ -217,9 +218,11 @@ const ChatroomMessages = () => {
       <div>
         {messagelog.map((message, idx) => {
           if (message !== null) {
-            console.log("messagelog's message:", message);
+            // console.log("messagelog's message:", message);
             // this is needed due to the bug in which messages show for other rooms
-            if (message.userID !== userID) {
+
+            // since userID was populated, it is now an object
+            if (message.userID._id !== userID) {
               return (
                 <p key={idx} style={{ textAlign: "left" }}>
                   {message.username}: {message.clientMessage}
@@ -233,6 +236,7 @@ const ChatroomMessages = () => {
               );
             }
           }
+
           return null;
         })}
         <div ref={messagesEndRef} />

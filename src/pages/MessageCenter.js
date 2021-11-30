@@ -26,6 +26,8 @@ const MessageCenter = () => {
   const pathname = location.pathname.replace("/message-center/", "");
   console.log("pathname:", pathname);
 
+  // const [currentChatroomName, setCurrentChatroomName] = useState("")
+
   const logoutButton = () => {
     // history.push("/logout");
     history.push("/logout");
@@ -82,6 +84,11 @@ const MessageCenter = () => {
     console.log("invalidAccount:", !validAccount);
     history.push("/login-form");
   }
+
+  // useEffect(() => {
+  //   axios
+  //   setCurrentChatroomName()
+  // }, [])
 
   return (
     <div>
