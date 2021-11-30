@@ -29,12 +29,47 @@ const ChatroomMessages = () => {
 
   const getMessagelog = () => {
     axios
-      .get(`${process.env.REACT_APP_GET_API_KEY}messages`)
-      .then((res) => {
+    // this axios gets data from the message pathway while giving the path query to the 8000 server to identify the roomID in which to retreive information/data
+      .get(`${process.env.REACT_APP_GET_API_KEY}messages?roomid=${pathname}`)
+      .then(async (res) => {
         let currentChatroomMessages = [];
         for (let i = 0; i < res.data.length; i++) {
           if (res.data[i].roomID === pathname) {
-            currentChatroomMessages.push(res.data[i]);
+            // console.log("res.data[i]:", res.data[i])
+            let retrieveRoomData = res.data[i];
+
+            const inputData = {
+              userID: res.data[i].userID,
+            };
+
+            // this is to get the user ID then find the username from the server/database to get the most recent name
+            // note: this causes the program to be slow.
+            // I added this if statement since if you are speaking, it doesn't output your own name
+            // therefore saving a little time so you don't need to call the server
+            if (res.data[i].userID !== userID) {
+              await axios
+                .post(
+                  `${process.env.REACT_APP_GET_API_KEY}get-username-by-user-id`,
+                  inputData
+                )
+                .then((res) => {
+                  console.log("res:", res.data.username);
+
+                  retrieveRoomData.username = res.data.username;
+
+                  // return;
+                })
+                .catch((err) => {
+                  console.error(err);
+                });
+
+              console.log("retrieveRoomData:", retrieveRoomData);
+              currentChatroomMessages.push(retrieveRoomData);
+              // currentChatroomMessages.push(res.data[i]);
+            } else {
+              currentChatroomMessages.push(res.data[i]);
+
+            }
           }
         }
         console.log("currentChatroomMessages:", currentChatroomMessages);
@@ -149,7 +184,7 @@ const ChatroomMessages = () => {
 
     if (strFilter.length === 0) {
       console.log("Cannot Have Empty Spaces in Chat Room Name");
-      prepmessage["inputMessage"].value = ""
+      prepmessage["inputMessage"].value = "";
       return;
     }
 
@@ -171,6 +206,8 @@ const ChatroomMessages = () => {
     prepmessage["inputMessage"].value = "";
   };
 
+  console.log("Final Messagelog:", messagelog);
+
   return (
     <div
       className="messageWindow"
@@ -180,8 +217,9 @@ const ChatroomMessages = () => {
       <div>
         {messagelog.map((message, idx) => {
           if (message !== null) {
+            console.log("messagelog's message:", message);
             // this is needed due to the bug in which messages show for other rooms
-            if (message.email !== userEmail) {
+            if (message.userID !== userID) {
               return (
                 <p key={idx} style={{ textAlign: "left" }}>
                   {message.username}: {message.clientMessage}
