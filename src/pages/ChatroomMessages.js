@@ -21,7 +21,7 @@ const ChatroomMessages = () => {
   const userEmail = useSelector((state) => state.auth.email);
   const userPass = useSelector((state) => state.auth.password);
   const username = useSelector((state) => state.auth.username);
-  const userID = useSelector((state) => state.auth.userID);
+  const owner = useSelector((state) => state.auth.owner);
   const prepMessage = useRef(null);
   const [messagelog, setMessagelog] = useState([]);
 
@@ -156,7 +156,7 @@ const ChatroomMessages = () => {
 
     let convertData = new MessageObject(
       pathname,
-      userID,
+      owner,
       username,
       userEmail,
       userPass,
@@ -180,8 +180,8 @@ const ChatroomMessages = () => {
             // console.log("messagelog's message:", message);
             // this is needed due to the bug in which messages show for other rooms
 
-            // since userID was populated, it is now an object
-            if (message.userID._id !== userID) {
+            // since owner was populated, it is now an object
+            if (message.owner._id !== owner) {
               return (
                 <p key={idx} style={{ textAlign: "left" }}>
                   {message.username}: {message.clientMessage}

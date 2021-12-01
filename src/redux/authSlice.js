@@ -4,7 +4,7 @@ const authSlice = createSlice({
 	name: "auth",
 	initialState: {
 		accountVerified: false,
-		userID: "",
+		owner: "",
 		username: "",
 		email: "",
 		password: "",
@@ -12,7 +12,7 @@ const authSlice = createSlice({
 	reducers: {
 		login: (state, { type, payload }) => {
 			state.accountVerified = true;
-			state.userID = payload.userID;
+			state.owner = payload.owner;
 			state.username = payload.username;
 			state.email = payload.email;
 			state.password = payload.password;
@@ -21,7 +21,7 @@ const authSlice = createSlice({
 			state.accountVerified = false;
 			state.email = "";
 			state.password = "";
-			state.userID = "";
+			state.owner = "";
 			state.username = ""
 		},
 		isVerified: (state) => {
@@ -32,7 +32,7 @@ const authSlice = createSlice({
 		},
 		outputData: (state) => {
 			console.log("state.accountVerified:", state.accountVerified);
-			console.log("state.userID:", state.userID);
+			console.log("state.owner:", state.owner);
 			console.log("state.email:", state.email);
 			console.log("state.password:", state.password);
 		},

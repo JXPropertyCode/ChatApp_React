@@ -5,17 +5,17 @@ import axios from "axios";
 
 const LeaveChatroom = ({ chatroomID }) => {
   const history = useHistory();
-  const userID = useSelector((state) => state.auth.userID);
+  const owner = useSelector((state) => state.auth.owner);
 
   useEffect(() => {
     console.log("In Leave Chatroom...");
   }, []);
 
   const leaveChatroom = () => {
-    console.log(userID, "is Leaving Chatroom:", chatroomID);
+    console.log(owner, "is Leaving Chatroom:", chatroomID);
 
     const inputCred = {
-      userID: userID,
+      owner: owner,
       chatroomID: chatroomID,
     };
 

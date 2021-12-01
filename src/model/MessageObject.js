@@ -1,6 +1,6 @@
 class MessageObject {
   roomID;
-  userID;
+  owner;
   username;
   email;
   password;
@@ -8,14 +8,14 @@ class MessageObject {
 
   constructor(
     roomID,
-    userID,
+    owner,
     username,
     email,
     password,
     clientMessage
   ) {
     this.roomID = String(roomID);
-    this.userID = String(userID);
+    this.owner = String(owner);
     this.username = String(username);
     this.email = String(email);
     this.password = String(password);

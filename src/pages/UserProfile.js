@@ -10,7 +10,7 @@ const UserProfile = () => {
 
   const validAccount = useSelector((state) => state.auth.accountVerified);
   const username = useSelector((state) => state.auth.username);
-  const userID = useSelector((state) => state.auth.userID);
+  const owner = useSelector((state) => state.auth.owner);
   const userPass = useSelector((state) => state.auth.password);
   const userEmail = useSelector((state) => state.auth.email);
   const reqNewUserName = useRef(null);
@@ -36,7 +36,7 @@ const UserProfile = () => {
     const inputData = {
       newUsername: strFilter,
       username: username,
-      userID: userID,
+      owner: owner,
       email: userEmail,
       password: userPass,
     };
@@ -76,7 +76,7 @@ const UserProfile = () => {
       <h1>{username}'s Profile</h1>
       <input type="button" onClick={logoutButton} value="Logout Button" />
 
-      <h3 className="userInfo">User ID: {userID}</h3>
+      <h3 className="userInfo">User ID: {owner}</h3>
 
       <div className="userInfo">
         <h3>Username: {username}</h3>

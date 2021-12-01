@@ -5,7 +5,7 @@ import axios from "axios";
 const ChatroomLists = () => {
   const createChatRoomName = useRef(null);
 
-  const userID = useSelector((state) => state.auth.userID);
+  const owner = useSelector((state) => state.auth.owner);
   const userEmail = useSelector((state) => state.auth.email);
   const userPass = useSelector((state) => state.auth.password);
 
@@ -53,7 +53,7 @@ const ChatroomLists = () => {
     console.log("Creating Chat Room Name:", createChatRoomName.current.value);
 
     const inputCred = {
-      userID: userID,
+      owner: owner,
       chatroomName: createChatRoomName.current.value,
       lastModified: Math.floor(Date.now() / 1000),
     };

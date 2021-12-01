@@ -13,7 +13,7 @@ const MessageCenter = () => {
   const history = useHistory();
 
   const username = useSelector((state) => state.auth.username);
-  const userID = useSelector((state) => state.auth.userID);
+  const owner = useSelector((state) => state.auth.owner);
   const userPass = useSelector((state) => state.auth.password);
   const userEmail = useSelector((state) => state.auth.email);
   const [isValidRoom, setIsValidRoom] = useState(false);
@@ -86,15 +86,15 @@ const MessageCenter = () => {
     <div>
       <header>
         <h1>{username}'s Dashboard</h1>
-        {validAccount && <a href={`/user-profile/${userID}`}>My Profile</a>}
-        <p>userID: {userID}</p>
+        {validAccount && <a href={`/user-profile/${owner}`}>My Profile</a>}
+        <p>userID: {owner}</p>
         <p>Current Chatroom: {pathname} </p>
         <button onClick={logoutButton}>Logout Button</button>
       </header>
 
       {/* if not a valid room, such as /message-center, do not let it add anyone */}
       {isValidRoom && <AddMembers chatroomID={pathname}></AddMembers>}
-      {isValidRoom && <LeaveChatroom chatroomID={pathname} userID={userID} />}
+      {isValidRoom && <LeaveChatroom chatroomID={pathname} owner={owner} />}
       <div className="chatDisplay">
         {validAccount && <ChatroomLists></ChatroomLists>}
 
