@@ -55,7 +55,7 @@ const ChatroomLists = () => {
     const inputCred = {
       userID: userID,
       chatroomName: createChatRoomName.current.value,
-      timestamp: Math.floor(Date.now() / 1000),
+      lastModified: Math.floor(Date.now() / 1000),
     };
 
     axios

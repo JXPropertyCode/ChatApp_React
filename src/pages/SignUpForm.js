@@ -37,15 +37,15 @@ const SignUpForm = () => {
     console.log("Creating Account using:", creatingCred);
 
     if (creatingCred.password === creatingCred.confirmPassword) {
-      // UNIX timestamp
-      let timestamp = Math.floor(Date.now() / 1000);
+      // UNIX lastModified
+      let lastModified = Math.floor(Date.now() / 1000);
 
       let convertData = new AccountObject(
         creatingCred.chatrooms,
         creatingCred.username,
         creatingCred.email,
         creatingCred.password,
-        timestamp
+        lastModified
       );
 
       axios

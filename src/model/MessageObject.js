@@ -4,7 +4,6 @@ class MessageObject {
   username;
   email;
   password;
-  timestamp;
   clientMessage;
 
   constructor(
@@ -13,7 +12,6 @@ class MessageObject {
     username,
     email,
     password,
-    timestamp,
     clientMessage
   ) {
     this.roomID = String(roomID);
@@ -21,7 +19,6 @@ class MessageObject {
     this.username = String(username);
     this.email = String(email);
     this.password = String(password);
-    this.timestamp = Number(timestamp);
     this.clientMessage = String(clientMessage);
   }
 }

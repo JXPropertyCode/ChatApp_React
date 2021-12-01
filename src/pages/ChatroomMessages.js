@@ -153,8 +153,6 @@ const ChatroomMessages = () => {
       return;
     }
 
-    // UNIX timestamp
-    let timestamp = Math.floor(Date.now() / 1000);
 
     let convertData = new MessageObject(
       pathname,
@@ -162,7 +160,6 @@ const ChatroomMessages = () => {
       username,
       userEmail,
       userPass,
-      timestamp,
       currentPrepMessageValue
     );
 

@@ -3,14 +3,14 @@ class ChatroomObject {
 	chatroomName;
 	creatorUserID;
 	members;
-	timestamp;
+	lastModified;
 
-	constructor(chatroomID, chatroomName, creatorUserID, members, timestamp) {
+	constructor(chatroomID, chatroomName, creatorUserID, members, lastModified) {
 		this.chatroomID = String(chatroomID)
 		this.chatroomName = String(chatroomName)
         this.creatorUserID = String(creatorUserID);
 		this.members = new Array(members);
-		this.timestamp = Number(timestamp);
+		this.lastModified = Number(lastModified);
 	}
 }
 
