@@ -95,7 +95,7 @@ const ChatroomLists = () => {
       {chatrooms.map((chatroom, idx) => {
         console.log("chatroom.chatroomName:", chatroom.chatroomName);
         return (
-          <a key={idx} href={`/message-center/${chatroom.chatroomID}`}>
+          <a key={idx} href={`/message-center/${chatroom.chatroomId}`}>
             {chatroom.chatroomName}
           </a>
         );

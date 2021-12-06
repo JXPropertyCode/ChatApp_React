@@ -2,13 +2,13 @@ import { useSelector } from "react-redux";
 import { useRef } from "react";
 import axios from "axios";
 
-const AddMembers = ({ chatroomID }) => {
+const AddMembers = ({ chatroomId }) => {
 	const addMembers = useRef(null);
 
 	const userEmail = useSelector((state) => state.auth.email);
 	const userPass = useSelector((state) => state.auth.password);
 
-	console.log("chatroomID to add members:", chatroomID);
+	console.log("chatroomId to add members:", chatroomId);
 
 	const authToAddMembers = async (e) => {
 		e.preventDefault();
@@ -47,7 +47,7 @@ const AddMembers = ({ chatroomID }) => {
 		const addMembersList = userInput.split(/[ ,]+/);
 
 		const inputData = {
-			currentChatroom: chatroomID,
+			currentChatroom: chatroomId,
 			addMembersList: addMembersList,
 		};
 

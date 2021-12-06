@@ -29,12 +29,12 @@ const ChatroomMessages = () => {
 
   const getMessagelog = () => {
     axios
-      // this axios gets data from the message pathway while giving the path query to the 8000 server to identify the roomID in which to retreive information/data
-      .get(`${process.env.REACT_APP_GET_API_KEY}messages?roomid=${pathname}`)
+      // this axios gets data from the message pathway while giving the path query to the 8000 server to identify the room in which to retreive information/data
+      .get(`${process.env.REACT_APP_GET_API_KEY}messages?room=${pathname}`)
       .then(async (res) => {
         let currentChatroomMessages = [];
         for (let i = 0; i < res.data.length; i++) {
-          if (res.data[i].roomID === pathname) {
+          if (res.data[i].room === pathname) {
             // console.log("res.data[i]:", res.data[i])
             let retrieveRoomData = res.data[i];
             currentChatroomMessages.push(retrieveRoomData);

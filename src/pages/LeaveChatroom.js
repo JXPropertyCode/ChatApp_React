@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import axios from "axios";
 
-const LeaveChatroom = ({ chatroomID }) => {
+const LeaveChatroom = ({ chatroomId }) => {
   const history = useHistory();
   const owner = useSelector((state) => state.auth.owner);
 
@@ -12,11 +12,11 @@ const LeaveChatroom = ({ chatroomID }) => {
   }, []);
 
   const leaveChatroom = () => {
-    console.log(owner, "is Leaving Chatroom:", chatroomID);
+    console.log(owner, "is Leaving Chatroom:", chatroomId);
 
     const inputCred = {
       owner: owner,
-      chatroomID: chatroomID,
+      chatroomId: chatroomId,
     };
 
     axios

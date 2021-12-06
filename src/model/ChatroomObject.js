@@ -1,12 +1,12 @@
 class ChatroomObject {
-    chatroomID;
+    chatroomId;
 	chatroomName;
 	creatorOwnerID;
 	members;
 	lastModified;
 
-	constructor(chatroomID, chatroomName, creatorOwnerID, members, lastModified) {
-		this.chatroomID = String(chatroomID)
+	constructor(chatroomId, chatroomName, creatorOwnerID, members, lastModified) {
+		this.chatroomId = String(chatroomId)
 		this.chatroomName = String(chatroomName)
         this.creatorOwnerID = String(creatorOwnerID);
 		this.members = new Array(members);

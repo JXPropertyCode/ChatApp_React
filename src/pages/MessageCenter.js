@@ -93,13 +93,13 @@ const MessageCenter = () => {
       </header>
 
       {/* if not a valid room, such as /message-center, do not let it add anyone */}
-      {isValidRoom && <AddMembers chatroomID={pathname}></AddMembers>}
-      {isValidRoom && <LeaveChatroom chatroomID={pathname} owner={owner} />}
+      {isValidRoom && <AddMembers chatroomId={pathname}></AddMembers>}
+      {isValidRoom && <LeaveChatroom chatroomId={pathname} owner={owner} />}
       <div className="chatDisplay">
         {validAccount && <ChatroomLists></ChatroomLists>}
 
         {isValidRoom && <ChatroomMessages></ChatroomMessages>}
-        {isValidRoom && <ChatroomMembers chatroomID={pathname} />}
+        {isValidRoom && <ChatroomMembers chatroomId={pathname} />}
       </div>
     </div>
   );

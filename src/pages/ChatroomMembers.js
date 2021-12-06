@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const ChatroomMembers = ({ chatroomID }) => {
+const ChatroomMembers = ({ chatroomId }) => {
 	console.log("In ChatroomMembers...");
-	console.log("chatroomID:", chatroomID);
+	console.log("chatroomId:", chatroomId);
 
 	const [members, setMembers] = useState([]);
 
 	const inputCred = {
-		chatroom: chatroomID,
+		chatroom: chatroomId,
 	};
 
 	useEffect(() => {
