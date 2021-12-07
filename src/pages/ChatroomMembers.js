@@ -23,6 +23,7 @@ const ChatroomMembers = ({ chatroomId }) => {
 			)
 			.then((res) => {
 				console.log("res.data:", res.data);
+
 				setMembers(res.data.membersInChatroom);
 			})
 			.catch((err) => {
@@ -39,7 +40,7 @@ const ChatroomMembers = ({ chatroomId }) => {
 			<input type="button" onClick={() => updateMemberList()} value="Refresh" />
 			<h3>Chatroom Members</h3>
 			{members.map((member, idx) => {
-				return <p key={idx}>{member}</p>;
+				return <p key={idx}>{member.username}</p>;
 			})}
 		</div>
 	);

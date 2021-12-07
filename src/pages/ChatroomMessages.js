@@ -5,6 +5,7 @@ import useWebSocket from "react-use-websocket";
 import MessageObject from "../model/MessageObject";
 import axios from "axios";
 import "../components/messageBox.css";
+import moment from "moment";
 
 const ChatroomMessages = () => {
   const location = useLocation();
@@ -153,7 +154,6 @@ const ChatroomMessages = () => {
       return;
     }
 
-
     let convertData = new MessageObject(
       pathname,
       owner,
@@ -176,27 +176,28 @@ const ChatroomMessages = () => {
     >
       <div>
         {messagelog.map((message, idx) => {
-          if (message !== null) {
-            // console.log("messagelog's message:", message);
-            // this is needed due to the bug in which messages show for other rooms
+          // if (message !== null) {
+          // console.log("messagelog's message:", message);
+          // this is needed due to the bug in which messages show for other rooms
 
-            // since owner was populated, it is now an object
-            if (message.owner._id !== owner) {
-              return (
-                <p key={idx} style={{ textAlign: "left" }}>
-                  {message.username}: {message.clientMessage}
-                </p>
-              );
-            } else {
-              return (
-                <p key={idx} style={{ textAlign: "right" }}>
-                  {message.clientMessage}
-                </p>
-              );
-            }
-          }
+          // since owner was populated, it is now an object
 
-          return null;
+          return (
+            <div
+              key={idx}
+              style={{
+                textAlign: message.owner._id !== owner ? "left" : "right",
+              }}
+            >
+              <div>{moment(message.createdAt).format("llll")}</div>
+              <div>
+                {message.owner.username}: {message.clientMessage}
+              </div>
+            </div>
+          );
+          // }
+
+          // return null;
         })}
         <div ref={messagesEndRef} />
       </div>

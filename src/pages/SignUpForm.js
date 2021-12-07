@@ -38,14 +38,14 @@ const SignUpForm = () => {
 
     if (creatingCred.password === creatingCred.confirmPassword) {
       // UNIX lastModified
-      let lastModified = Math.floor(Date.now() / 1000);
+      // let lastModified = Math.floor(Date.now() / 1000);
 
       let convertData = new AccountObject(
         creatingCred.chatrooms,
         creatingCred.username,
         creatingCred.email,
         creatingCred.password,
-        lastModified
+        // lastModified
       );
 
       axios
