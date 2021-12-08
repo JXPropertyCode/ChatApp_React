@@ -4,10 +4,11 @@ import ChatroomMessages from "./ChatroomMessages";
 import ChatroomLists from "./ChatroomLists";
 import ChatroomMembers from "./ChatroomMembers";
 import AddMembers from "./AddMembers";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import LeaveChatroom from "./LeaveChatroom";
+import queryString from "query-string";
 
 const MessageCenter = () => {
   const history = useHistory();
@@ -19,12 +20,20 @@ const MessageCenter = () => {
   const [isValidRoom, setIsValidRoom] = useState(false);
 
   const validAccount = useSelector((state) => state.auth.accountVerified);
+  // const [searchParams, setSearchParams] = useSearchParams();
+  // const roomId = searchParams.get('roomId')
 
-  const location = useLocation();
-  console.log("location.pathname:", location.pathname);
+  // const location = useLocation();
+  // console.log("location.pathname:", location.pathname);
 
-  const pathname = location.pathname.replace("/message-center/", "");
-  console.log("pathname:", pathname);
+  // gets the path variable
+  const params = useParams();
+  // const { search } = useLocation()
+  // const values = queryString.parse(search)
+
+  console.log("Current roomId Params:", params);
+
+  const pathname = params.roomId;
 
   const logoutButton = () => {
     history.push("/logout");
@@ -68,13 +77,13 @@ const MessageCenter = () => {
   }, []);
 
   // pathname is from useLocation() which is a hook therefore useEffect can be used
-  useEffect(() => {
-    console.log("Room Changed:", pathname);
-    if (pathname === "" || pathname === "/message-center") {
-      setIsValidRoom(false);
-      history.push("/message-center");
-    }
-  }, [pathname]);
+  // useEffect(() => {
+  //   console.log("Room Changed:", pathname);
+  //   if (pathname === "" || pathname === "/message-center") {
+  //     setIsValidRoom(false);
+  //     history.push("/chatroom-lists/");
+  //   }
+  // }, [pathname]);
 
   if (!validAccount) {
     console.log("Invalid Access Detected...");
@@ -94,7 +103,13 @@ const MessageCenter = () => {
 
       {/* if not a valid room, such as /message-center, do not let it add anyone */}
       {isValidRoom && <AddMembers chatroomId={pathname}></AddMembers>}
-      {isValidRoom && <LeaveChatroom chatroomId={pathname} owner={owner} />}
+      {isValidRoom && (
+        <LeaveChatroom
+          chatroomId={pathname}
+          owner={owner}
+          setIsValidRoom={setIsValidRoom}
+        />
+      )}
       <div className="chatDisplay">
         {validAccount && <ChatroomLists></ChatroomLists>}
 

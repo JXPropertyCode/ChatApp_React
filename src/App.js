@@ -9,6 +9,7 @@ import LoginSuccess from "./pages/LoginSuccess";
 import Logout from "./pages/Logout";
 import Error from "./pages/Error";
 import UserProfile from "./pages/UserProfile";
+import ChatroomLists from "./pages/ChatroomLists";
 
 export default function App() {
   return (
@@ -21,7 +22,11 @@ export default function App() {
         {/* auth these login before letting access */}
 
         {/* if using exact path, the chatroom routes would result in Error 404 */}
-        <Route path="/message-center" component={MessageCenter} />
+        {/* <Route path="/message-center/" component={MessageCenter} /> */}
+        <Route exact path="/message-center/" component={MessageCenter} />
+        <Route path="/message-center/:roomId" component={MessageCenter} />
+        <Route exact path="/chatroom-lists/" component={ChatroomLists} />
+
         <Route path="/user-profile" component={UserProfile} />
 
         <Route exact path="/account-created" component={AccountCreated} />

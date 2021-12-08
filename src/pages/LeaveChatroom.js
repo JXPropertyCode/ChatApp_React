@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import axios from "axios";
 
-const LeaveChatroom = ({ chatroomId }) => {
+const LeaveChatroom = ({ chatroomId, setIsValidRoom }) => {
   const history = useHistory();
   const owner = useSelector((state) => state.auth.owner);
 
@@ -29,6 +29,7 @@ const LeaveChatroom = ({ chatroomId }) => {
         console.error(err);
       });
 
+    setIsValidRoom(false);
     history.push("/message-center");
   };
 

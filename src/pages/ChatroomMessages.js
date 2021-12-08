@@ -1,4 +1,4 @@
-import { Redirect, useLocation } from "react-router-dom";
+import { Redirect, useLocation, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState, useEffect, useRef } from "react";
 import useWebSocket from "react-use-websocket";
@@ -8,15 +8,21 @@ import "../components/messageBox.css";
 import moment from "moment";
 
 const ChatroomMessages = () => {
-  const location = useLocation();
-  console.log("location.pathname:", location.pathname);
+  // const location = useLocation();
+  // console.log("location.pathname:", location.pathname);
 
-  const pathname = location.pathname.replace("/message-center/", "");
+  // const pathname = location.pathname.replace("/message-center/", "");
+  // console.log("pathname:", pathname);
+
+  const params = useParams();
+
+  console.log("Current roomId Params:", params);
+
+  const pathname = params.roomId;
+
   console.log("pathname:", pathname);
 
-  const { sendMessage, lastMessage } = useWebSocket(
-    `ws://localhost:8000/${pathname}`
-  );
+  
 
   const validAccount = useSelector((state) => state.auth.accountVerified);
   const userEmail = useSelector((state) => state.auth.email);
@@ -25,6 +31,10 @@ const ChatroomMessages = () => {
   const owner = useSelector((state) => state.auth.owner);
   const prepMessage = useRef(null);
   const [messagelog, setMessagelog] = useState([]);
+
+  const { sendMessage, lastMessage } = useWebSocket(
+    `ws://localhost:8000/${pathname}/${owner}`
+  );
 
   const [isScrollActive, setIsScrollActive] = useState(true);
 
@@ -35,6 +45,7 @@ const ChatroomMessages = () => {
       .then(async (res) => {
         let currentChatroomMessages = [];
         for (let i = 0; i < res.data.length; i++) {
+          console.log("res.data[i].room:", res.data[i].room === pathname);
           if (res.data[i].room === pathname) {
             // console.log("res.data[i]:", res.data[i])
             let retrieveRoomData = res.data[i];
@@ -54,9 +65,11 @@ const ChatroomMessages = () => {
     var W3CWebSocket = require("websocket").w3cwebsocket;
 
     var client = new W3CWebSocket(
-      `ws://localhost:8000/${pathname}`,
+      `ws://localhost:8000/${pathname}/${owner}`,
       "echo-protocol"
     );
+
+    console.log(`ws://localhost:8000/${pathname}`);
 
     client.onerror = function () {
       console.log("Connection Error");
@@ -65,7 +78,7 @@ const ChatroomMessages = () => {
     // sending random numbers to Express's websocket, then Express would output them
     // this is optional for testing purposes
     client.onopen = function () {
-      console.log("WebSocket Client Connected");
+      console.log("WebSocket Client Connected to", pathname);
       // function sendNumber() {
       // 	// this is while the connection is open, it will continually keep sending messages
       // 	// to visualize the flow
@@ -123,12 +136,22 @@ const ChatroomMessages = () => {
     }
   }, [messagelog, lastMessage]);
 
+
+  // original
   useEffect(() => {
     if (lastMessage !== null) {
-      let convertData = JSON.parse(lastMessage.data);
-      console.log("lastMessage:", convertData);
-      // when getting new messages just update the state
-      setMessagelog([...messagelog, convertData]);
+      console.log("lastMessage:", lastMessage)
+      const convertData = JSON.parse(lastMessage.data);
+
+      // previously when I messaged in one room, every room received the message.
+      // this was the way I used to prevent that.
+      // problem with this is that what if there are a billion people speaking at the same time?
+      // it would be slow due to this keeps filtering messages after receiving them
+      // if (convertData.room === pathname) {
+        console.log("lastMessage:", convertData);
+        // when getting new messages just update the state
+        setMessagelog([...messagelog, convertData]);
+      // }
     }
   }, [lastMessage]);
 
