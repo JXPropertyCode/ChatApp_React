@@ -44,7 +44,7 @@ const SignUpForm = () => {
         creatingCred.chatrooms,
         creatingCred.username,
         creatingCred.email,
-        creatingCred.password,
+        creatingCred.password
         // lastModified
       );
 
@@ -54,10 +54,19 @@ const SignUpForm = () => {
           if (res.data.validCred === "true") {
             console.log("Success! Account Created:", convertData);
             setCredEmailError(false);
+
+            // attempt to send email
+            axios
+              .post(`${process.env.REACT_APP_GET_API_KEY}email`, convertData)
+              .then((res) => {
+                console.log("res from email:", res);
+              });
+
             history.push({
               pathname: "/account-created",
               auth: true,
             });
+
           } else {
             console.log("Error! Email Already Exists:", convertData.email);
             setCredEmailError(true);

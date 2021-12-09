@@ -37,6 +37,7 @@ const LoginForm = () => {
 					dispatch({ type: "auth/login", payload: inputCred });
 					return true
 				} else {
+					alert("Need to confirm account in your email!")
 					setInvalidCred(true);
 					return false
 				}

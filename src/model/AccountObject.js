@@ -3,14 +3,12 @@ class AccountObject {
 	username;
 	email;
 	password;
-	// lastModified;
 
-	constructor(chatrooms, username, email, password, lastModified) {
+	constructor(chatrooms, username, email, password) {
 		this.chatrooms = new Array(...chatrooms);
 		this.username = String(username);
 		this.email = String(email);
 		this.password = String(password);
-		// this.lastModified = Date(lastModified);
 	}
 }
 

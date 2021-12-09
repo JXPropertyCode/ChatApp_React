@@ -10,6 +10,7 @@ import Logout from "./pages/Logout";
 import Error from "./pages/Error";
 import UserProfile from "./pages/UserProfile";
 import ChatroomLists from "./pages/ChatroomLists";
+import ConfirmEmail from './pages/ConfirmEmail'
 
 export default function App() {
   return (
@@ -20,6 +21,9 @@ export default function App() {
         <Route exact path="/login-form" component={LoginForm} />
         <Route exact path="/signup-form" component={SignUpForm} />
         {/* auth these login before letting access */}
+
+
+        <Route exact path='/confirm/:id' component={ConfirmEmail} />
 
         {/* if using exact path, the chatroom routes would result in Error 404 */}
         {/* <Route path="/message-center/" component={MessageCenter} /> */}
