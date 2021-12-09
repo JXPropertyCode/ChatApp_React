@@ -8,12 +8,6 @@ import "../components/messageBox.css";
 import moment from "moment";
 
 const ChatroomMessages = () => {
-  // const location = useLocation();
-  // console.log("location.pathname:", location.pathname);
-
-  // const pathname = location.pathname.replace("/message-center/", "");
-  // console.log("pathname:", pathname);
-
   const params = useParams();
 
   console.log("Current roomId Params:", params);
@@ -21,8 +15,6 @@ const ChatroomMessages = () => {
   const pathname = params.roomId;
 
   console.log("pathname:", pathname);
-
-  
 
   const validAccount = useSelector((state) => state.auth.accountVerified);
   const userEmail = useSelector((state) => state.auth.email);
@@ -32,6 +24,8 @@ const ChatroomMessages = () => {
   const prepMessage = useRef(null);
   const [messagelog, setMessagelog] = useState([]);
 
+  // owner is the userId before its populated with the accountCollection data
+  // it passes to the Express so it can detect the unique client.
   const { sendMessage, lastMessage } = useWebSocket(
     `ws://localhost:8000/${pathname}/${owner}`
   );
@@ -136,11 +130,10 @@ const ChatroomMessages = () => {
     }
   }, [messagelog, lastMessage]);
 
-
   // original
   useEffect(() => {
     if (lastMessage !== null) {
-      console.log("lastMessage:", lastMessage)
+      console.log("lastMessage:", lastMessage);
       const convertData = JSON.parse(lastMessage.data);
 
       // previously when I messaged in one room, every room received the message.
@@ -148,9 +141,9 @@ const ChatroomMessages = () => {
       // problem with this is that what if there are a billion people speaking at the same time?
       // it would be slow due to this keeps filtering messages after receiving them
       // if (convertData.room === pathname) {
-        console.log("lastMessage:", convertData);
-        // when getting new messages just update the state
-        setMessagelog([...messagelog, convertData]);
+      console.log("lastMessage:", convertData);
+      // when getting new messages just update the state
+      setMessagelog([...messagelog, convertData]);
       // }
     }
   }, [lastMessage]);
