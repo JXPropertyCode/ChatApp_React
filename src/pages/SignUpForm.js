@@ -37,7 +37,7 @@ const SignUpForm = () => {
     console.log("Creating Account using:", creatingCred);
 
     if (creatingCred.password === creatingCred.confirmPassword) {
-      // UNIX lastModified
+      // UNIX lastModified f
       // let lastModified = Math.floor(Date.now() / 1000);
 
       let convertData = new AccountObject(
@@ -66,7 +66,6 @@ const SignUpForm = () => {
               pathname: "/account-created",
               auth: true,
             });
-
           } else {
             console.log("Error! Email Already Exists:", convertData.email);
             setCredEmailError(true);

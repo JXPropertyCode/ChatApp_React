@@ -11,6 +11,9 @@ import Error from "./pages/Error";
 import UserProfile from "./pages/UserProfile";
 import ChatroomLists from "./pages/ChatroomLists";
 import ConfirmEmail from './pages/ConfirmEmail'
+import ChangeEmail from './pages/ChangeEmail'
+import ChangePassword from './pages/ChangePassword'
+
 
 export default function App() {
   return (
@@ -24,6 +27,9 @@ export default function App() {
 
 
         <Route exact path='/confirm/:id' component={ConfirmEmail} />
+        <Route exact path="/change-email/:id" component={ChangeEmail} />
+        <Route exact path="/change-password/:id" component={ChangePassword} />
+
 
         {/* if using exact path, the chatroom routes would result in Error 404 */}
         {/* <Route path="/message-center/" component={MessageCenter} /> */}

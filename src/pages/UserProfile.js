@@ -60,6 +60,48 @@ const UserProfile = () => {
     setChangeUsername(!changeUsername);
   };
 
+  const handleEmail = (e) => {
+    const inputData = {
+      username: username,
+      owner: owner,
+      email: userEmail,
+      password: userPass,
+    };
+
+    axios
+      .post(`${process.env.REACT_APP_GET_API_KEY}change-email/${owner}`, inputData)
+      .then((res) => {
+        console.log("res:", res);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+
+    alert("Email has been sent to you to change your email!");
+  };
+
+
+  const handlePassword = (e) => {
+    const inputData = {
+      username: username,
+      owner: owner,
+      email: userEmail,
+      password: userPass,
+    };
+
+    axios
+      .post(`${process.env.REACT_APP_GET_API_KEY}change-password/${owner}`, inputData)
+      .then((res) => {
+        console.log("res:", res);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+
+    alert("Email has been sent to you to change your password!");
+  };
+
+
   const logoutButton = () => {
     history.push("/logout");
   };
@@ -113,12 +155,16 @@ const UserProfile = () => {
 
       <div className="userInfo">
         <h3>Email: {userEmail}</h3>
-        <input type="button" value="Change" />
+        <input
+          type="button"
+          value="Request Change"
+          onClick={() => handleEmail()}
+        />
       </div>
 
       <div className="userInfo">
         <h3>Password: {userPass}</h3>
-        <input type="button" value="Change" />
+        <input type="button" value="Request Change" onClick={() => handlePassword()} />
       </div>
     </div>
   );

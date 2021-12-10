@@ -30,6 +30,12 @@ const authSlice = createSlice({
 		changeUsername: (state, { type, payload }) => {
 			state.username = payload.newUsername
 		},
+		changeEmail: (state, { type, payload }) => {
+			state.email = payload.newEmail
+		},
+		changePassword: (state, { type, payload }) => {
+			state.password = payload.newPassword
+		},
 		outputData: (state) => {
 			console.log("state.accountVerified:", state.accountVerified);
 			console.log("state.owner:", state.owner);
