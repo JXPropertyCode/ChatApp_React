@@ -26,7 +26,7 @@ const ConfirmEmail = () => {
     // console.log("userId:", userId);
     axios
       .post(
-        `${process.env.REACT_APP_GET_API_KEY}email/confirm/${userId}`,
+        `${process.env.REACT_APP_GET_API_KEY}confirm/${userId}`,
         userId
       )
       .then(
