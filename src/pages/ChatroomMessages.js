@@ -27,7 +27,7 @@ const ChatroomMessages = () => {
   // owner is the userId before its populated with the accountCollection data
   // it passes to the Express so it can detect the unique client.
   const { sendMessage, lastMessage } = useWebSocket(
-    `ws://localhost:8000/${pathname}/${owner}`
+    `ws://chat-app-express-jx.herokuapp.com/${pathname}/${owner}`
   );
 
   const [isScrollActive, setIsScrollActive] = useState(true);
@@ -59,7 +59,7 @@ const ChatroomMessages = () => {
     var W3CWebSocket = require("websocket").w3cwebsocket;
 
     var client = new W3CWebSocket(
-      `ws://localhost:8000/${pathname}/${owner}`,
+      `ws://chat-app-express-jx.herokuapp.com/${pathname}/${owner}`,
       "echo-protocol"
     );
 
