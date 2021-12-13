@@ -69,7 +69,7 @@ const ChangeEmail = () => {
       )
       .then((res) => {
         // console.log("res from email:", res);
-        res
+        return res
       });
 
     dispatch({ type: "auth/changeEmail", payload: creatingCred });

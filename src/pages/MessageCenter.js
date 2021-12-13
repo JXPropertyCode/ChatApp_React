@@ -70,9 +70,9 @@ const MessageCenter = () => {
             history.push("/message-center");
           }
         })
-        .catch((e) => {
+        .catch((err) => {
           // console.log("Error:", e);
-          e;
+          return err;
         });
     }
   }, []);

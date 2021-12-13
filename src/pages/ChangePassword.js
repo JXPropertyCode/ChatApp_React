@@ -69,7 +69,7 @@ const ChangePassword = () => {
       )
       .then((res) => {
         // console.log("res from password:", res);
-        ResizeObserver;
+        return res;
       });
 
     dispatch({ type: "auth/changePassword", payload: creatingCred });

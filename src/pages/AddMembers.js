@@ -55,11 +55,11 @@ const AddMembers = ({ chatroomId }) => {
 			.post(`${process.env.REACT_APP_GET_API_KEY}add-users-to-chatroom`, inputData)
 			.then((res) => {
 				// console.log("res.data:", res.data);
-				res
+				return res
 			})
 			.catch((err) => {
 				// console.log("Error in Adding Users to Chatroom...");
-				err
+				return err
 				// console.error(err);
 			});
 		// console.log("Adding Members:", addMembersList);

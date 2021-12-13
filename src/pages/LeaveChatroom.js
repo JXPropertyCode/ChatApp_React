@@ -23,12 +23,12 @@ const LeaveChatroom = ({ chatroomId, setIsValidRoom }) => {
       .post(`${process.env.REACT_APP_GET_API_KEY}leave-chatroom`, inputCred)
       .then((res) => {
         // console.log("res.data:", res.data);
-        res
+        return res
       })
       .catch((err) => {
         // console.log("Error in Leaving Chatroom...");
         // console.error(err);
-        err
+        return err
       });
 
     setIsValidRoom(false);

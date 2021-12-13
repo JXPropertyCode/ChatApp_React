@@ -45,7 +45,7 @@ const UserProfile = () => {
       .post(`${process.env.REACT_APP_GET_API_KEY}change-username`, inputData)
       .then((res) => {
         // console.log("res:", res);
-        res;
+        return res;
       })
       .catch((err) => {
         console.error(err);
@@ -76,10 +76,11 @@ const UserProfile = () => {
       )
       .then((res) => {
         // console.log("res:", res);
-        res;
+        return res;
       })
       .catch((err) => {
-        console.error(err);
+        // console.error(err);
+        return err
       });
 
     alert("Email has been sent to you to change your email!");
@@ -100,10 +101,11 @@ const UserProfile = () => {
       )
       .then((res) => {
         // console.log("res:", res);
-        res;
+        return res;
       })
       .catch((err) => {
-        console.error(err);
+        // console.error(err);
+        return err
       });
 
     alert("Email has been sent to you to change your password!");

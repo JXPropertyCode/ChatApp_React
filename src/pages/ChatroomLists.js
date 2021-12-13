@@ -74,7 +74,7 @@ const ChatroomLists = () => {
       .catch((err) => {
         // console.log("Error in Creating a Chatroom...");
         // console.error(err);
-        err
+        return err
       });
 
     // reset the input box value after submitting
