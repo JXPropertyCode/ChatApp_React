@@ -22,15 +22,23 @@ const ConfirmEmail = () => {
   //
   // where 5c40d...a9d42 is the unique id created by Mongo
   useEffect(() => {
-    console.log("In Confirm Email React...");
-    console.log("userId:", userId);
+    // console.log("In Confirm Email React...");
+    // console.log("userId:", userId);
     axios
       .post(
         `${process.env.REACT_APP_GET_API_KEY}email/confirm/${userId}`,
         userId
       )
-      .then((res) => console.log("res:", res))
-      .catch((err) => console.log(err));
+      .then(
+        (res) =>
+          // console.log("res:", res)
+          res
+      )
+      .catch(
+        (err) =>
+          // console.log(err)
+          err
+      );
   }, []);
 
   return (

@@ -8,11 +8,11 @@ const LeaveChatroom = ({ chatroomId, setIsValidRoom }) => {
   const owner = useSelector((state) => state.auth.owner);
 
   useEffect(() => {
-    console.log("In Leave Chatroom...");
+    // console.log("In Leave Chatroom...");
   }, []);
 
   const leaveChatroom = () => {
-    console.log(owner, "is Leaving Chatroom:", chatroomId);
+    // console.log(owner, "is Leaving Chatroom:", chatroomId);
 
     const inputCred = {
       owner: owner,
@@ -22,11 +22,13 @@ const LeaveChatroom = ({ chatroomId, setIsValidRoom }) => {
     axios
       .post(`${process.env.REACT_APP_GET_API_KEY}leave-chatroom`, inputCred)
       .then((res) => {
-        console.log("res.data:", res.data);
+        // console.log("res.data:", res.data);
+        res
       })
       .catch((err) => {
-        console.log("Error in Leaving Chatroom...");
-        console.error(err);
+        // console.log("Error in Leaving Chatroom...");
+        // console.error(err);
+        err
       });
 
     setIsValidRoom(false);

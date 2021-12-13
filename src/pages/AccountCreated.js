@@ -2,13 +2,13 @@ import { useHistory, Redirect } from "react-router-dom";
 
 const AccountCreated = (props) => {
 
-	console.log("In Account Created...")
-	console.log("props:", props)
+	// console.log("In Account Created...")
+	// console.log("props:", props)
 	const history = useHistory();
 	// if you were not logged in, it wouldn't let you go there
 	// so solve both issues, this is the solution
 	if (props.location.auth === undefined) {
-		console.log("props.auth === undefined");
+		// console.log("props.auth === undefined");
 		return <Redirect to="/login-form" />;
 	}
 

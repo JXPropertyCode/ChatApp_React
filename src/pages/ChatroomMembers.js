@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const ChatroomMembers = ({ chatroomId }) => {
-	console.log("In ChatroomMembers...");
-	console.log("chatroomId:", chatroomId);
+	// console.log("In ChatroomMembers...");
+	// console.log("chatroomId:", chatroomId);
 
 	const [members, setMembers] = useState([]);
 
@@ -22,18 +22,19 @@ const ChatroomMembers = ({ chatroomId }) => {
 				inputCred
 			)
 			.then((res) => {
-				console.log("res.data:", res.data);
+				// console.log("res.data:", res.data);
 
 				setMembers(res.data.membersInChatroom);
 			})
 			.catch((err) => {
-				console.log("Error in Creating a Chatroom...");
-				console.error(err)
+				// console.log("Error in Creating a Chatroom...");
+				// console.error(err)
+				err
 			});
 
 	}
 
-	console.log("members:", members);
+	// console.log("members:", members);
 
 	return (
 		<div className="chatroomWindow">

@@ -24,12 +24,12 @@ const UserProfile = () => {
   const removeExtraSpace = (s) => s.trim().split(/ +/).join(" ");
 
   const reqChangeUsername = () => {
-    console.log("reqNewUserName.current.value:", reqNewUserName.current.value);
+    // console.log("reqNewUserName.current.value:", reqNewUserName.current.value);
 
     let strFilter = removeExtraSpace(reqNewUserName.current.value);
 
     if (strFilter.length === 0) {
-      console.log("Cannot Have ONLY Empty Spaces as a Username");
+      // console.log("Cannot Have ONLY Empty Spaces as a Username");
       return;
     }
 
@@ -44,7 +44,8 @@ const UserProfile = () => {
     axios
       .post(`${process.env.REACT_APP_GET_API_KEY}change-username`, inputData)
       .then((res) => {
-        console.log("res:", res);
+        // console.log("res:", res);
+        res;
       })
       .catch((err) => {
         console.error(err);
@@ -69,9 +70,13 @@ const UserProfile = () => {
     };
 
     axios
-      .post(`${process.env.REACT_APP_GET_API_KEY}change-email/${owner}`, inputData)
+      .post(
+        `${process.env.REACT_APP_GET_API_KEY}change-email/${owner}`,
+        inputData
+      )
       .then((res) => {
-        console.log("res:", res);
+        // console.log("res:", res);
+        res;
       })
       .catch((err) => {
         console.error(err);
@@ -79,7 +84,6 @@ const UserProfile = () => {
 
     alert("Email has been sent to you to change your email!");
   };
-
 
   const handlePassword = (e) => {
     const inputData = {
@@ -90,9 +94,13 @@ const UserProfile = () => {
     };
 
     axios
-      .post(`${process.env.REACT_APP_GET_API_KEY}change-password/${owner}`, inputData)
+      .post(
+        `${process.env.REACT_APP_GET_API_KEY}change-password/${owner}`,
+        inputData
+      )
       .then((res) => {
-        console.log("res:", res);
+        // console.log("res:", res);
+        res;
       })
       .catch((err) => {
         console.error(err);
@@ -100,7 +108,6 @@ const UserProfile = () => {
 
     alert("Email has been sent to you to change your password!");
   };
-
 
   const logoutButton = () => {
     history.push("/logout");
@@ -164,7 +171,11 @@ const UserProfile = () => {
 
       <div className="userInfo">
         <h3>Password: {userPass}</h3>
-        <input type="button" value="Request Change" onClick={() => handlePassword()} />
+        <input
+          type="button"
+          value="Request Change"
+          onClick={() => handlePassword()}
+        />
       </div>
     </div>
   );

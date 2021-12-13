@@ -34,7 +34,7 @@ const SignUpForm = () => {
       confirmPassword: userConPass.current.value,
     };
 
-    console.log("Creating Account using:", creatingCred);
+    // console.log("Creating Account using:", creatingCred);
 
     if (creatingCred.password === creatingCred.confirmPassword) {
       // UNIX lastModified f
@@ -52,14 +52,14 @@ const SignUpForm = () => {
         .post(`${process.env.REACT_APP_GET_API_KEY}signup`, convertData)
         .then((res) => {
           if (res.data.validCred === "true") {
-            console.log("Success! Account Created:", convertData);
+            // console.log("Success! Account Created:", convertData);
             setCredEmailError(false);
 
             // attempt to send email
             axios
               .post(`${process.env.REACT_APP_GET_API_KEY}email`, convertData)
               .then((res) => {
-                console.log("res from email:", res);
+                // console.log("res from email:", res);
               });
 
             history.push({
@@ -67,7 +67,7 @@ const SignUpForm = () => {
               auth: true,
             });
           } else {
-            console.log("Error! Email Already Exists:", convertData.email);
+            // console.log("Error! Email Already Exists:", convertData.email);
             setCredEmailError(true);
           }
         })
@@ -133,7 +133,7 @@ const SignUpForm = () => {
             type="button"
             value="Back to Login"
             onClick={() => {
-              console.log("Going back to login...");
+              // console.log("Going back to login...");
               history.push("/login-form");
             }}
           />

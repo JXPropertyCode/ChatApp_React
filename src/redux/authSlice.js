@@ -25,7 +25,7 @@ const authSlice = createSlice({
 			state.username = ""
 		},
 		isVerified: (state) => {
-			console.log("isVerified:", state.accountVerified);
+			// console.log("isVerified:", state.accountVerified);
 		},
 		changeUsername: (state, { type, payload }) => {
 			state.username = payload.newUsername
@@ -37,10 +37,10 @@ const authSlice = createSlice({
 			state.password = payload.newPassword
 		},
 		outputData: (state) => {
-			console.log("state.accountVerified:", state.accountVerified);
-			console.log("state.owner:", state.owner);
-			console.log("state.email:", state.email);
-			console.log("state.password:", state.password);
+			// console.log("state.accountVerified:", state.accountVerified);
+			// console.log("state.owner:", state.owner);
+			// console.log("state.email:", state.email);
+			// console.log("state.password:", state.password);
 		},
 	},
 });

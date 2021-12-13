@@ -27,12 +27,12 @@ const ChangeEmail = () => {
 
   const reqChangeEmail = (e) => {
     e.preventDefault();
-    console.log("oldEmail.current.value:", oldEmail.current.value);
-    console.log("newEmail.current.value:", newEmail.current.value);
-    console.log(
-      "confirmNewEmail.current.value:",
-      confirmNewEmail.current.value
-    );
+    // console.log("oldEmail.current.value:", oldEmail.current.value);
+    // console.log("newEmail.current.value:", newEmail.current.value);
+    // console.log(
+    //   "confirmNewEmail.current.value:",
+    //   confirmNewEmail.current.value
+    // );
 
     if (userEmail !== oldEmail.current.value) {
       alert("Old Email Doesn't Match Your Current Email!");
@@ -52,7 +52,7 @@ const ChangeEmail = () => {
       return;
     }
 
-    console.log("Email Request Valid...");
+    // console.log("Email Request Valid...");
 
     let creatingCred = {
       email: userEmail,
@@ -68,7 +68,8 @@ const ChangeEmail = () => {
         creatingCred
       )
       .then((res) => {
-        console.log("res from email:", res);
+        // console.log("res from email:", res);
+        res
       });
 
     dispatch({ type: "auth/changeEmail", payload: creatingCred });

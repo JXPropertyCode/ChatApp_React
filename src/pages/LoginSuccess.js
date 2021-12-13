@@ -15,7 +15,7 @@ const LoginSuccess = () => {
 	if (!validAccount) {
 		return <Redirect to="/login-form" />;
 	}
-	console.log("Login Succesful...")
+	// console.log("Login Succesful...")
 	
 	return (
 		<div>

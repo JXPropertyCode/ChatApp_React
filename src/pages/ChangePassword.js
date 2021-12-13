@@ -10,7 +10,7 @@ const ChangePassword = () => {
 
   const history = useHistory();
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const validAccount = useSelector((state) => state.auth.accountVerified);
   const username = useSelector((state) => state.auth.username);
@@ -27,12 +27,12 @@ const ChangePassword = () => {
 
   const reqChangePassword = (e) => {
     e.preventDefault();
-    console.log("oldPassword.current.value:", oldPassword.current.value);
-    console.log("newPassword.current.value:", newPassword.current.value);
-    console.log(
-      "confirmNewPassword.current.value:",
-      confirmNewPassword.current.value
-    );
+    // console.log("oldPassword.current.value:", oldPassword.current.value);
+    // console.log("newPassword.current.value:", newPassword.current.value);
+    // console.log(
+    //   "confirmNewPassword.current.value:",
+    //   confirmNewPassword.current.value
+    // );
 
     if (userPass !== oldPassword.current.value) {
       alert("Old Password Doesn't Match Your Current Password!");
@@ -52,7 +52,7 @@ const ChangePassword = () => {
       return;
     }
 
-    console.log("Password Request Valid...");
+    // console.log("Password Request Valid...");
 
     let creatingCred = {
       email: userEmail,
@@ -68,7 +68,8 @@ const ChangePassword = () => {
         creatingCred
       )
       .then((res) => {
-        console.log("res from password:", res);
+        // console.log("res from password:", res);
+        ResizeObserver;
       });
 
     dispatch({ type: "auth/changePassword", payload: creatingCred });

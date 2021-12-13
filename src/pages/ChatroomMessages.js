@@ -10,11 +10,11 @@ import moment from "moment";
 const ChatroomMessages = () => {
   const params = useParams();
 
-  console.log("Current roomId Params:", params);
+  // console.log("Current roomId Params:", params);
 
   const pathname = params.roomId;
 
-  console.log("pathname:", pathname);
+  // console.log("pathname:", pathname);
 
   const validAccount = useSelector((state) => state.auth.accountVerified);
   const userEmail = useSelector((state) => state.auth.email);
@@ -39,14 +39,14 @@ const ChatroomMessages = () => {
       .then(async (res) => {
         let currentChatroomMessages = [];
         for (let i = 0; i < res.data.length; i++) {
-          console.log("res.data[i].room:", res.data[i].room === pathname);
+          // console.log("res.data[i].room:", res.data[i].room === pathname);
           if (res.data[i].room === pathname) {
             // console.log("res.data[i]:", res.data[i])
             let retrieveRoomData = res.data[i];
             currentChatroomMessages.push(retrieveRoomData);
           }
         }
-        console.log("currentChatroomMessages:", currentChatroomMessages);
+        // console.log("currentChatroomMessages:", currentChatroomMessages);
         setMessagelog([...currentChatroomMessages]);
         return currentChatroomMessages;
       })
@@ -63,16 +63,16 @@ const ChatroomMessages = () => {
       "echo-protocol"
     );
 
-    console.log(`ws://localhost:8000/${pathname}`);
+    // console.log(`ws://localhost:8000/${pathname}`);
 
     client.onerror = function () {
-      console.log("Connection Error");
+      // console.log("Connection Error");
     };
 
     // sending random numbers to Express's websocket, then Express would output them
     // this is optional for testing purposes
     client.onopen = function () {
-      console.log("WebSocket Client Connected to", pathname);
+      // console.log("WebSocket Client Connected to", pathname);
       // function sendNumber() {
       // 	// this is while the connection is open, it will continually keep sending messages
       // 	// to visualize the flow
@@ -92,10 +92,10 @@ const ChatroomMessages = () => {
     };
 
     client.onclose = function () {
-      console.log("echo-protocol Client Closed");
+      // console.log("echo-protocol Client Closed");
     };
 
-    console.log("UseEffect...");
+    // console.log("UseEffect...");
     getMessagelog();
     // optional return function can be here to process a cleanup
   }, []);
@@ -116,10 +116,10 @@ const ChatroomMessages = () => {
     // detects if youre at the bottom of the page
     e.preventDefault();
     if (e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight) {
-      console.log("Bottom of the page");
+      // console.log("Bottom of the page");
       setIsScrollActive(true);
     } else {
-      console.log("NOT bottom of the page");
+      // console.log("NOT bottom of the page");
       setIsScrollActive(false);
     }
   };
@@ -133,7 +133,7 @@ const ChatroomMessages = () => {
   // original
   useEffect(() => {
     if (lastMessage !== null) {
-      console.log("lastMessage:", lastMessage);
+      // console.log("lastMessage:", lastMessage);
       const convertData = JSON.parse(lastMessage.data);
 
       // previously when I messaged in one room, every room received the message.
@@ -141,7 +141,7 @@ const ChatroomMessages = () => {
       // problem with this is that what if there are a billion people speaking at the same time?
       // it would be slow due to this keeps filtering messages after receiving them
       // if (convertData.room === pathname) {
-      console.log("lastMessage:", convertData);
+      // console.log("lastMessage:", convertData);
       // when getting new messages just update the state
       setMessagelog([...messagelog, convertData]);
       // }
@@ -165,7 +165,7 @@ const ChatroomMessages = () => {
     let strFilter = removeExtraSpace(currentPrepMessageValue);
 
     if (strFilter.length === 0) {
-      console.log("Cannot Have Empty Spaces in Chat Room Name");
+      // console.log("Cannot Have Empty Spaces in Chat Room Name");
       prepmessage["inputMessage"].value = "";
       return;
     }
@@ -179,7 +179,7 @@ const ChatroomMessages = () => {
       currentPrepMessageValue
     );
 
-    console.log("Data Sent to Server:", convertData);
+    // console.log("Data Sent to Server:", convertData);
     sendMessage(JSON.stringify(convertData));
     prepmessage["inputMessage"].value = "";
   };

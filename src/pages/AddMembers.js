@@ -8,7 +8,7 @@ const AddMembers = ({ chatroomId }) => {
 	const userEmail = useSelector((state) => state.auth.email);
 	const userPass = useSelector((state) => state.auth.password);
 
-	console.log("chatroomId to add members:", chatroomId);
+	// console.log("chatroomId to add members:", chatroomId);
 
 	const authToAddMembers = async (e) => {
 		e.preventDefault();
@@ -25,15 +25,15 @@ const AddMembers = ({ chatroomId }) => {
 			)
 			.then((res) => {
 				if (res.data.validCred === "true") {
-					console.log("res.data:", res.data);
-					console.log("Success! Auth to Add Members to Chatroom...");
+					// console.log("res.data:", res.data);
+					// console.log("Success! Auth to Add Members to Chatroom...");
 					addMembersToRoom();
 				} else {
-					console.log("Not Auth to Add Members to Chatroom");
+					// console.log("Not Auth to Add Members to Chatroom");
 				}
 			})
 			.catch((err) => {
-				console.log("Error in Auth to Add Members to Chatroom...");
+				// console.log("Error in Auth to Add Members to Chatroom...");
 				console.error(err);
 			});
 
@@ -54,13 +54,15 @@ const AddMembers = ({ chatroomId }) => {
 		axios
 			.post(`${process.env.REACT_APP_GET_API_KEY}add-users-to-chatroom`, inputData)
 			.then((res) => {
-				console.log("res.data:", res.data);
+				// console.log("res.data:", res.data);
+				res
 			})
 			.catch((err) => {
-				console.log("Error in Adding Users to Chatroom...");
-				console.error(err);
+				// console.log("Error in Adding Users to Chatroom...");
+				err
+				// console.error(err);
 			});
-		console.log("Adding Members:", addMembersList);
+		// console.log("Adding Members:", addMembersList);
 	};
 
 	return (

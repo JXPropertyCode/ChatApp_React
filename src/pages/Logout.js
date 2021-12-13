@@ -6,7 +6,7 @@ const Logout = () => {
 
 	const dispatch = useDispatch();
 
-	console.log("validAccount:", validAccount);
+	// console.log("validAccount:", validAccount);
 
 	if (!validAccount) {
 		return <Redirect to="/login-form" />;

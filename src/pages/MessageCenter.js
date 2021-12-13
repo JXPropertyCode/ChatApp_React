@@ -31,7 +31,7 @@ const MessageCenter = () => {
   // const { search } = useLocation()
   // const values = queryString.parse(search)
 
-  console.log("Current roomId Params:", params);
+  // console.log("Current roomId Params:", params);
 
   const pathname = params.roomId;
 
@@ -39,29 +39,29 @@ const MessageCenter = () => {
     history.push("/logout");
   };
 
-  console.log("Re-rendering...");
+  // console.log("Re-rendering...");
 
   useEffect(() => {
     // this is just to make sure taht if the user inputs a unauthorized chatroom, it wouldn't let them access it
-    console.log("useEffect...");
+    // console.log("useEffect...");
     const inputData = {
       email: userEmail,
       password: userPass,
       reqChatroom: pathname,
     };
 
-    console.log("inputData:", inputData);
+    // console.log("inputData:", inputData);
 
     // if accessing the chatroom is not valid or doesn't belong to you, you will be sent back to your /message-center
     if (validAccount) {
-      console.log("Account Valid...");
+      // console.log("Account Valid...");
       axios
         .post(
           `${process.env.REACT_APP_GET_API_KEY}user-chatroom-validation`,
           inputData
         )
         .then((res) => {
-          console.log("res.data:", res.data);
+          // console.log("res.data:", res.data);
 
           if (res.data.auth === true) {
             setIsValidRoom(true);
@@ -71,7 +71,8 @@ const MessageCenter = () => {
           }
         })
         .catch((e) => {
-          console.log("Error:", e);
+          // console.log("Error:", e);
+          e;
         });
     }
   }, []);
@@ -86,8 +87,8 @@ const MessageCenter = () => {
   // }, [pathname]);
 
   if (!validAccount) {
-    console.log("Invalid Access Detected...");
-    console.log("invalidAccount:", !validAccount);
+    // console.log("Invalid Access Detected...");
+    // console.log("invalidAccount:", !validAccount);
     history.push("/login-form");
   }
 

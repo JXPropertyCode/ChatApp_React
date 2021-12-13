@@ -17,29 +17,29 @@ const LoginForm = () => {
     return await axios
       .post(`${process.env.REACT_APP_GET_API_KEY}login-validation`, inputCred)
       .then((res) => {
-        console.log("res.data:", res.data);
+        // console.log("res.data:", res.data);
 
         if (res.data.validCred === "true") {
           if (res.data.confirmed === "true") {
-            console.log("res.data:", res.data);
+            // console.log("res.data:", res.data);
             // I added a new key and value to teh inputcred, the username is from the database and inserted to the inputCred so the Store has the username of the user
             inputCred.username = res.data.username;
             inputCred.owner = res.data.owner;
 
-            console.log("Success! Account Found:", inputCred);
+            // console.log("Success! Account Found:", inputCred);
 
-            console.log(
-              "res.data.username found in database:",
-              res.data.username
-            );
+            // console.log(
+            //   "res.data.username found in database:",
+            //   res.data.username
+            // );
 
-            console.log("Transferring Data onto Auth Store:", res.data);
+            // console.log("Transferring Data onto Auth Store:", res.data);
 
             setInvalidCred(false);
             dispatch({ type: "auth/login", payload: inputCred });
             return true;
           } else {
-			  // this is for if the account is created but they haven't confirmed it
+            // this is for if the account is created but they haven't confirmed it
             alert("Account has not been confirmed! Check your email!");
             setInvalidCred(true);
             return false;
@@ -50,7 +50,7 @@ const LoginForm = () => {
         }
       })
       .catch((err) => {
-        console.error(err);
+        // console.error(err);
         return false;
       });
   };
@@ -64,12 +64,12 @@ const LoginForm = () => {
     };
 
     // doesn't need ex. emailCred.current['email'].value to access the value since its useRef() is not nested on a Form like MessageCenter's prepmessage
-    console.log("inputCred to Login:", inputCred);
+    // console.log("inputCred to Login:", inputCred);
 
     const loginValid = await login(inputCred);
 
     if (loginValid === true) {
-      console.log("loginValid:", loginValid);
+      // console.log("loginValid:", loginValid);
       history.push("/login-success");
     }
   };
