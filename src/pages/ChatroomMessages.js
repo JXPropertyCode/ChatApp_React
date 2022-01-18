@@ -26,8 +26,18 @@ const ChatroomMessages = () => {
 
   // owner is the userId before its populated with the accountCollection data
   // it passes to the Express so it can detect the unique client.
+  // const { sendMessage, lastMessage } = useWebSocket(
+  //   `ws://chat-app-express-jx.herokuapp.com/${pathname}/${owner}`
+  // );
+
+  // for heroku deployment
+  // const { sendMessage, lastMessage } = useWebSocket(
+  //   `ws://chat-app-express-jx.herokuapp.com/${pathname}/${owner}`
+  // );
+
+  // for local server testing
   const { sendMessage, lastMessage } = useWebSocket(
-    `ws://chat-app-express-jx.herokuapp.com/${pathname}/${owner}`
+    `ws://localhost:8000/${pathname}/${owner}`
   );
 
   const [isScrollActive, setIsScrollActive] = useState(true);
@@ -58,8 +68,15 @@ const ChatroomMessages = () => {
   useEffect(() => {
     var W3CWebSocket = require("websocket").w3cwebsocket;
 
+    // for heroku deployment
+    // var client = new W3CWebSocket(
+    //   `ws://chat-app-express-jx.herokuapp.com/${pathname}/${owner}`,
+    //   "echo-protocol"
+    // );
+
+    // for personal server
     var client = new W3CWebSocket(
-      `ws://chat-app-express-jx.herokuapp.com/${pathname}/${owner}`,
+      `ws://localhost:8000//${pathname}/${owner}`,
       "echo-protocol"
     );
 
@@ -77,7 +94,6 @@ const ChatroomMessages = () => {
       // 	// this is while the connection is open, it will continually keep sending messages
       // 	// to visualize the flow
       // 	if (client.readyState === client.OPEN) {
-
       // 		var number = Math.round(Math.random() * 0xffffff);
       // 		let sendInitialData = {
       // 			dateSent: new Date(),
@@ -193,7 +209,7 @@ const ChatroomMessages = () => {
       <div>
         {messagelog.map((message, idx) => {
           // if (message !== null) {
-          // console.log("messagelog's message:", message);
+          console.log("messagelog's message:", message);
           // this is needed due to the bug in which messages show for other rooms
 
           // since owner was populated, it is now an object

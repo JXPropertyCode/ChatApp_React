@@ -20,30 +20,50 @@ const LoginForm = () => {
         // console.log("res.data:", res.data);
 
         if (res.data.validCred === "true") {
-          if (res.data.confirmed === "true") {
-            // console.log("res.data:", res.data);
-            // I added a new key and value to teh inputcred, the username is from the database and inserted to the inputCred so the Store has the username of the user
-            inputCred.username = res.data.username;
+
+          inputCred.username = res.data.username;
             inputCred.owner = res.data.owner;
+          setInvalidCred(false);
+          dispatch({ type: "auth/login", payload: inputCred });
+          return true;
+          // if (res.data.confirmed === "true") {
+          //   // console.log("res.data:", res.data);
+          //   // I added a new key and value to teh inputcred, the username is from the database and inserted to the inputCred so the Store has the username of the user
+          //   inputCred.username = res.data.username;
+          //   inputCred.owner = res.data.owner;
 
-            // console.log("Success! Account Found:", inputCred);
+          //   // console.log("Success! Account Found:", inputCred);
 
-            // console.log(
-            //   "res.data.username found in database:",
-            //   res.data.username
-            // );
+          //   // console.log(
+          //   //   "res.data.username found in database:",
+          //   //   res.data.username
+          //   // );
 
-            // console.log("Transferring Data onto Auth Store:", res.data);
+          //   // console.log("Transferring Data onto Auth Store:", res.data);
 
-            setInvalidCred(false);
-            dispatch({ type: "auth/login", payload: inputCred });
-            return true;
-          } else {
-            // this is for if the account is created but they haven't confirmed it
-            alert("Account has not been confirmed! Check your email!");
-            setInvalidCred(true);
-            return false;
-          }
+          //   setInvalidCred(false);
+          //   dispatch({ type: "auth/login", payload: inputCred });
+          //   return true;
+          // } else {
+          //   // this is for if the account is created but they haven't confirmed it
+          //   alert(
+          //     "Account Has Not Been Confirmed! Re-sending Confirmation Email! Please Check Your Email!"
+          //   );
+
+          //   const convertData = {
+          //     email: emailCred.current.value,
+          //   };
+
+          //   // attempt to send email
+          //   // axios
+          //   //   .post(`${process.env.REACT_APP_GET_API_KEY}email`, convertData)
+          //   //   .then((res) => {
+          //   //     // console.log("res from email:", res);
+          //   //   });
+
+          //   setInvalidCred(true);
+          //   return false;
+          // }
         } else {
           setInvalidCred(true);
           return false;

@@ -36,12 +36,12 @@ const authSlice = createSlice({
 		changePassword: (state, { type, payload }) => {
 			state.password = payload.newPassword
 		},
-		outputData: (state) => {
+		// outputData: (state) => {
 			// console.log("state.accountVerified:", state.accountVerified);
 			// console.log("state.owner:", state.owner);
 			// console.log("state.email:", state.email);
 			// console.log("state.password:", state.password);
-		},
+		// },
 	},
 });
 

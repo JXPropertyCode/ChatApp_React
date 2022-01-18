@@ -16,7 +16,7 @@ const AccountCreated = (props) => {
 	return (
 		<div>
 			<h1>Account has been created successfully!</h1>
-			<h3>CHECK YOUR EMAIL TO CONFIRM YOUR ACCOUNT!</h3>
+			{/* <h3>CHECK YOUR EMAIL TO CONFIRM YOUR ACCOUNT!</h3> */}
 			<h3>Redirecting to Login Page...</h3>
 		</div>
 	);
