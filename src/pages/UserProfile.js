@@ -62,53 +62,57 @@ const UserProfile = () => {
   };
 
   const handleEmail = (e) => {
-    const inputData = {
-      username: username,
-      owner: owner,
-      email: userEmail,
-      password: userPass,
-    };
+    // const inputData = {
+    //   username: username,
+    //   owner: owner,
+    //   email: userEmail,
+    //   password: userPass,
+    // };
 
-    axios
-      .post(
-        `${process.env.REACT_APP_GET_API_KEY}change-email/${owner}`,
-        inputData
-      )
-      .then((res) => {
-        // console.log("res:", res);
-        return res;
-      })
-      .catch((err) => {
-        // console.error(err);
-        return err
-      });
+    // axios
+    //   .post(
+    //     `${process.env.REACT_APP_GET_API_KEY}change-email/${owner}`,
+    //     inputData
+    //   )
+    //   .then((res) => {
+    //     // console.log("res:", res);
+    //     return res;
+    //   })
+    //   .catch((err) => {
+    //     // console.error(err);
+    //     return err
+    //   });
 
-    alert("Email has been sent to you to change your email!");
+    // alert("Email has been sent to you to change your email!");
+    alert("Nodemailer doesn't work, cannot request change currently!");
+
   };
 
   const handlePassword = (e) => {
-    const inputData = {
-      username: username,
-      owner: owner,
-      email: userEmail,
-      password: userPass,
-    };
+    // const inputData = {
+    //   username: username,
+    //   owner: owner,
+    //   email: userEmail,
+    //   password: userPass,
+    // };
 
-    axios
-      .post(
-        `${process.env.REACT_APP_GET_API_KEY}change-password/${owner}`,
-        inputData
-      )
-      .then((res) => {
-        // console.log("res:", res);
-        return res;
-      })
-      .catch((err) => {
-        // console.error(err);
-        return err
-      });
+    // axios
+    //   .post(
+    //     `${process.env.REACT_APP_GET_API_KEY}change-password/${owner}`,
+    //     inputData
+    //   )
+    //   .then((res) => {
+    //     // console.log("res:", res);
+    //     return res;
+    //   })
+    //   .catch((err) => {
+    //     // console.error(err);
+    //     return err
+    //   });
 
-    alert("Email has been sent to you to change your password!");
+    // alert("Email has been sent to you to change your password!");
+    alert("Nodemailer doesn't work, cannot request change currently!");
+
   };
 
   const logoutButton = () => {
@@ -166,8 +170,8 @@ const UserProfile = () => {
         <h3>Email: {userEmail}</h3>
         <input
           type="button"
-          value="Request Change"
-          onClick={() => handleEmail()}
+          // value="Request Change"
+          // onClick={() => handleEmail()}
         />
       </div>
 
@@ -175,8 +179,8 @@ const UserProfile = () => {
         <h3>Password: {userPass}</h3>
         <input
           type="button"
-          value="Request Change"
-          onClick={() => handlePassword()}
+          // value="Request Change"
+          // onClick={() => handlePassword()}
         />
       </div>
     </div>

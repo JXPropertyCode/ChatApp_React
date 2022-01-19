@@ -1,4 +1,4 @@
-import { Redirect, useLocation, useParams } from "react-router-dom";
+import { Redirect, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState, useEffect, useRef } from "react";
 import useWebSocket from "react-use-websocket";
@@ -114,7 +114,7 @@ const ChatroomMessages = () => {
     // console.log("UseEffect...");
     getMessagelog();
     // optional return function can be here to process a cleanup
-  }, []);
+  });
 
   // console.log("Current Message Log:", messagelog);
 
@@ -209,7 +209,7 @@ const ChatroomMessages = () => {
       <div>
         {messagelog.map((message, idx) => {
           // if (message !== null) {
-          console.log("messagelog's message:", message);
+          // console.log("messagelog's message:", message);
           // this is needed due to the bug in which messages show for other rooms
 
           // since owner was populated, it is now an object

@@ -35,7 +35,7 @@ const ChatroomLists = () => {
   useEffect(() => {
     // console.log("useEffect...");
     getChatrooms();
-  }, []);
+  });
 
   const removeExtraSpace = (s) => s.trim().split(/ +/).join(" ");
 

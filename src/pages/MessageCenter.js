@@ -4,11 +4,10 @@ import ChatroomMessages from "./ChatroomMessages";
 import ChatroomLists from "./ChatroomLists";
 import ChatroomMembers from "./ChatroomMembers";
 import AddMembers from "./AddMembers";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import LeaveChatroom from "./LeaveChatroom";
-import queryString from "query-string";
 
 const MessageCenter = () => {
   const history = useHistory();
@@ -75,7 +74,7 @@ const MessageCenter = () => {
           return err;
         });
     }
-  }, []);
+  });
 
   // pathname is from useLocation() which is a hook therefore useEffect can be used
   // useEffect(() => {

@@ -1,6 +1,6 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 const ChangeEmail = () => {
@@ -12,7 +12,7 @@ const ChangeEmail = () => {
 
   const history = useHistory();
 
-  const validAccount = useSelector((state) => state.auth.accountVerified);
+  // const validAccount = useSelector((state) => state.auth.accountVerified);
   const username = useSelector((state) => state.auth.username);
   const owner = useSelector((state) => state.auth.owner);
   const userPass = useSelector((state) => state.auth.password);
@@ -36,6 +36,7 @@ const ChangeEmail = () => {
 
     if (userEmail !== oldEmail.current.value) {
       alert("Old Email Doesn't Match Your Current Email!");
+      resetInput();
       return;
     }
 
@@ -44,11 +45,15 @@ const ChangeEmail = () => {
       oldEmail.current.value === confirmNewEmail.current.value
     ) {
       alert("Old Email and New Emails Cannot Be The Same!");
+      resetInput();
+
       return;
     }
 
     if (newEmail.current.value !== confirmNewEmail.current.value) {
       alert("New Email and Confirm New Email Doesn't Match!");
+      resetInput();
+
       return;
     }
 
@@ -69,7 +74,7 @@ const ChangeEmail = () => {
       )
       .then((res) => {
         // console.log("res from email:", res);
-        return res
+        return res;
       });
 
     dispatch({ type: "auth/changeEmail", payload: creatingCred });

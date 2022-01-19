@@ -13,7 +13,7 @@ const ChatroomMembers = ({ chatroomId }) => {
 
 	useEffect(() => {
 		updateMemberList()
-	}, []);
+	});
 
 	function updateMemberList() {
 		axios

@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
-import { Redirect, useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const ConfirmEmail = () => {
   const params = useParams();
@@ -39,7 +38,7 @@ const ConfirmEmail = () => {
           // console.log(err)
           err
       );
-  }, []);
+  });
 
   return (
     <div>

@@ -1,6 +1,6 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 const ChangePassword = () => {
@@ -12,7 +12,7 @@ const ChangePassword = () => {
 
   const dispatch = useDispatch();
 
-  const validAccount = useSelector((state) => state.auth.accountVerified);
+  // const validAccount = useSelector((state) => state.auth.accountVerified);
   const username = useSelector((state) => state.auth.username);
   const owner = useSelector((state) => state.auth.owner);
   const userPass = useSelector((state) => state.auth.password);
@@ -36,6 +36,7 @@ const ChangePassword = () => {
 
     if (userPass !== oldPassword.current.value) {
       alert("Old Password Doesn't Match Your Current Password!");
+      resetInput();
       return;
     }
 
@@ -44,11 +45,13 @@ const ChangePassword = () => {
       oldPassword.current.value === confirmNewPassword.current.value
     ) {
       alert("Old Password and New Password Cannot Be The Same!");
+      resetInput();
       return;
     }
 
     if (newPassword.current.value !== confirmNewPassword.current.value) {
       alert("New Password and Confirm New Password Doesn't Match!");
+      resetInput();
       return;
     }
 

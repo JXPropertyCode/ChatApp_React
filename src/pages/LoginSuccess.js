@@ -9,7 +9,7 @@ const LoginSuccess = () => {
 
 	useEffect(() => {
 		setTimeout(() => history.push("/message-center"), 3000);
-	}, [])
+	})
 
 
 	if (!validAccount) {
