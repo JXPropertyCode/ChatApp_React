@@ -6,7 +6,7 @@ const AddMembers = ({ chatroomId }) => {
 	const addMembers = useRef(null);
 
 	const userEmail = useSelector((state) => state.auth.email);
-	const userPass = useSelector((state) => state.auth.password);
+	// const userPass = useSelector((state) => state.auth.password);
 
 	// console.log("chatroomId to add members:", chatroomId);
 
@@ -15,7 +15,7 @@ const AddMembers = ({ chatroomId }) => {
 
 		const inputCred = {
 			email: userEmail,
-			password: userPass,
+			// password: userPass,
 		};
 
 		await axios

@@ -14,7 +14,7 @@ const MessageCenter = () => {
 
   const username = useSelector((state) => state.auth.username);
   const owner = useSelector((state) => state.auth.owner);
-  const userPass = useSelector((state) => state.auth.password);
+  // const userPass = useSelector((state) => state.auth.password);
   const userEmail = useSelector((state) => state.auth.email);
   const [isValidRoom, setIsValidRoom] = useState(false);
 
@@ -45,7 +45,7 @@ const MessageCenter = () => {
     // console.log("useEffect...");
     const inputData = {
       email: userEmail,
-      password: userPass,
+      // password: userPass,
       reqChatroom: pathname,
     };
 
@@ -74,7 +74,7 @@ const MessageCenter = () => {
           return err;
         });
     }
-  });
+  }, []);
 
   // pathname is from useLocation() which is a hook therefore useEffect can be used
   // useEffect(() => {

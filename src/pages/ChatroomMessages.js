@@ -18,19 +18,15 @@ const ChatroomMessages = () => {
 
   const validAccount = useSelector((state) => state.auth.accountVerified);
   const userEmail = useSelector((state) => state.auth.email);
-  const userPass = useSelector((state) => state.auth.password);
+  // const userPass = useSelector((state) => state.auth.password);
   const username = useSelector((state) => state.auth.username);
   const owner = useSelector((state) => state.auth.owner);
   const prepMessage = useRef(null);
   const [messagelog, setMessagelog] = useState([]);
 
+  // for heroku deployment
   // owner is the userId before its populated with the accountCollection data
   // it passes to the Express so it can detect the unique client.
-  // const { sendMessage, lastMessage } = useWebSocket(
-  //   `ws://chat-app-express-jx.herokuapp.com/${pathname}/${owner}`
-  // );
-
-  // for heroku deployment
   // const { sendMessage, lastMessage } = useWebSocket(
   //   `ws://chat-app-express-jx.herokuapp.com/${pathname}/${owner}`
   // );
@@ -114,7 +110,7 @@ const ChatroomMessages = () => {
     // console.log("UseEffect...");
     getMessagelog();
     // optional return function can be here to process a cleanup
-  });
+  }, []);
 
   // console.log("Current Message Log:", messagelog);
 
@@ -191,7 +187,7 @@ const ChatroomMessages = () => {
       owner,
       username,
       userEmail,
-      userPass,
+      // userPass,
       currentPrepMessageValue
     );
 

@@ -1,15 +1,10 @@
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
 import axios from "axios";
 
 const LeaveChatroom = ({ chatroomId, setIsValidRoom }) => {
   const history = useHistory();
   const owner = useSelector((state) => state.auth.owner);
-
-  useEffect(() => {
-    // console.log("In Leave Chatroom...");
-  }, []);
 
   const leaveChatroom = () => {
     // console.log(owner, "is Leaving Chatroom:", chatroomId);

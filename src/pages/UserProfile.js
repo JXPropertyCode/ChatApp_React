@@ -11,7 +11,7 @@ const UserProfile = () => {
   const validAccount = useSelector((state) => state.auth.accountVerified);
   const username = useSelector((state) => state.auth.username);
   const owner = useSelector((state) => state.auth.owner);
-  const userPass = useSelector((state) => state.auth.password);
+  // const userPass = useSelector((state) => state.auth.password);
   const userEmail = useSelector((state) => state.auth.email);
   const reqNewUserName = useRef(null);
 
@@ -38,7 +38,7 @@ const UserProfile = () => {
       username: username,
       owner: owner,
       email: userEmail,
-      password: userPass,
+      // password: userPass,
     };
 
     axios
@@ -61,7 +61,7 @@ const UserProfile = () => {
     setChangeUsername(!changeUsername);
   };
 
-  const handleEmail = (e) => {
+  // const handleEmail = (e) => {
     // const inputData = {
     //   username: username,
     //   owner: owner,
@@ -84,11 +84,11 @@ const UserProfile = () => {
     //   });
 
     // alert("Email has been sent to you to change your email!");
-    alert("Nodemailer doesn't work, cannot request change currently!");
+    // alert("Nodemailer doesn't work, cannot request change currently!");
 
-  };
+  // };
 
-  const handlePassword = (e) => {
+  // const handlePassword = (e) => {
     // const inputData = {
     //   username: username,
     //   owner: owner,
@@ -111,9 +111,9 @@ const UserProfile = () => {
     //   });
 
     // alert("Email has been sent to you to change your password!");
-    alert("Nodemailer doesn't work, cannot request change currently!");
+    // alert("Nodemailer doesn't work, cannot request change currently!");
 
-  };
+  // };
 
   const logoutButton = () => {
     history.push("/logout");
@@ -176,7 +176,7 @@ const UserProfile = () => {
       </div>
 
       <div className="userInfo">
-        <h3>Password: {userPass}</h3>
+        <h3>Password: *****</h3>
         <input
           type="button"
           // value="Request Change"

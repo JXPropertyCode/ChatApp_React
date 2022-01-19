@@ -15,7 +15,7 @@ const ChangePassword = () => {
   // const validAccount = useSelector((state) => state.auth.accountVerified);
   const username = useSelector((state) => state.auth.username);
   const owner = useSelector((state) => state.auth.owner);
-  const userPass = useSelector((state) => state.auth.password);
+  // const userPass = useSelector((state) => state.auth.password);
   const userEmail = useSelector((state) => state.auth.email);
 
   const resetInput = () => {
@@ -34,11 +34,11 @@ const ChangePassword = () => {
     //   confirmNewPassword.current.value
     // );
 
-    if (userPass !== oldPassword.current.value) {
-      alert("Old Password Doesn't Match Your Current Password!");
-      resetInput();
-      return;
-    }
+    // if (userPass !== oldPassword.current.value) {
+    //   alert("Old Password Doesn't Match Your Current Password!");
+    //   resetInput();
+    //   return;
+    // }
 
     if (
       oldPassword.current.value === newPassword.current.value ||
@@ -61,7 +61,7 @@ const ChangePassword = () => {
       email: userEmail,
       owner: owner,
       username: username,
-      userPass: userPass,
+      // userPass: userPass,
       newPassword: confirmNewPassword.current.value,
     };
 

@@ -15,7 +15,7 @@ const ChangeEmail = () => {
   // const validAccount = useSelector((state) => state.auth.accountVerified);
   const username = useSelector((state) => state.auth.username);
   const owner = useSelector((state) => state.auth.owner);
-  const userPass = useSelector((state) => state.auth.password);
+  // const userPass = useSelector((state) => state.auth.password);
   const userEmail = useSelector((state) => state.auth.email);
 
   const resetInput = () => {
@@ -63,7 +63,7 @@ const ChangeEmail = () => {
       email: userEmail,
       owner: owner,
       username: username,
-      userPass: userPass,
+      // userPass: userPass,
       newEmail: confirmNewEmail.current.value,
     };
 

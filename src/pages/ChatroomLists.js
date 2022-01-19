@@ -7,14 +7,14 @@ const ChatroomLists = () => {
 
   const owner = useSelector((state) => state.auth.owner);
   const userEmail = useSelector((state) => state.auth.email);
-  const userPass = useSelector((state) => state.auth.password);
+  // const userPass = useSelector((state) => state.auth.password);
 
   const [chatrooms, setChatrooms] = useState([]);
 
   const getChatrooms = () => {
     const inputCred = {
       email: userEmail,
-      password: userPass,
+      // password: userPass,
     };
     axios
       .post(`${process.env.REACT_APP_GET_API_KEY}get-user-chatroom`, inputCred)
@@ -35,7 +35,7 @@ const ChatroomLists = () => {
   useEffect(() => {
     // console.log("useEffect...");
     getChatrooms();
-  });
+  }, []);
 
   const removeExtraSpace = (s) => s.trim().split(/ +/).join(" ");
 

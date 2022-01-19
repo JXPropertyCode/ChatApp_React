@@ -2,13 +2,13 @@ class AccountObject {
 	chatrooms;
 	username;
 	email;
-	password;
+	// password;
 
-	constructor(chatrooms, username, email, password) {
+	constructor(chatrooms, username, email) {
 		this.chatrooms = new Array(...chatrooms);
 		this.username = String(username);
 		this.email = String(email);
-		this.password = String(password);
+		// this.password = String(password);
 	}
 }
 

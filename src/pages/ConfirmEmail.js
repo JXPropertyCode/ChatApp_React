@@ -38,7 +38,7 @@ const ConfirmEmail = () => {
           // console.log(err)
           err
       );
-  });
+  }, []);
 
   return (
     <div>

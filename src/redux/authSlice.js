@@ -4,10 +4,11 @@ const authSlice = createSlice({
 	name: "auth",
 	initialState: {
 		accountVerified: false,
+		// owner to be populated
 		owner: "",
 		username: "",
 		email: "",
-		password: "",
+		// password: "",
 	},
 	reducers: {
 		login: (state, { type, payload }) => {
@@ -15,27 +16,27 @@ const authSlice = createSlice({
 			state.owner = payload.owner;
 			state.username = payload.username;
 			state.email = payload.email;
-			state.password = payload.password;
+			// state.password = payload.password;
 		},
 		logout: (state) => {
 			state.accountVerified = false;
 			state.email = "";
-			state.password = "";
+			// state.password = "";
 			state.owner = "";
 			state.username = ""
 		},
-		isVerified: (state) => {
+		// isVerified: (state) => {
 			// console.log("isVerified:", state.accountVerified);
-		},
+		// },
 		changeUsername: (state, { type, payload }) => {
 			state.username = payload.newUsername
 		},
-		changeEmail: (state, { type, payload }) => {
-			state.email = payload.newEmail
-		},
-		changePassword: (state, { type, payload }) => {
-			state.password = payload.newPassword
-		},
+		// changeEmail: (state, { type, payload }) => {
+		// 	state.email = payload.newEmail
+		// },
+		// changePassword: (state, { type, payload }) => {
+			// state.password = payload.newPassword
+		// },
 		// outputData: (state) => {
 			// console.log("state.accountVerified:", state.accountVerified);
 			// console.log("state.owner:", state.owner);
@@ -47,8 +48,8 @@ const authSlice = createSlice({
 
 export const login = authSlice.actions.login;
 export const logout = authSlice.actions.logout;
-export const isVerified = authSlice.actions.isVerified;
+// export const isVerified = authSlice.actions.isVerified;
 export const changeUsername = authSlice.actions.changeUsername;
-export const outputData = authSlice.actions.outputData;
+// export const outputData = authSlice.actions.outputData;
 
 export default authSlice.reducer;
