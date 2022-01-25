@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
+import CryptoJS from "crypto-js";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -13,6 +14,27 @@ const LoginForm = () => {
   const emailCred = useRef(null);
   const passCred = useRef(null);
 
+  const encrypt = (input) => {
+    // Encrypt
+    var ciphertext = CryptoJS.AES.encrypt(
+      input,
+      process.env.REACT_APP_CRYPTO_JS_SECRET_KEY
+    ).toString();
+    console.log("encrypt password:", ciphertext);
+    return ciphertext;
+  };
+
+  const decrypt = (input) => {
+    // Decrypt
+    var bytes = CryptoJS.AES.decrypt(
+      input,
+      process.env.REACT_APP_CRYPTO_JS_SECRET_KEY
+    );
+    var originalText = bytes.toString(CryptoJS.enc.Utf8);
+    console.log("decrypt password:", originalText);
+    return originalText;
+  };
+
   const login = async (inputCred) => {
     return await axios
       .post(`${process.env.REACT_APP_GET_API_KEY}login-validation`, inputCred)
@@ -20,9 +42,8 @@ const LoginForm = () => {
         // console.log("res.data:", res.data);
 
         if (res.data.validCred === "true") {
-
           inputCred.username = res.data.username;
-            inputCred.owner = res.data.owner;
+          inputCred.owner = res.data.owner;
           setInvalidCred(false);
           dispatch({ type: "auth/login", payload: inputCred });
           return true;
@@ -80,7 +101,7 @@ const LoginForm = () => {
     e.preventDefault();
     const inputCred = {
       email: emailCred.current.value,
-      password: passCred.current.value,
+      password: encrypt(passCred.current.value),
     };
 
     // doesn't need ex. emailCred.current['email'].value to access the value since its useRef() is not nested on a Form like MessageCenter's prepmessage

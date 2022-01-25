@@ -5,6 +5,7 @@ import { useHistory, Redirect } from "react-router-dom";
 import AccountObject from "../model/AccountObject";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import CryptoJS from "crypto-js";
 
 const SignUpForm = () => {
   const userName = useRef(null);
@@ -22,6 +23,27 @@ const SignUpForm = () => {
   if (validAccount) {
     return <Redirect to="/message-center" />;
   }
+
+  const encrypt = (input) => {
+    // Encrypt
+    var ciphertext = CryptoJS.AES.encrypt(
+      input,
+      process.env.REACT_APP_CRYPTO_JS_SECRET_KEY
+    ).toString();
+    console.log("encrypt password:", ciphertext);
+    return ciphertext;
+  };
+
+  const decrypt = (input) => {
+    // Decrypt
+    var bytes = CryptoJS.AES.decrypt(
+      input,
+      process.env.REACT_APP_CRYPTO_JS_SECRET_KEY
+    );
+    var originalText = bytes.toString(CryptoJS.enc.Utf8);
+    console.log("decrypt password:", originalText);
+    return originalText;
+  };
 
   const createAccount = (e) => {
     e.preventDefault();
@@ -44,9 +66,11 @@ const SignUpForm = () => {
         creatingCred.chatrooms,
         creatingCred.username,
         creatingCred.email,
-        creatingCred.password
+        encrypt(creatingCred.password)
         // lastModified
       );
+
+      console.log('convertData:', convertData)
 
       axios
         .post(`${process.env.REACT_APP_GET_API_KEY}signup`, convertData)

@@ -2,13 +2,15 @@ class AccountObject {
 	chatrooms;
 	username;
 	email;
-	// password;
+	password;
 
-	constructor(chatrooms, username, email) {
+	constructor(chatrooms, username, email, password) {
 		this.chatrooms = new Array(...chatrooms);
 		this.username = String(username);
 		this.email = String(email);
-		// this.password = String(password);
+		// password here is needed ONLY in signupform or else it cannot pass the password to the server
+		// also login form needs password as well to send to server
+		this.password = String(password);
 	}
 }
 
