@@ -1,5 +1,6 @@
 {
   "name": "chat-react-app",
+  "proxy":"http://192.168.4.25:8000/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -16,6 +17,7 @@
     "react": "^17.0.2",
     "react-bootstrap": "^2.0.0-beta.4",
     "react-dom": "^17.0.2",
+    "react-google-login": "^5.2.2",
     "react-native-uuid": "^2.0.1",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",

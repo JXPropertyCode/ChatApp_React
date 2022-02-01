@@ -30,7 +30,7 @@ const SignUpForm = () => {
       input,
       process.env.REACT_APP_CRYPTO_JS_SECRET_KEY
     ).toString();
-    console.log("encrypt password:", ciphertext);
+    // console.log("encrypt password:", ciphertext);
     return ciphertext;
   };
 

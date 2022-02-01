@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import CryptoJS from "crypto-js";
+import GoogleLogin from "react-google-login";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ const LoginForm = () => {
       input,
       process.env.REACT_APP_CRYPTO_JS_SECRET_KEY
     ).toString();
-    console.log("encrypt password:", ciphertext);
+    // console.log("encrypt password:", ciphertext);
     return ciphertext;
   };
 
@@ -115,6 +116,42 @@ const LoginForm = () => {
     }
   };
 
+  const handleFailure = (result) => {
+    console.log("result:", result);
+    // alert(result);
+  };
+
+  const handleLogin = async (googleData) => {
+    console.log("googleData:", googleData);
+    // all requests goes to "proxy":"http://192.168.4.25:8000/" from package.json
+    const res = await fetch("/api/google-login", {
+      method: "POST",
+      body: JSON.stringify({
+        token: googleData.tokenId,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await res.json();
+
+    console.log("data:", data);
+
+    if (data.validCred === "true") {
+      const inputCred = {
+        username: data.username,
+        owner: data.owner,
+        email: data.email,
+      };
+      setInvalidCred(false);
+      dispatch({ type: "auth/login", payload: inputCred });
+      history.push("/login-success");
+    }
+  };
+  // setLoginData(data);
+  // localStorage.setItem("loginData", JSON.stringify(data));
+
   return (
     <div className="App">
       <form onSubmit={submitHandler}>
@@ -157,6 +194,13 @@ const LoginForm = () => {
             value="SIGN UP"
           />
         </div>
+        <GoogleLogin
+          clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+          buttonText="Log in with Google"
+          onSuccess={handleLogin}
+          onFailure={handleFailure}
+          cookiePolicy={"single_host_origin"}
+        ></GoogleLogin>
       </form>
     </div>
   );

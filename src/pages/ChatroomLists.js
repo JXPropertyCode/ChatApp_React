@@ -62,18 +62,18 @@ const ChatroomLists = () => {
       .post(`${process.env.REACT_APP_GET_API_KEY}create-chatroom`, inputCred)
       .then((res) => {
         if (res.data.validCred === "true") {
-          // console.log("res.data:", res.data);
+          console.log("res.data:", res.data);
 
-          // console.log("Success! Auth to Create a Chatroom...");
+          console.log("Success! Auth to Create a Chatroom...");
 
           setChatrooms([...chatrooms, res.data.chatroomCreated]);
         } else {
-          // console.log("Error in Creating a Chatroom");
+          console.log("Error in Creating a Chatroom");
         }
       })
       .catch((err) => {
-        // console.log("Error in Creating a Chatroom...");
-        // console.error(err);
+        console.log("Error in Creating a Chatroom...");
+        console.error(err);
         return err
       });
 
