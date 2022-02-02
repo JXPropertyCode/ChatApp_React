@@ -16,6 +16,7 @@ const MessageCenter = () => {
   const userEmail = useSelector((state) => state.auth.email);
   const [isValidRoom, setIsValidRoom] = useState(false);
   const validAccount = useSelector((state) => state.auth.accountVerified);
+  const [currentChatroom, setCurrentChatroom] = useState("N/A");
 
   // gets the path variable
   const params = useParams();
@@ -51,6 +52,22 @@ const MessageCenter = () => {
           return err;
         });
     }
+
+    const chatroomData = {
+      chatroomId: pathname,
+    };
+
+    axios
+      .post(
+        `${process.env.REACT_APP_GET_API_KEY}get-chatroom-name`,
+        chatroomData
+      )
+      .then((res) => {
+        setCurrentChatroom(res.data.chatroomName);
+      })
+      .catch((err) => {
+        return err;
+      });
   }, []);
 
   if (!validAccount) {
@@ -63,7 +80,8 @@ const MessageCenter = () => {
         <h1>{username}'s Dashboard</h1>
         {validAccount && <a href={`/user-profile/${owner}`}>My Profile</a>}
         <p>userID: {owner}</p>
-        <p>Current Chatroom: {pathname} </p>
+        <p>Current Chatroom: {currentChatroom} </p>
+        {/* <p>Current Chatroom: {pathname} </p> */}
         <button onClick={logoutButton}>Logout Button</button>
       </header>
 
@@ -78,7 +96,6 @@ const MessageCenter = () => {
       )}
       <div className="chatDisplay">
         {validAccount && <ChatroomLists></ChatroomLists>}
-
         {isValidRoom && <ChatroomMessages></ChatroomMessages>}
         {isValidRoom && <ChatroomMembers chatroomId={pathname} />}
       </div>
