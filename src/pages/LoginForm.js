@@ -25,6 +25,7 @@ const LoginForm = () => {
     return await axios
       .post(`${process.env.REACT_APP_GET_API_KEY}login-validation`, inputCred)
       .then((res) => {
+        console.log("res:", res)
         if (res.data.validCred === "true") {
           inputCred.username = res.data.username;
           inputCred.owner = res.data.owner;
@@ -51,6 +52,8 @@ const LoginForm = () => {
 
     // doesn't need ex. emailCred.current['email'].value to access the value since its useRef() is not nested on a Form like MessageCenter's prepmessage
     const loginValid = await login(inputCred);
+
+    console.log("inputCred:", inputCred)
 
     if (loginValid === true) {
       history.push("/login-success");
