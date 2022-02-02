@@ -58,17 +58,20 @@ const MessageCenter = () => {
     };
 
     // finds the chatroom's name by using the pathname which is the chatroom id to search the name
-    axios
-      .post(
-        `${process.env.REACT_APP_GET_API_KEY}get-chatroom-name`,
-        chatroomData
-      )
-      .then((res) => {
-        setCurrentChatroom(res.data.chatroomName);
-      })
-      .catch((err) => {
-        return err;
-      });
+    // if in the message center, pathname would be undefined so this is an error handling
+    if (pathname !== undefined) {
+      axios
+        .post(
+          `${process.env.REACT_APP_GET_API_KEY}get-chatroom-name`,
+          chatroomData
+        )
+        .then((res) => {
+          setCurrentChatroom(res.data.chatroomName);
+        })
+        .catch((err) => {
+          return err;
+        });
+    }
   }, []);
 
   if (!validAccount) {

@@ -1,5 +1,6 @@
 {
   "name": "chat-react-app",
+  "proxy":"http://192.168.4.25:8000/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
