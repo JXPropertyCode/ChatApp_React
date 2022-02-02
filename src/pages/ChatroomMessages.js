@@ -210,6 +210,12 @@ const ChatroomMessages = () => {
 
           // since owner was populated, it is now an object
 
+          // console.log("message:", message);
+          // this is for if the user deletes their account, it would not crash the application due to unable to read "null"
+          if (message.owner === null) {
+            return <div key={idx}></div>;
+          }
+
           return (
             <div
               key={idx}
