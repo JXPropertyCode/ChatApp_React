@@ -3,22 +3,13 @@ class MessageObject {
   owner;
   username;
   email;
-  // password;
   clientMessage;
 
-  constructor(
-    room,
-    owner,
-    username,
-    email,
-    // password,
-    clientMessage
-  ) {
+  constructor(room, owner, username, email, clientMessage) {
     this.room = String(room);
     this.owner = String(owner);
     this.username = String(username);
     this.email = String(email);
-    // this.password = String(password);
     this.clientMessage = String(clientMessage);
   }
 }

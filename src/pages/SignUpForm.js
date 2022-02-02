@@ -12,11 +12,8 @@ const SignUpForm = () => {
   const userEmail = useRef(null);
   const userPass = useRef(null);
   const userConPass = useRef(null);
-
   const history = useHistory();
-
   const validAccount = useSelector((state) => state.auth.accountVerified);
-
   const [credPassError, setCredPassError] = useState(false);
   const [credEmailError, setCredEmailError] = useState(false);
 
@@ -30,19 +27,7 @@ const SignUpForm = () => {
       input,
       process.env.REACT_APP_CRYPTO_JS_SECRET_KEY
     ).toString();
-    // console.log("encrypt password:", ciphertext);
     return ciphertext;
-  };
-
-  const decrypt = (input) => {
-    // Decrypt
-    var bytes = CryptoJS.AES.decrypt(
-      input,
-      process.env.REACT_APP_CRYPTO_JS_SECRET_KEY
-    );
-    var originalText = bytes.toString(CryptoJS.enc.Utf8);
-    console.log("decrypt password:", originalText);
-    return originalText;
   };
 
   const createAccount = (e) => {
@@ -56,42 +41,26 @@ const SignUpForm = () => {
       confirmPassword: userConPass.current.value,
     };
 
-    // console.log("Creating Account using:", creatingCred);
-
     if (creatingCred.password === creatingCred.confirmPassword) {
-      // UNIX lastModified f
-      // let lastModified = Math.floor(Date.now() / 1000);
-
       let convertData = new AccountObject(
         creatingCred.chatrooms,
         creatingCred.username,
         creatingCred.email,
         encrypt(creatingCred.password)
-        // lastModified
       );
 
-      console.log('convertData:', convertData)
+      console.log("convertData:", convertData);
 
       axios
         .post(`${process.env.REACT_APP_GET_API_KEY}signup`, convertData)
         .then((res) => {
           if (res.data.validCred === "true") {
-            // console.log("Success! Account Created:", convertData);
             setCredEmailError(false);
-
-            // attempt to send email
-            // axios
-            //   .post(`${process.env.REACT_APP_GET_API_KEY}email`, convertData)
-            //   .then((res) => {
-            //     // console.log("res from email:", res);
-            //   });
-
             history.push({
               pathname: "/account-created",
               auth: true,
             });
           } else {
-            // console.log("Error! Email Already Exists:", convertData.email);
             setCredEmailError(true);
           }
         })
@@ -157,7 +126,6 @@ const SignUpForm = () => {
             type="button"
             value="Back to Login"
             onClick={() => {
-              // console.log("Going back to login...");
               history.push("/login-form");
             }}
           />

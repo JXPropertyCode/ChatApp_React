@@ -7,19 +7,13 @@ const ChangePassword = () => {
   const oldPassword = useRef(null);
   const newPassword = useRef(null);
   const confirmNewPassword = useRef(null);
-
   const history = useHistory();
-
   const dispatch = useDispatch();
-
-  // const validAccount = useSelector((state) => state.auth.accountVerified);
   const username = useSelector((state) => state.auth.username);
   const owner = useSelector((state) => state.auth.owner);
-  // const userPass = useSelector((state) => state.auth.password);
   const userEmail = useSelector((state) => state.auth.email);
 
   const resetInput = () => {
-    // e.preventDefault();
     oldPassword.current.value = "";
     newPassword.current.value = "";
     confirmNewPassword.current.value = "";
@@ -27,18 +21,6 @@ const ChangePassword = () => {
 
   const reqChangePassword = (e) => {
     e.preventDefault();
-    // console.log("oldPassword.current.value:", oldPassword.current.value);
-    // console.log("newPassword.current.value:", newPassword.current.value);
-    // console.log(
-    //   "confirmNewPassword.current.value:",
-    //   confirmNewPassword.current.value
-    // );
-
-    // if (userPass !== oldPassword.current.value) {
-    //   alert("Old Password Doesn't Match Your Current Password!");
-    //   resetInput();
-    //   return;
-    // }
 
     if (
       oldPassword.current.value === newPassword.current.value ||
@@ -55,13 +37,10 @@ const ChangePassword = () => {
       return;
     }
 
-    // console.log("Password Request Valid...");
-
     let creatingCred = {
       email: userEmail,
       owner: owner,
       username: username,
-      // userPass: userPass,
       newPassword: confirmNewPassword.current.value,
     };
 
@@ -71,7 +50,6 @@ const ChangePassword = () => {
         creatingCred
       )
       .then((res) => {
-        // console.log("res from password:", res);
         return res;
       });
 

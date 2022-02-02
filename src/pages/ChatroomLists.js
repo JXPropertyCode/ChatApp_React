@@ -4,36 +4,26 @@ import axios from "axios";
 
 const ChatroomLists = () => {
   const createChatRoomName = useRef(null);
-
   const owner = useSelector((state) => state.auth.owner);
   const userEmail = useSelector((state) => state.auth.email);
-  // const userPass = useSelector((state) => state.auth.password);
-
   const [chatrooms, setChatrooms] = useState([]);
 
   const getChatrooms = () => {
     const inputCred = {
       email: userEmail,
-      // password: userPass,
     };
     axios
       .post(`${process.env.REACT_APP_GET_API_KEY}get-user-chatroom`, inputCred)
       .then((res) => {
-        // console.log("User Chatrooms From Server:", res.data.chatrooms);
-
-        // console.log("User Chatrooms From Server:", res.data);
         setChatrooms([...res.data]);
-
         return;
       })
       .catch((e) => {
-        // console.log("Error:", e);
         return e;
       });
   };
 
   useEffect(() => {
-    // console.log("useEffect...");
     getChatrooms();
   }, []);
 
@@ -46,16 +36,12 @@ const ChatroomLists = () => {
     let strFilter = removeExtraSpace(createChatRoomName.current.value);
 
     if (strFilter.length === 0) {
-      // console.log("Cannot Have Empty Spaces in Chat Room Name");
       return;
     }
-
-    // console.log("Creating Chat Room Name:", createChatRoomName.current.value);
 
     const inputCred = {
       owner: owner,
       chatroomName: createChatRoomName.current.value,
-      // lastModified: Math.floor(Date.now() / 1000),
     };
 
     axios
@@ -74,7 +60,7 @@ const ChatroomLists = () => {
       .catch((err) => {
         console.log("Error in Creating a Chatroom...");
         console.error(err);
-        return err
+        return err;
       });
 
     // reset the input box value after submitting
@@ -94,7 +80,6 @@ const ChatroomLists = () => {
       </form>
       <h3> Your Chatrooms </h3>
       {chatrooms.map((chatroom, idx) => {
-        // console.log("chatroom.chatroomName:", chatroom.chatroomName);
         return (
           <a key={idx} href={`/message-center/${chatroom.chatroomId}`}>
             {chatroom.chatroomName}

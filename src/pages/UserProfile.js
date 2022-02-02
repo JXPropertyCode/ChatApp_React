@@ -11,7 +11,6 @@ const UserProfile = () => {
   const validAccount = useSelector((state) => state.auth.accountVerified);
   const username = useSelector((state) => state.auth.username);
   const owner = useSelector((state) => state.auth.owner);
-  // const userPass = useSelector((state) => state.auth.password);
   const userEmail = useSelector((state) => state.auth.email);
   const reqNewUserName = useRef(null);
 
@@ -24,12 +23,9 @@ const UserProfile = () => {
   const removeExtraSpace = (s) => s.trim().split(/ +/).join(" ");
 
   const reqChangeUsername = () => {
-    // console.log("reqNewUserName.current.value:", reqNewUserName.current.value);
-
     let strFilter = removeExtraSpace(reqNewUserName.current.value);
 
     if (strFilter.length === 0) {
-      // console.log("Cannot Have ONLY Empty Spaces as a Username");
       return;
     }
 
@@ -38,13 +34,11 @@ const UserProfile = () => {
       username: username,
       owner: owner,
       email: userEmail,
-      // password: userPass,
     };
 
     axios
       .post(`${process.env.REACT_APP_GET_API_KEY}change-username`, inputData)
       .then((res) => {
-        // console.log("res:", res);
         return res;
       })
       .catch((err) => {
@@ -60,60 +54,6 @@ const UserProfile = () => {
   const handleUsername = () => {
     setChangeUsername(!changeUsername);
   };
-
-  // const handleEmail = (e) => {
-    // const inputData = {
-    //   username: username,
-    //   owner: owner,
-    //   email: userEmail,
-    //   password: userPass,
-    // };
-
-    // axios
-    //   .post(
-    //     `${process.env.REACT_APP_GET_API_KEY}change-email/${owner}`,
-    //     inputData
-    //   )
-    //   .then((res) => {
-    //     // console.log("res:", res);
-    //     return res;
-    //   })
-    //   .catch((err) => {
-    //     // console.error(err);
-    //     return err
-    //   });
-
-    // alert("Email has been sent to you to change your email!");
-    // alert("Nodemailer doesn't work, cannot request change currently!");
-
-  // };
-
-  // const handlePassword = (e) => {
-    // const inputData = {
-    //   username: username,
-    //   owner: owner,
-    //   email: userEmail,
-    //   password: userPass,
-    // };
-
-    // axios
-    //   .post(
-    //     `${process.env.REACT_APP_GET_API_KEY}change-password/${owner}`,
-    //     inputData
-    //   )
-    //   .then((res) => {
-    //     // console.log("res:", res);
-    //     return res;
-    //   })
-    //   .catch((err) => {
-    //     // console.error(err);
-    //     return err
-    //   });
-
-    // alert("Email has been sent to you to change your password!");
-    // alert("Nodemailer doesn't work, cannot request change currently!");
-
-  // };
 
   const logoutButton = () => {
     history.push("/logout");
@@ -168,20 +108,12 @@ const UserProfile = () => {
 
       <div className="userInfo">
         <h3>Email: {userEmail}</h3>
-        <input
-          type="button"
-          // value="Request Change"
-          // onClick={() => handleEmail()}
-        />
+        <input type="button" />
       </div>
 
       <div className="userInfo">
         <h3>Password: *****</h3>
-        <input
-          type="button"
-          // value="Request Change"
-          // onClick={() => handlePassword()}
-        />
+        <input type="button" />
       </div>
     </div>
   );

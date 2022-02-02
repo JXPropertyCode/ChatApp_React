@@ -7,19 +7,13 @@ const ChangeEmail = () => {
   const oldEmail = useRef(null);
   const newEmail = useRef(null);
   const confirmNewEmail = useRef(null);
-
   const dispatch = useDispatch();
-
   const history = useHistory();
-
-  // const validAccount = useSelector((state) => state.auth.accountVerified);
   const username = useSelector((state) => state.auth.username);
   const owner = useSelector((state) => state.auth.owner);
-  // const userPass = useSelector((state) => state.auth.password);
   const userEmail = useSelector((state) => state.auth.email);
 
   const resetInput = () => {
-    // e.preventDefault();
     oldEmail.current.value = "";
     newEmail.current.value = "";
     confirmNewEmail.current.value = "";
@@ -27,12 +21,6 @@ const ChangeEmail = () => {
 
   const reqChangeEmail = (e) => {
     e.preventDefault();
-    // console.log("oldEmail.current.value:", oldEmail.current.value);
-    // console.log("newEmail.current.value:", newEmail.current.value);
-    // console.log(
-    //   "confirmNewEmail.current.value:",
-    //   confirmNewEmail.current.value
-    // );
 
     if (userEmail !== oldEmail.current.value) {
       alert("Old Email Doesn't Match Your Current Email!");
@@ -46,24 +34,19 @@ const ChangeEmail = () => {
     ) {
       alert("Old Email and New Emails Cannot Be The Same!");
       resetInput();
-
       return;
     }
 
     if (newEmail.current.value !== confirmNewEmail.current.value) {
       alert("New Email and Confirm New Email Doesn't Match!");
       resetInput();
-
       return;
     }
-
-    // console.log("Email Request Valid...");
 
     let creatingCred = {
       email: userEmail,
       owner: owner,
       username: username,
-      // userPass: userPass,
       newEmail: confirmNewEmail.current.value,
     };
 
@@ -73,7 +56,6 @@ const ChangeEmail = () => {
         creatingCred
       )
       .then((res) => {
-        // console.log("res from email:", res);
         return res;
       });
 

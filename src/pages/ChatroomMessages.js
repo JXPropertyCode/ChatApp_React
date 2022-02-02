@@ -9,16 +9,9 @@ import moment from "moment";
 
 const ChatroomMessages = () => {
   const params = useParams();
-
-  // console.log("Current roomId Params:", params);
-
   const pathname = params.roomId;
-
-  // console.log("pathname:", pathname);
-
   const validAccount = useSelector((state) => state.auth.accountVerified);
   const userEmail = useSelector((state) => state.auth.email);
-  // const userPass = useSelector((state) => state.auth.password);
   const username = useSelector((state) => state.auth.username);
   const owner = useSelector((state) => state.auth.owner);
   const prepMessage = useRef(null);
@@ -45,14 +38,11 @@ const ChatroomMessages = () => {
       .then(async (res) => {
         let currentChatroomMessages = [];
         for (let i = 0; i < res.data.length; i++) {
-          // console.log("res.data[i].room:", res.data[i].room === pathname);
           if (res.data[i].room === pathname) {
-            // console.log("res.data[i]:", res.data[i])
             let retrieveRoomData = res.data[i];
             currentChatroomMessages.push(retrieveRoomData);
           }
         }
-        // console.log("currentChatroomMessages:", currentChatroomMessages);
         setMessagelog([...currentChatroomMessages]);
         return currentChatroomMessages;
       })
@@ -76,10 +66,8 @@ const ChatroomMessages = () => {
       "echo-protocol"
     );
 
-    // console.log(`ws://localhost:8000/${pathname}`);
-
     client.onerror = function () {
-      // console.log("Connection Error");
+      console.log("Connection Error");
     };
 
     // sending random numbers to Express's websocket, then Express would output them
@@ -103,16 +91,11 @@ const ChatroomMessages = () => {
       // sendNumber();
     };
 
-    client.onclose = function () {
-      // console.log("echo-protocol Client Closed");
-    };
+    client.onclose = function () {};
 
-    // console.log("UseEffect...");
     getMessagelog();
     // optional return function can be here to process a cleanup
   }, []);
-
-  // console.log("Current Message Log:", messagelog);
 
   // to detect when to scroll
   const messagesEndRef = useRef(null);
@@ -128,10 +111,8 @@ const ChatroomMessages = () => {
     // detects if youre at the bottom of the page
     e.preventDefault();
     if (e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight) {
-      // console.log("Bottom of the page");
       setIsScrollActive(true);
     } else {
-      // console.log("NOT bottom of the page");
       setIsScrollActive(false);
     }
   };
@@ -145,18 +126,8 @@ const ChatroomMessages = () => {
   // original
   useEffect(() => {
     if (lastMessage !== null) {
-      // console.log("lastMessage:", lastMessage);
       const convertData = JSON.parse(lastMessage.data);
-
-      // previously when I messaged in one room, every room received the message.
-      // this was the way I used to prevent that.
-      // problem with this is that what if there are a billion people speaking at the same time?
-      // it would be slow due to this keeps filtering messages after receiving them
-      // if (convertData.room === pathname) {
-      // console.log("lastMessage:", convertData);
-      // when getting new messages just update the state
       setMessagelog([...messagelog, convertData]);
-      // }
     }
   }, [lastMessage]);
 
@@ -177,7 +148,6 @@ const ChatroomMessages = () => {
     let strFilter = removeExtraSpace(currentPrepMessageValue);
 
     if (strFilter.length === 0) {
-      // console.log("Cannot Have Empty Spaces in Chat Room Name");
       prepmessage["inputMessage"].value = "";
       return;
     }
@@ -187,11 +157,9 @@ const ChatroomMessages = () => {
       owner,
       username,
       userEmail,
-      // userPass,
       currentPrepMessageValue
     );
 
-    // console.log("Data Sent to Server:", convertData);
     sendMessage(JSON.stringify(convertData));
     prepmessage["inputMessage"].value = "";
   };
@@ -204,13 +172,7 @@ const ChatroomMessages = () => {
     >
       <div>
         {messagelog.map((message, idx) => {
-          // if (message !== null) {
-          // console.log("messagelog's message:", message);
-          // this is needed due to the bug in which messages show for other rooms
-
           // since owner was populated, it is now an object
-
-          // console.log("message:", message);
           // this is for if the user deletes their account, it would not crash the application due to unable to read "null"
           if (message.owner === null) {
             return <div key={idx}></div>;
@@ -229,9 +191,6 @@ const ChatroomMessages = () => {
               </div>
             </div>
           );
-          // }
-
-          // return null;
         })}
         <div ref={messagesEndRef} />
       </div>

@@ -11,57 +11,35 @@ import LeaveChatroom from "./LeaveChatroom";
 
 const MessageCenter = () => {
   const history = useHistory();
-
   const username = useSelector((state) => state.auth.username);
   const owner = useSelector((state) => state.auth.owner);
-  // const userPass = useSelector((state) => state.auth.password);
   const userEmail = useSelector((state) => state.auth.email);
   const [isValidRoom, setIsValidRoom] = useState(false);
-
   const validAccount = useSelector((state) => state.auth.accountVerified);
-  // const [searchParams, setSearchParams] = useSearchParams();
-  // const roomId = searchParams.get('roomId')
-
-  // const location = useLocation();
-  // console.log("location.pathname:", location.pathname);
 
   // gets the path variable
   const params = useParams();
-  // const { search } = useLocation()
-  // const values = queryString.parse(search)
-
-  // console.log("Current roomId Params:", params);
-
   const pathname = params.roomId;
 
   const logoutButton = () => {
     history.push("/logout");
   };
 
-  // console.log("Re-rendering...");
-
   useEffect(() => {
     // this is just to make sure taht if the user inputs a unauthorized chatroom, it wouldn't let them access it
-    // console.log("useEffect...");
     const inputData = {
       email: userEmail,
-      // password: userPass,
       reqChatroom: pathname,
     };
 
-    // console.log("inputData:", inputData);
-
     // if accessing the chatroom is not valid or doesn't belong to you, you will be sent back to your /message-center
     if (validAccount) {
-      // console.log("Account Valid...");
       axios
         .post(
           `${process.env.REACT_APP_GET_API_KEY}user-chatroom-validation`,
           inputData
         )
         .then((res) => {
-          // console.log("res.data:", res.data);
-
           if (res.data.auth === true) {
             setIsValidRoom(true);
           } else {
@@ -70,24 +48,12 @@ const MessageCenter = () => {
           }
         })
         .catch((err) => {
-          // console.log("Error:", e);
           return err;
         });
     }
   }, []);
 
-  // pathname is from useLocation() which is a hook therefore useEffect can be used
-  // useEffect(() => {
-  //   console.log("Room Changed:", pathname);
-  //   if (pathname === "" || pathname === "/message-center") {
-  //     setIsValidRoom(false);
-  //     history.push("/chatroom-lists/");
-  //   }
-  // }, [pathname]);
-
   if (!validAccount) {
-    // console.log("Invalid Access Detected...");
-    // console.log("invalidAccount:", !validAccount);
     history.push("/login-form");
   }
 
