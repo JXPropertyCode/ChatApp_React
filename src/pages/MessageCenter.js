@@ -57,6 +57,7 @@ const MessageCenter = () => {
       chatroomId: pathname,
     };
 
+    // finds the chatroom's name by using the pathname which is the chatroom id to search the name
     axios
       .post(
         `${process.env.REACT_APP_GET_API_KEY}get-chatroom-name`,

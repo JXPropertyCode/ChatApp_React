@@ -20,14 +20,14 @@ const ChatroomMessages = () => {
   // for heroku deployment
   // owner is the userId before its populated with the accountCollection data
   // it passes to the Express so it can detect the unique client.
-  // const { sendMessage, lastMessage } = useWebSocket(
-  //   `ws://chat-app-express-jx.herokuapp.com/${pathname}/${owner}`
-  // );
+  const { sendMessage, lastMessage } = useWebSocket(
+    `ws://chat-app-express-jx.herokuapp.com/${pathname}/${owner}`
+  );
 
   // for local server testing
-  const { sendMessage, lastMessage } = useWebSocket(
-    `ws://localhost:8000/${pathname}/${owner}`
-  );
+  // const { sendMessage, lastMessage } = useWebSocket(
+  //   `ws://localhost:8000/${pathname}/${owner}`
+  // );
 
   const [isScrollActive, setIsScrollActive] = useState(true);
 
@@ -55,16 +55,16 @@ const ChatroomMessages = () => {
     var W3CWebSocket = require("websocket").w3cwebsocket;
 
     // for heroku deployment
-    // var client = new W3CWebSocket(
-    //   `ws://chat-app-express-jx.herokuapp.com/${pathname}/${owner}`,
-    //   "echo-protocol"
-    // );
-
-    // for personal server
     var client = new W3CWebSocket(
-      `ws://localhost:8000//${pathname}/${owner}`,
+      `ws://chat-app-express-jx.herokuapp.com/${pathname}/${owner}`,
       "echo-protocol"
     );
+
+    // for personal server
+    // var client = new W3CWebSocket(
+    //   `ws://localhost:8000//${pathname}/${owner}`,
+    //   "echo-protocol"
+    // );
 
     client.onerror = function () {
       console.log("Connection Error");
