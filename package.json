@@ -1,5 +1,6 @@
 {
   "name": "chat-react-app",
+  "proxy":"http://chat-app-express-jx.herokuapp.com/ ",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
