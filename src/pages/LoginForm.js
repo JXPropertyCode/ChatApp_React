@@ -94,7 +94,7 @@ const LoginForm = () => {
     const data = await res;
 
     console.log("data:", data);
-    if (data === err) {
+    if (!data) {
       alert("Error with Google Login")
       return
     }
