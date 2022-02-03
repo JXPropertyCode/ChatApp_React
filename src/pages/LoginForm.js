@@ -94,6 +94,10 @@ const LoginForm = () => {
     const data = await res;
 
     console.log("data:", data);
+    if (data === err) {
+      alert("Error with Google Login")
+      return
+    }
 
     if (data.data.validCred === "true") {
       console.log("data.validCred:", data.data.validCred);
