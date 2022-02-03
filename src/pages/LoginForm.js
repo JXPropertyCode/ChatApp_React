@@ -25,7 +25,7 @@ const LoginForm = () => {
     return await axios
       .post(`${process.env.REACT_APP_GET_API_KEY}login-validation`, inputCred)
       .then((res) => {
-        console.log("res:", res);
+        // console.log("res:", res);
         if (res.data.validCred === "true") {
           inputCred.username = res.data.username;
           inputCred.owner = res.data.owner;
@@ -53,7 +53,7 @@ const LoginForm = () => {
     // doesn't need ex. emailCred.current['email'].value to access the value since its useRef() is not nested on a Form like MessageCenter's prepmessage
     const loginValid = await login(inputCred);
 
-    console.log("inputCred:", inputCred);
+    // console.log("inputCred:", inputCred);
 
     if (loginValid === true) {
       history.push("/login-success");
@@ -65,7 +65,7 @@ const LoginForm = () => {
   };
 
   const handleLogin = async (googleData) => {
-    console.log("googleData:", googleData);
+    // console.log("googleData:", googleData);
     // all requests goes to "proxy":"http://192.168.4.25:8000/" from package.json
     // const res = await fetch("/api/google-login", {
     //   method: "POST",
@@ -84,7 +84,7 @@ const LoginForm = () => {
     const res = await axios
       .post(`${process.env.REACT_APP_GET_API_KEY}api/google-login`, inputCred)
       .then((res) => {
-        console.log("res:", res);
+        // console.log("res:", res);
         return res;
       })
       .catch((err) => {
@@ -93,16 +93,10 @@ const LoginForm = () => {
 
     const data = await res;
 
-    console.log("data:", data);
-    console.log("data:", JSON.stringify(data));
+    // console.log("data:", data);
+    // console.log("data:", JSON.stringify(data));
     if (data.data === undefined) {
       alert("Error with Google Login");
-      return;
-    }
-
-    if (data == undefined) {
-      alert("Error with Google Login");
-
       return;
     }
 

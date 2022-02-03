@@ -49,7 +49,7 @@ const SignUpForm = () => {
         encrypt(creatingCred.password)
       );
 
-      console.log("convertData:", convertData);
+      // console.log("convertData:", convertData);
 
       axios
         .post(`${process.env.REACT_APP_GET_API_KEY}signup`, convertData)
