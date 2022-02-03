@@ -94,9 +94,16 @@ const LoginForm = () => {
     const data = await res;
 
     console.log("data:", data);
-    if (!data) {
-      alert("Error with Google Login")
-      return
+    console.log("data:", JSON.stringify(data));
+    if (data.data === undefined) {
+      alert("Error with Google Login");
+      return;
+    }
+
+    if (data == undefined) {
+      alert("Error with Google Login");
+
+      return;
     }
 
     if (data.data.validCred === "true") {
