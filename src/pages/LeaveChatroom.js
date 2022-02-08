@@ -15,7 +15,7 @@ const LeaveChatroom = ({ chatroomId, setIsValidRoom }) => {
     await axios
       .post(`${process.env.REACT_APP_GET_API_KEY}leave-chatroom`, inputCred)
       .then((res) => {
-        console.log("res:", res);
+        // console.log("res:", res);
 
         if (
           res.data.updateAccount === "Success" &&

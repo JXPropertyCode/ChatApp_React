@@ -55,6 +55,8 @@ const SignUpForm = () => {
         .post(`${process.env.REACT_APP_GET_API_KEY}signup`, convertData)
         .then((res) => {
 
+          console.log("res:", res)
+
           // console.log("res.data:", res.data)
           if (res.data.validCred === "true") {
             setCredEmailError(false);
