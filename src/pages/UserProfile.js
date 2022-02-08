@@ -22,7 +22,7 @@ const UserProfile = () => {
 
   const removeExtraSpace = (s) => s.trim().split(/ +/).join(" ");
 
-  const reqChangeUsername = () => {
+  const reqChangeUsername = async () => {
     let strFilter = removeExtraSpace(reqNewUserName.current.value);
 
     if (strFilter.length === 0) {
@@ -36,12 +36,15 @@ const UserProfile = () => {
       email: userEmail,
     };
 
-    axios
+    await axios
       .post(`${process.env.REACT_APP_GET_API_KEY}change-username`, inputData)
       .then((res) => {
+        alert(`${res.data.message}`);
         return res;
       })
       .catch((err) => {
+        alert("Error Changing Username");
+
         console.error(err);
       });
 

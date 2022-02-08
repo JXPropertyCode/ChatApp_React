@@ -12,13 +12,14 @@ const ChatroomMembers = ({ chatroomId }) => {
     updateMemberList();
   }, []);
 
-  function updateMemberList() {
-    axios
+  async function updateMemberList() {
+    await axios
       .post(
         `${process.env.REACT_APP_GET_API_KEY}get-chatroom-members`,
         inputCred
       )
       .then((res) => {
+        // console.log("res.data.membersInChatroom:", res.data.membersInChatroom);
         setMembers(res.data.membersInChatroom);
       })
       .catch((err) => {
@@ -31,6 +32,7 @@ const ChatroomMembers = ({ chatroomId }) => {
       <input type="button" onClick={() => updateMemberList()} value="Refresh" />
       <h3>Chatroom Members</h3>
       {members.map((member, idx) => {
+        // console.log("member:", member);
         // this is for if the user deletes their account, it would not crash the application due to unable to read "null"
         if (member === null) {
           return <div key={idx}></div>;

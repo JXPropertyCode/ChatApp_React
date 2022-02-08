@@ -5,22 +5,24 @@ import axios from "axios";
 const ChatroomLists = () => {
   const createChatRoomName = useRef(null);
   const owner = useSelector((state) => state.auth.owner);
-  const userEmail = useSelector((state) => state.auth.email);
   const [chatrooms, setChatrooms] = useState([]);
 
-  const getChatrooms = () => {
+  const getChatrooms = async () => {
     const inputCred = {
-      email: userEmail,
+      _id: owner,
     };
-    axios
+
+    const getUserChatroom = await axios
       .post(`${process.env.REACT_APP_GET_API_KEY}get-user-chatroom`, inputCred)
       .then((res) => {
         setChatrooms([...res.data]);
-        return;
+        return [...res.data];
       })
       .catch((e) => {
         return e;
       });
+
+    // console.log("getUserChatroom:", getUserChatroom);
   };
 
   useEffect(() => {
@@ -29,7 +31,7 @@ const ChatroomLists = () => {
 
   const removeExtraSpace = (s) => s.trim().split(/ +/).join(" ");
 
-  const createRoom = (e) => {
+  const createRoom = async (e) => {
     e.preventDefault();
 
     // prevent white spaces from being used
@@ -44,17 +46,18 @@ const ChatroomLists = () => {
       chatroomName: createChatRoomName.current.value,
     };
 
-    axios
+    await axios
       .post(`${process.env.REACT_APP_GET_API_KEY}create-chatroom`, inputCred)
       .then((res) => {
         if (res.data.validCred === "true") {
           // console.log("res.data:", res.data);
 
           // console.log("Success! Auth to Create a Chatroom...");
-
+          alert(`Created Chatroom: ${createChatRoomName.current.value}`);
           setChatrooms([...chatrooms, res.data.chatroomCreated]);
         } else {
           // console.log("Error in Creating a Chatroom");
+          alert("Error in Creating Chatroom");
         }
       })
       .catch((err) => {
@@ -62,6 +65,9 @@ const ChatroomLists = () => {
         console.error(err);
         return err;
       });
+
+    // refreshes chatroom lists itself
+    getChatrooms();
 
     // reset the input box value after submitting
     createChatRoomName.current.value = "";

@@ -38,7 +38,7 @@ const LoginForm = () => {
         }
       })
       .catch((err) => {
-        return false;
+        return err;
       });
   };
 

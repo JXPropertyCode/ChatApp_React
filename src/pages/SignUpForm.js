@@ -30,7 +30,7 @@ const SignUpForm = () => {
     return ciphertext;
   };
 
-  const createAccount = (e) => {
+  const createAccount = async (e) => {
     e.preventDefault();
 
     const creatingCred = {
@@ -51,9 +51,11 @@ const SignUpForm = () => {
 
       // console.log("convertData:", convertData);
 
-      axios
+      await axios
         .post(`${process.env.REACT_APP_GET_API_KEY}signup`, convertData)
         .then((res) => {
+
+          // console.log("res.data:", res.data)
           if (res.data.validCred === "true") {
             setCredEmailError(false);
             history.push({

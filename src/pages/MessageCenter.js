@@ -26,7 +26,7 @@ const MessageCenter = () => {
     history.push("/logout");
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     // this is just to make sure taht if the user inputs a unauthorized chatroom, it wouldn't let them access it
     const inputData = {
       email: userEmail,
@@ -35,12 +35,13 @@ const MessageCenter = () => {
 
     // if accessing the chatroom is not valid or doesn't belong to you, you will be sent back to your /message-center
     if (validAccount) {
-      axios
+      await axios
         .post(
           `${process.env.REACT_APP_GET_API_KEY}user-chatroom-validation`,
           inputData
         )
         .then((res) => {
+          // console.log("res.data.auth:", res.data.auth);
           if (res.data.auth === true) {
             setIsValidRoom(true);
           } else {
@@ -60,7 +61,7 @@ const MessageCenter = () => {
     // finds the chatroom's name by using the pathname which is the chatroom id to search the name
     // if in the message center, pathname would be undefined so this is an error handling
     if (pathname !== undefined) {
-      axios
+      await axios
         .post(
           `${process.env.REACT_APP_GET_API_KEY}get-chatroom-name`,
           chatroomData

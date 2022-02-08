@@ -6,15 +6,25 @@ const LeaveChatroom = ({ chatroomId, setIsValidRoom }) => {
   const history = useHistory();
   const owner = useSelector((state) => state.auth.owner);
 
-  const leaveChatroom = () => {
+  const leaveChatroom = async () => {
     const inputCred = {
       owner: owner,
       chatroomId: chatroomId,
     };
 
-    axios
+    await axios
       .post(`${process.env.REACT_APP_GET_API_KEY}leave-chatroom`, inputCred)
       .then((res) => {
+        console.log("res:", res);
+
+        if (
+          res.data.updateAccount === "Success" &&
+          res.data.updateChatroom === "Success"
+        ) {
+          alert("Leaving Chatroom Successful...");
+        } else {
+          alert("Leaving Chatroom Failed...");
+        }
         return res;
       })
       .catch((err) => {

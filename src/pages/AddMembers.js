@@ -30,7 +30,7 @@ const AddMembers = ({ chatroomId }) => {
     addMembers.current.value = "";
   };
 
-  const addMembersToRoom = () => {
+  const addMembersToRoom = async () => {
     const userInput = addMembers.current.value;
 
     // the split creates an array of the input by removing the commas and spaces
@@ -41,13 +41,17 @@ const AddMembers = ({ chatroomId }) => {
       addMembersList: addMembersList,
     };
 
-    axios
+    await axios
       .post(
         `${process.env.REACT_APP_GET_API_KEY}add-users-to-chatroom`,
         inputData
       )
       .then((res) => {
-        return res;
+        // console.log("res:", res);
+
+        alert(`Accepted Users: ${res.data.addedMembers}`);
+        alert(`Users Not Added: ${res.data.notAddedMembers}`);
+        return;
       })
       .catch((err) => {
         return err;
